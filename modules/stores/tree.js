@@ -8,9 +8,21 @@ import {
 } from "../utils/configUtils";
 import {deepEqual} from "../utils/stuff";
 import {validateValue, getNewValueForFieldOp} from "../utils/validation";
-
+import {Utils} from "../index";
 
 const hasChildren = (tree, path) => tree.getIn(expandTreePath(path, 'children1')).size > 0;
+
+const countRules = (children) => {
+    let count = 0;
+    for (let obj in children) {
+        if (children[obj].type === "rule" || children[obj].type === "rule_group") {
+            count += 1 ;
+        } else {
+            count +=  countRules(children[obj].children1)
+        }
+    }
+    return count;
+};
 
 /**
  * @param {object} config
@@ -19,12 +31,16 @@ const hasChildren = (tree, path) => tree.getIn(expandTreePath(path, 'children1')
  */
 const addNewGroup = (state, path, properties, config) => {
     const groupUuid = uuid();
-    state = addItem(state, path, 'group', groupUuid, defaultGroupProperties(config).merge(properties || {}));
+    const rulesNumber = countRules(Utils.getTree(state).children1);
 
-    const groupPath = path.push(groupUuid);
-    // If we don't set the empty map, then the following merge of addItem will create a Map rather than an OrderedMap for some reason
-    state = state.setIn(expandTreePath(groupPath, 'children1'), new Immutable.OrderedMap());
-    state = addItem(state, groupPath, 'rule', uuid(), defaultRuleProperties(config));
+    if (!config.settings.maxNumberOfRules || rulesNumber < config.settings.maxNumberOfRules) {
+        state = addItem(state, path, 'group', groupUuid, defaultGroupProperties(config).merge(properties || {}), config);
+
+        const groupPath = path.push(groupUuid);
+        // If we don't set the empty map, then the following merge of addItem will create a Map rather than an OrderedMap for some reason
+        state = state.setIn(expandTreePath(groupPath, 'children1'), new Immutable.OrderedMap());
+        state = addItem(state, groupPath, 'rule', uuid(), defaultRuleProperties(config), config);
+    }
     state = fixPathsInTree(state);
     return state;
 };
@@ -96,10 +112,14 @@ const setConjunction = (state, path, conjunction) =>
  * @param {string} id
  * @param {Immutable.OrderedMap} properties
  */
-const addItem = (state, path, type, id, properties) => {
-    state = state.mergeIn(expandTreePath(path, 'children1'), new Immutable.OrderedMap({
-        [id]: new Immutable.Map({type, id, properties})
-    }));
+const addItem = (state, path, type, id, properties,config) => {
+    const rulesNumber = countRules(Utils.getTree(state).children1);
+
+    if (!config.settings.maxNumberOfRules || rulesNumber < config.settings.maxNumberOfRules) {
+        state = state.mergeIn(expandTreePath(path, 'children1'), new Immutable.OrderedMap({
+            [id]: new Immutable.Map({type, id, properties})
+        }));
+    }
     state = fixPathsInTree(state);
     return state;
 };
@@ -451,13 +471,13 @@ export default (config) => {
                 return Object.assign({}, state, {...unset}, {tree: addNewGroup(state.tree, action.path, action.properties, action.config)});
 
             case constants.ADD_GROUP:
-                return Object.assign({}, state, {...unset}, {tree: addItem(state.tree, action.path, 'group', action.id, action.properties)});
+                return Object.assign({}, state, {...unset}, {tree: addItem(state.tree, action.path, 'group', action.id, action.properties, action.config)});
 
             case constants.REMOVE_GROUP:
                 return Object.assign({}, state, {...unset}, {tree: removeGroup(state.tree, action.path, action.config)});
 
             case constants.ADD_RULE:
-                return Object.assign({}, state, {...unset}, {tree: addItem(state.tree, action.path, 'rule', action.id, action.properties)});
+                return Object.assign({}, state, {...unset}, {tree: addItem(state.tree, action.path, 'rule', action.id, action.properties, action.config)});
 
             case constants.REMOVE_RULE:
                 return Object.assign({}, state, {...unset}, {tree: removeRule(state.tree, action.path, action.config)});

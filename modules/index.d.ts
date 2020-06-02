@@ -565,7 +565,8 @@ export interface BehaviourSettings {
   immutableFieldsMode?: Boolean,
   immutableOpsMode?: Boolean,
   immutableValuesMode?: Boolean,
-  showErrorMessage?: Boolean
+  showErrorMessage?: Boolean,
+    maxNumberOfRules?: Number
 };
 
 export interface OtherSettings {

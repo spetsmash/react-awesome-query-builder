@@ -197,10 +197,11 @@ export default (skin) => {
         // showLabels: true,
         maxNesting: 3,
         canLeaveEmptyGroup: true, //after deletion
-        showErrorMessage: true
+        showErrorMessage: true,
         // renderField: (props) => <FieldCascader {...props} />,
         // renderOperator: (props) => <FieldDropdown {...props} />,
         // renderFunc: (props) => <FieldSelect {...props} />,
+        maxNumberOfRules: 10 // number of rules can be added to the query builder
     };
 
     //////////////////////////////////////////////////////////////////////
