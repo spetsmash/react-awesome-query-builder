@@ -67,7 +67,6 @@ export default (skin) => {
             sqlOp: 'BETWEEN',
             cardinality: 2,
             isSpecialRange: true,
-            // cardinality: 2,
             formatOp: (field, op, values, valueSrcs, valueTypes, opDef, operatorOptions, isForDisplay) => {
                 let valFrom = values[0];
                 let valTo = values[1];
@@ -76,8 +75,26 @@ export default (skin) => {
                 else
                     return `${field} >= ${valFrom} && ${field} <= ${valTo}`;
             },
-            reversedOp: 'not_between',
+            reversedOp: 'not_date_range',
             jsonLogic: "between",
+        },
+        not_date_range: {
+            ...InitialConfig.operators.not_between,
+            label: 'Not between',
+            labelForFormat: 'NOT BETWEEN',
+            sqlOp: 'NOT_BETWEEN',
+            cardinality: 2,
+            isSpecialRange: true,
+            formatOp: (field, op, values, valueSrcs, valueTypes, opDef, operatorOptions, isForDisplay) => {
+                let valFrom = values[0];
+                let valTo = values[1];
+                if (isForDisplay)
+                    return `${field} >= ${valFrom} AND ${field} <= ${valTo}`;
+                else
+                    return `${field} >= ${valFrom} && ${field} <= ${valTo}`;
+            },
+            reversedOp: 'date_range',
+            jsonLogic: "not_between",
         },
     };
 
@@ -239,6 +256,8 @@ export default (skin) => {
                         valuePlaceholder: "Enter name",
                         validateValue: (val, fieldDef) => {
                             const valid = val.length < 4;
+                            return valid
+                            const valid = val.length < 4;
                             let errorMessage = valid ? null : 'Incorrect value';
 
                             return valid
@@ -331,7 +350,7 @@ export default (skin) => {
             label: 'Date',
             type: 'date',
             valueSources: ['value'],
-            operators: ['date_range', 'equal', "greater_or_equal"],
+            operators: ['date_range', 'equal', "greater_or_equal", "not_date_range"],
             fieldSettings: {
                 dateFormat: 'DD-MM-YYYY',
             }
