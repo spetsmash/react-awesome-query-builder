@@ -256,8 +256,6 @@ export default (skin) => {
                         valuePlaceholder: "Enter name",
                         validateValue: (val, fieldDef) => {
                             const valid = val.length < 4;
-                            return valid
-                            const valid = val.length < 4;
                             let errorMessage = valid ? null : 'Incorrect value';
 
                             return valid
