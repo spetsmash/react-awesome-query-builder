@@ -47,17 +47,20 @@ export default
     "88999999-cdef-4012-b456-71725ba881d9": {
       "type": "rule",
       "properties": {
-        "field": "user.login",
-        "operator": "equal",
+        "field": "date",
+        "operator": "range",
         "value": [
-          "sac"
+          "2020-06-05",
+          "2020-07-16"
         ],
         "valueSrc": [
+          "value",
           "value"
         ],
         "validity": true,
         "valueType": [
-          "text"
+          "date",
+          "date"
         ]
       }
     }
