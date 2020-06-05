@@ -335,20 +335,28 @@ const setOperator = (state, path, newOperator, config) => {
  * @param {string} valueType
  * @param {boolean} __isInternal
  */
-const setValue = ( state, path, delta, value, valueType,flag, config, __isInternal) => { //TODO v1
+const setValue = ( state, path, delta, value, valueType,flag, config, __isInternal) => {
     const fieldSeparator = config.settings.fieldSeparator;
     const showErrorMessage = config.settings.showErrorMessage;
     const valueSrc = state.getIn(expandTreePath(path, 'properties', 'valueSrc', delta + '')) || null;
-    if (valueSrc === 'field' && Array.isArray(value))
-        value = value.join(fieldSeparator);
 
     const field = state.getIn(expandTreePath(path, 'properties', 'field')) || null;
     const operator = state.getIn(expandTreePath(path, 'properties', 'operator')) || null;
+    let valueArr;
+
+    if (valueType === 'number' && operator === "between") {
+        const item = getItemByPath(state, path);
+        valueArr = Array.from(item.get('properties').get('value'));
+        valueArr[delta] = value;
+    }
+
+    if (valueSrc === 'field' && Array.isArray(value))
+        value = value.join(fieldSeparator);
 
     const isEndValue = false;
     const canFix = false;
     const calculatedValueType = valueType || calculateValueType(value, valueSrc, config);
-    const [validateError, fixedValue, errorMessage] = validateValue(config, field, field, operator, value, calculatedValueType, valueSrc, flag, false, canFix, isEndValue);
+    const [validateError, fixedValue, errorMessage] = validateValue(config, field, field, operator, value, calculatedValueType, valueSrc, flag, valueArr, false, canFix, isEndValue);
     const validResult = !errorMessage;
     const isValid = validResult;
     if (isValid && fixedValue !== value) {
@@ -497,7 +505,7 @@ export default (config) => {
 
             case constants.SET_VALUE:
                 let set = {};
-                const tree = setValue(state.tree, action.path, action.delta, action.value, action.valueType, action.flag, action.config, action.__isInternal); //TODO v1
+                const tree = setValue(state.tree, action.path, action.delta, action.value, action.valueType, action.flag, action.config, action.__isInternal);
                 if (tree.__isInternalValueChange)
                     set.__isInternalValueChange = true;
                 return Object.assign({}, state, {...unset, ...set}, {tree});

@@ -30,15 +30,16 @@ export const setOperator = (config, path, operator) => ({
  * @param {integer} delta
  * @param {*} value
  * @param {string} valueType
+ * @param {boolean} flag
  * @param {boolean} __isInternal
  */
-export const setValue = (config, path, delta, value, valueType, flag,  __isInternal) => ({  //TODO v1
+export const setValue = (config, path, delta, value, valueType, flag,  __isInternal) => ({
   type: constants.SET_VALUE,
   path: path,
   delta: delta,
   value: value,
   valueType: valueType,
-  flag: flag, //TODO v1
+  flag: flag,
   config: config,
   __isInternal: __isInternal
 });

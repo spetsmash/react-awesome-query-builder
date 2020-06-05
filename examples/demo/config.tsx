@@ -3139,14 +3139,23 @@ export default (skin) => {
                                 ],
                                 mainWidgetProps: {
                                     valueLabel: 'Balance Amount',
-                                    validateValue: (val, fieldDef, flag) => {
+                                    validateValue: (val, fieldDef, flag, valueArr, operator) => {
                                         if (val === undefined && flag) {
                                             return "No value entered"
                                         }
-                                            const regex =  /^\$?(?!0.00)(([0-9]{1,3},([0-9]{3},)*)[0-9]{3}|[0-9]{1,3})(\.[0-9]{0,3}[^-_.])?$/;
-                                            const validRegex = regex.test(val);
+                                        const regex =  /^\$?(?!0.00)(([0-9]{1,3},([0-9]{3},)*)[0-9]{3}|[0-9]{1,19})(\.[0-9]{0,3}[^-_.])?$/g;
+                                        const validRegex = regex.test(val);
 
-                                            return validRegex || !val ? null : "Invalid format";
+                                        if (valueArr && val !== undefined) {
+                                            if(valueArr[0] > valueArr[1] || valueArr[0] === valueArr[1]) {
+                                                return "Value 'from' must be less than 'till'"
+                                            }
+                                        } else if (!validRegex && val !== undefined) {
+                                            return  "Invalid format"
+                                        } else if (operator === 'less' && val <= 0 && val !== undefined ) {
+                                            return "Value must be greater than 0 "
+                                        }
+                                        return true;
                                     },
                                 },
                             },

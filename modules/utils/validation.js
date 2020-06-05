@@ -173,9 +173,10 @@ function validateRule (item, path, itemId, meta, c) {
  * @param {bool} canFix true is useful for func values to remove bad args
  * @param {bool} isEndValue false if value is in process of editing by user
  * @param {bool} isRawValue false is used only internally from validateFuncValue
+ * @param {array} valueArr array of valuer if valueType is Number and operator "between", "less"
  * @return {array} [validError, fixedValue] - if validError === null and canFix == true, fixedValue can differ from value if was fixed
  */
-export const validateValue = (config, leftField, field, operator, value, valueType, valueSrc, flag, canFix = false, isEndValue = false, isRawValue = true) => {
+export const validateValue = (config, leftField, field, operator, value, valueType, valueSrc, flag, valueArr, canFix = false, isEndValue = false, isRawValue = true) => {
 	let validError = null;
 	let fixedValue = value;
 	let validResult;
@@ -201,7 +202,9 @@ export const validateValue = (config, leftField, field, operator, value, valueTy
 									fixedValue, 
 									//field,
 									fieldConfig,
-								flag
+									flag,
+									valueArr,
+									operator
 							];
 							if (valueSrc == 'field')
 									args.push(rightFieldDefinition);

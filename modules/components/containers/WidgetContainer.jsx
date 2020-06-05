@@ -56,23 +56,7 @@ export default (Widget) => {
         }
 
         _setValue = (isSpecialRange, delta, widgetType, value, flag, __isInternal) => {
-            // function getStackTrace () {
-            //
-            //     var stack;
-            //
-            //     try {
-            //         throw new Error('');
-            //     }
-            //     catch (error) {
-            //         stack = error.stack || '';
-            //     }
-            //
-            //     stack = stack.split('\n').map(function (line) { return line.trim(); });
-            //     console.log(stack)
-            //     return stack.splice(stack[0] == 'Error' ? 2 : 1);
-            // }
-            //
-            // console.log(getStackTrace());
+
             if (isSpecialRange && Array.isArray(value)) {
                 const oldRange = [this.props.value.get(0), this.props.value.get(1)];
                 if (oldRange[0] != value[0])

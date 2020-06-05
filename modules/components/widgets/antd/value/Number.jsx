@@ -19,10 +19,11 @@ export default class NumberWidget extends PureComponent {
   };
 
   handleChange = (val) => {
-    if (val === '' || val === null)
+    if (val === '' || val === null || typeof val === 'string') {
       val = undefined;
+    }
     this.props.setValue(val, false);
-  }
+  };
 
   static defaultProps = {
       min: undefined,

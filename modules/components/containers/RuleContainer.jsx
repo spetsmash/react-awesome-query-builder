@@ -48,7 +48,7 @@ export default (Rule) => {
     }
 
     setValue = (delta, value, flag, type, __isInternal) => {
-        this.props.actions.setValue(this.props.path, delta, value, type, flag, __isInternal); //TODO v1
+        this.props.actions.setValue(this.props.path, delta, value, type, flag, __isInternal);
     }
 
     setValueSrc = (delta, srcKey) => {
