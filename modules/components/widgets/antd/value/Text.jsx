@@ -16,27 +16,34 @@ export default class TextWidget extends PureComponent {
   handleChange = (ev) => {
     const v = ev.target.value;
     const val = v === '' ? undefined : v; // don't allow empty value
-    this.props.setValue(val);
+    this.props.setValue(val, false);
   }
 
+  validateOnBlur() {
+    this.setValue(this.value, true);
+  }
   render() {
-    const {config, placeholder, customProps, value, readonly} = this.props;
+    const {config, placeholder, customProps, value, readonly, mask} = this.props;
     const {renderSize} = config.settings;
     const _value = value != undefined ? value : null;
 
     return (
       <Col>
-        <Input
+        <ReactInputMask
+            mask={mask}
+            onChange={this.handleChange} value={_value} onBlur={this.validateOnBlur.bind(this.props)}>
+          <Input
           disabled={readonly}
           key="widget-text"
           size={renderSize}
           type={"text"}
-          value={_value}
+              value={_value}
           placeholder={placeholder}
-          onChange={this.handleChange}
           {...customProps}
         />
+        </ReactInputMask>
       </Col>
     );
+
   }
 }

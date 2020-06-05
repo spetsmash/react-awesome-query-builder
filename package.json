@@ -47,9 +47,11 @@
     "lodash": "^4.6",
     "moment": "^2.24.0",
     "prop-types": "^15.6.0",
+    "react-input-mask": "^3.0.0-alpha.0",
     "react-redux": "^5.0.0",
     "redux": "^3.5.0",
     "sqlstring": "^2.3.1",
+    "stacktrace-js": "^2.0.2",
     "transit-immutable-js": "^0.7.0",
     "transit-js": "^0.8.846"
   },

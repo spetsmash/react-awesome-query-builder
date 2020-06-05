@@ -22,6 +22,7 @@ export default (Rule) => {
       parentField: PropTypes.string, //from RuleGroup
       //connected:
       dragging: PropTypes.object, //{id, x, y, w, h}
+        flag:PropTypes.bool
     };
 
     constructor(props) {
@@ -46,8 +47,8 @@ export default (Rule) => {
       this.props.actions.setOperatorOption(this.props.path, name, value);
     }
 
-    setValue = (delta, value, type, __isInternal) => {
-        this.props.actions.setValue(this.props.path, delta, value, type, __isInternal);
+    setValue = (delta, value, flag, type, __isInternal) => {
+        this.props.actions.setValue(this.props.path, delta, value, type, flag, __isInternal); //TODO v1
     }
 
     setValueSrc = (delta, srcKey) => {

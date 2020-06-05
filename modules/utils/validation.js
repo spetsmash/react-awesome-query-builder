@@ -175,12 +175,12 @@ function validateRule (item, path, itemId, meta, c) {
  * @param {bool} isRawValue false is used only internally from validateFuncValue
  * @return {array} [validError, fixedValue] - if validError === null and canFix == true, fixedValue can differ from value if was fixed
  */
-export const validateValue = (config, leftField, field, operator, value, valueType, valueSrc, canFix = false, isEndValue = false, isRawValue = true) => {
+export const validateValue = (config, leftField, field, operator, value, valueType, valueSrc, flag, canFix = false, isEndValue = false, isRawValue = true) => {
 	let validError = null;
 	let fixedValue = value;
 	let validResult;
 
-	if (value != null) {
+	if (value != null || !value) {
 			if (valueSrc == 'field') {
 					[validError, fixedValue] = validateFieldValue(leftField, field, value, valueSrc, valueType, config, operator, isEndValue, canFix);
 			} else if (valueSrc == 'func') {
@@ -189,7 +189,7 @@ export const validateValue = (config, leftField, field, operator, value, valueTy
 					[validError, fixedValue] = validateNormalValue(leftField, field, value, valueSrc, valueType, config, operator, isEndValue, canFix);
 			}
 
-			if (!validError) {
+			if (!validError || !value) {
 					const fieldConfig = getFieldConfig(field, config);
 					const w = getWidgetForFieldOp(config, field, operator, valueSrc);
 					const fieldWidgetDefinition = omit(getFieldWidgetConfig(config, field, operator, w, valueSrc), ['factory', 'formatValue']);
@@ -201,6 +201,7 @@ export const validateValue = (config, leftField, field, operator, value, valueTy
 									fixedValue, 
 									//field,
 									fieldConfig,
+								flag
 							];
 							if (valueSrc == 'field')
 									args.push(rightFieldDefinition);

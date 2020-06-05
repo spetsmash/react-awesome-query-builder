@@ -21,7 +21,7 @@ export default class NumberWidget extends PureComponent {
   handleChange = (val) => {
     if (val === '' || val === null)
       val = undefined;
-    this.props.setValue(val);
+    this.props.setValue(val, false);
   }
 
   static defaultProps = {
@@ -29,6 +29,10 @@ export default class NumberWidget extends PureComponent {
       max: undefined,
       step: undefined,
   };
+
+  validateOnBlur() {
+    this.setValue(this.value, true);
+  }
 
   render() {
     const {config, placeholder, customProps, value,  min, max, step, readonly} = this.props;
@@ -39,6 +43,7 @@ export default class NumberWidget extends PureComponent {
       <Col>
         <InputNumber
           disabled={readonly}
+          onBlur={this.validateOnBlur.bind(this.props)}
           key="widget-number"
           size={renderSize}
           value={_value}

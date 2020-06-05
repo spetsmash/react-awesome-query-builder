@@ -32,12 +32,13 @@ export const setOperator = (config, path, operator) => ({
  * @param {string} valueType
  * @param {boolean} __isInternal
  */
-export const setValue = (config, path, delta, value, valueType, __isInternal) => ({
+export const setValue = (config, path, delta, value, valueType, flag,  __isInternal) => ({  //TODO v1
   type: constants.SET_VALUE,
   path: path,
   delta: delta,
   value: value,
   valueType: valueType,
+  flag: flag, //TODO v1
   config: config,
   __isInternal: __isInternal
 });

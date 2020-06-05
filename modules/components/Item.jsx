@@ -81,7 +81,7 @@ class Item extends PureComponent {
     onDragStart: PropTypes.func,
     parentField: PropTypes.string, //from RuleGroup
     validity:PropTypes.bool,
-      errorMessage:PropTypes.string
+      errorMessage:PropTypes.any
   };
 
   render() {

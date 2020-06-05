@@ -9,10 +9,6 @@ import {ElementType, ReactElement, Factory} from 'react';
 
 type MongoValue = any;
 
-type Validation = {
-  valid: boolean,
-  errorMessage: string
-};
 
 type JsonLogicResult = {
   logic?: JsonLogicTree,
@@ -132,7 +128,7 @@ export interface Config {
 type FormatValue =         (val: RuleValue, fieldDef: Field, wgtDef: Widget, isForDisplay: Boolean, op: String, opDef: Operator, rightFieldDef?: Field) => string;
 type SqlFormatValue =      (val: RuleValue, fieldDef: Field, wgtDef: Widget, op: String, opDef: Operator, rightFieldDef?: Field) => String;
 type MongoFormatValue =    (val: RuleValue, fieldDef: Field, wgtDef: Widget, op: String, opDef: Operator) => MongoValue;
-type ValidateValue =       (val: RuleValue, fieldDef: Field) => boolean | string;
+type ValidateValue =       (val: RuleValue, fieldDef: Field, flag: Boolean) => boolean | string;
 
 interface BaseWidgetProps {
   value: RuleValue,
@@ -164,6 +160,7 @@ export interface BaseWidget {
   customProps?: {},
   type: String,
   jsType?: String,
+  mask?: any,
   factory: Factory<WidgetProps>,
   valueSrc?: ValueSource,
   valuePlaceholder?: String,

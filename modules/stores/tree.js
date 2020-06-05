@@ -111,8 +111,9 @@ const setConjunction = (state, path, conjunction) =>
  * @param {string} type
  * @param {string} id
  * @param {Immutable.OrderedMap} properties
+ * @param {object} config
  */
-const addItem = (state, path, type, id, properties,config) => {
+const addItem = (state, path, type, id, properties, config) => {
     const rulesNumber = countRules(Utils.getTree(state).children1);
 
     if (!config.settings.maxNumberOfRules || rulesNumber < config.settings.maxNumberOfRules) {
@@ -250,7 +251,7 @@ const setField = (state, path, newField, config) => {
         });
         state = state.setIn(expandTreePath(path, 'properties'), groupProperties);
         state = state.setIn(expandTreePath(path, 'children1'), new Immutable.OrderedMap());
-        state = addItem(state, path, 'rule', uuid(), defaultRuleProperties(config, newField));
+        state = addItem(state, path, 'rule', uuid(), defaultRuleProperties(config, newField), config);
         state = fixPathsInTree(state);
 
         return state;
@@ -334,7 +335,7 @@ const setOperator = (state, path, newOperator, config) => {
  * @param {string} valueType
  * @param {boolean} __isInternal
  */
-const setValue = (state, path, delta, value, valueType, config, __isInternal) => {
+const setValue = ( state, path, delta, value, valueType,flag, config, __isInternal) => { //TODO v1
     const fieldSeparator = config.settings.fieldSeparator;
     const showErrorMessage = config.settings.showErrorMessage;
     const valueSrc = state.getIn(expandTreePath(path, 'properties', 'valueSrc', delta + '')) || null;
@@ -347,7 +348,7 @@ const setValue = (state, path, delta, value, valueType, config, __isInternal) =>
     const isEndValue = false;
     const canFix = false;
     const calculatedValueType = valueType || calculateValueType(value, valueSrc, config);
-    const [validateError, fixedValue, errorMessage] = validateValue(config, field, field, operator, value, calculatedValueType, valueSrc, canFix, isEndValue);
+    const [validateError, fixedValue, errorMessage] = validateValue(config, field, field, operator, value, calculatedValueType, valueSrc, flag, false, canFix, isEndValue);
     const validResult = !errorMessage;
     const isValid = validResult;
     if (isValid && fixedValue !== value) {
@@ -496,7 +497,7 @@ export default (config) => {
 
             case constants.SET_VALUE:
                 let set = {};
-                const tree = setValue(state.tree, action.path, action.delta, action.value, action.valueType, action.config, action.__isInternal);
+                const tree = setValue(state.tree, action.path, action.delta, action.value, action.valueType, action.flag, action.config, action.__isInternal); //TODO v1
                 if (tree.__isInternalValueChange)
                     set.__isInternalValueChange = true;
                 return Object.assign({}, state, {...unset, ...set}, {tree});
