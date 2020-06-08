@@ -21,8 +21,8 @@ export default class TextWidget extends PureComponent {
   }
 
   validateOnBlur() {
-    if (this.value !== undefined) {
-      this.setValue(this.value.trim(), true);
+    if (!this.value) {
+      this.setValue(this.value, true);
     } else {
       this.setValue(this.value.trim(), true);
     }
