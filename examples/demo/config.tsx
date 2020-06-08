@@ -449,6 +449,7 @@ export default (skin) => {
                         'less_or_equal',
                         'equal',
                         'not_equal',
+                        'date_range',
                     ],
                 },
                 registrationIp: {
@@ -485,6 +486,7 @@ export default (skin) => {
                         'less_or_equal',
                         'equal',
                         'not_equal',
+                        'date_range',
                     ],
                 },
                 lastLoginIp: {
@@ -571,6 +573,33 @@ export default (skin) => {
                     label: 'Registration Form Name',
                     valueSources: ['value'],
                     operators: ['equal', 'not_equal'],
+                    mainWidgetProps: {
+                        valueLabel: 'Registration Form Name',
+                        validateValue: (val, fieldDef, flag) => {
+                            if (!val && flag) {
+                                return "No value entered"
+                            } else if (val) {
+                                const regex =  /^[a-zA-Z ]*$/;
+                                // const validRegex = regex.test(val);
+                                const validLength = val.length >= 2 && val.length <= 2550;
+                                // const valid = validLength  && validRegex;
+                                // let errorMessage;
+                                // if (!validLength) {
+                                //     errorMessage = "City length should be not les than 2 symbols and not more than 255 symbols"
+                                // } else if (!validRegex) {
+                                //     errorMessage = "City name can cota"
+                                // }
+
+
+                                // if (!validLength) {
+                                //     return "City name length should be not les than 2 symbols and not more than 255 symbols";
+                                // }
+
+                                return validLength ? null : "City name length should be not les than 2 symbols and not more than 255 symbols";
+                            }
+
+                        },
+                    },
                 },
                 countryOfRegistration: {
                     label: 'Country Of Registration',
@@ -612,6 +641,31 @@ export default (skin) => {
                                 'not_equal',
                                 'between',
                             ],
+                            fieldSettings: {
+                                min: 0,
+                                max: 999999999999999999,
+                            },
+                            mainWidgetProps: {
+                                valueLabel: 'Amount',
+                                validateValue: (val, fieldDef, flag, valueArr, operator) => {
+                                    if (val === undefined && flag) {
+                                        return "No value entered"
+                                    }
+                                    const regex =  /^\$?(?!0.00)(([0-9]{1,3},([0-9]{3},)*)[0-9]{3}|[0-9]{1,19})(\.[0-9]{0,3}[^-_.])?$/g;
+                                    const validRegex = regex.test(val);
+
+                                    if (valueArr && val !== undefined) {
+                                        if(valueArr[0] > valueArr[1] || valueArr[0] === valueArr[1]) {
+                                            return "Value 'from' must be less than 'till'"
+                                        }
+                                    } else if (!validRegex && val !== undefined) {
+                                        return  "Invalid format"
+                                    } else if (operator === 'less' && val <= 0 && val !== undefined ) {
+                                        return "Value must be greater than 0 "
+                                    }
+                                    return true;
+                                },
+                            },
                         },
                         currency: {
                             label: 'Currency',
@@ -666,7 +720,7 @@ export default (skin) => {
                             label: 'Period Range',
                             type: 'date',
                             valueSources: ['value'],
-                            operators: ['between'],
+                            operators: ['date_range'],
                         },
                     },
                 },
@@ -686,6 +740,31 @@ export default (skin) => {
                                 'equal',
                                 'not_equal',
                             ],
+                            fieldSettings: {
+                                min: 0,
+                                max: 999999999999999999,
+                            },
+                            mainWidgetProps: {
+                                valueLabel: 'Amount',
+                                validateValue: (val, fieldDef, flag, valueArr, operator) => {
+                                    if (val === undefined && flag) {
+                                        return "No value entered"
+                                    }
+                                    const regex =  /^\$?(?!0.00)(([0-9]{1,3},([0-9]{3},)*)[0-9]{3}|[0-9]{1,19})(\.[0-9]{0,3}[^-_.])?$/g;
+                                    const validRegex = regex.test(val);
+
+                                    if (valueArr && val !== undefined) {
+                                        if(valueArr[0] > valueArr[1] || valueArr[0] === valueArr[1]) {
+                                            return "Value 'from' must be less than 'till'"
+                                        }
+                                    } else if (!validRegex && val !== undefined) {
+                                        return  "Invalid format"
+                                    } else if (operator === 'less' && val <= 0 && val !== undefined ) {
+                                        return "Value must be greater than 0 "
+                                    }
+                                    return true;
+                                },
+                            },
                         },
                         currency: {
                             label: 'Currency',
@@ -724,7 +803,7 @@ export default (skin) => {
                             label: 'Period Range',
                             type: 'date',
                             valueSources: ['value'],
-                            operators: ['between'],
+                            operators: ['date_range'],
                         },
                     },
                 },
@@ -745,6 +824,31 @@ export default (skin) => {
                                 'not_equal',
                                 'between',
                             ],
+                            fieldSettings: {
+                                min: 0,
+                                max: 999999999999999999,
+                            },
+                            mainWidgetProps: {
+                                valueLabel: 'Amount',
+                                validateValue: (val, fieldDef, flag, valueArr, operator) => {
+                                    if (val === undefined && flag) {
+                                        return "No value entered"
+                                    }
+                                    const regex =  /^\$?(?!0.00)(([0-9]{1,3},([0-9]{3},)*)[0-9]{3}|[0-9]{1,19})(\.[0-9]{0,3}[^-_.])?$/g;
+                                    const validRegex = regex.test(val);
+
+                                    if (valueArr && val !== undefined) {
+                                        if(valueArr[0] > valueArr[1] || valueArr[0] === valueArr[1]) {
+                                            return "Value 'from' must be less than 'till'"
+                                        }
+                                    } else if (!validRegex && val !== undefined) {
+                                        return  "Invalid format"
+                                    } else if (operator === 'less' && val <= 0 && val !== undefined ) {
+                                        return "Value must be greater than 0 "
+                                    }
+                                    return true;
+                                },
+                            },
                         },
                         currency: {
                             label: 'Currency',
@@ -799,7 +903,7 @@ export default (skin) => {
                             label: 'Period Range',
                             type: 'date',
                             valueSources: ['value'],
-                            operators: ['between'],
+                            operators: ['date_range'],
                         },
                     },
                 },
@@ -810,11 +914,6 @@ export default (skin) => {
                         value: {
                             label: 'Amount',
                             type: 'number',
-                            // fieldSettings: {
-                            //   min: 0,
-                            //   max: 100,
-                            //   step:10
-                            // },
                             valueSources: ['value'],
                             operators: [
                                 'greater',
@@ -825,6 +924,31 @@ export default (skin) => {
                                 'not_equal',
                                 'between',
                             ],
+                            fieldSettings: {
+                                min: 0,
+                                max: 999999999999999999,
+                            },
+                            mainWidgetProps: {
+                                valueLabel: 'Amount',
+                                validateValue: (val, fieldDef, flag, valueArr, operator) => {
+                                    if (val === undefined && flag) {
+                                        return "No value entered"
+                                    }
+                                    const regex =  /^\$?(?!0.00)(([0-9]{1,3},([0-9]{3},)*)[0-9]{3}|[0-9]{1,19})(\.[0-9]{0,3}[^-_.])?$/g;
+                                    const validRegex = regex.test(val);
+
+                                    if (valueArr && val !== undefined) {
+                                        if(valueArr[0] > valueArr[1] || valueArr[0] === valueArr[1]) {
+                                            return "Value 'from' must be less than 'till'"
+                                        }
+                                    } else if (!validRegex && val !== undefined) {
+                                        return  "Invalid format"
+                                    } else if (operator === 'less' && val <= 0 && val !== undefined ) {
+                                        return "Value must be greater than 0 "
+                                    }
+                                    return true;
+                                },
+                            },
                         },
                         currency: {
                             label: 'Currency',
@@ -856,7 +980,7 @@ export default (skin) => {
                             label: 'Period Range',
                             type: 'date',
                             valueSources: ['value'],
-                            operators: ['between'],
+                            operators: ['date_range'],
                         },
                     },
                 },
@@ -875,7 +999,7 @@ export default (skin) => {
                                 'less_or_equal',
                                 'equal',
                                 'not_equal',
-                                'between',
+                                'date_range',
                             ],
                         },
                         currency: {
@@ -906,7 +1030,7 @@ export default (skin) => {
                                 'less_or_equal',
                                 'equal',
                                 'not_equal',
-                                'between',
+                                'date_range',
                             ],
                         },
                         currency: {
@@ -972,7 +1096,7 @@ export default (skin) => {
                             label: 'Period Range',
                             type: 'date',
                             valueSources: ['value'],
-                            operators: ['between'],
+                            operators: ['date_range'],
                         },
                     },
                 },
@@ -1026,7 +1150,7 @@ export default (skin) => {
                             label: 'Period Range',
                             type: 'date',
                             valueSources: ['value'],
-                            operators: ['between'],
+                            operators: ['date_range'],
                         },
                     },
                 },
@@ -1080,7 +1204,7 @@ export default (skin) => {
                             label: 'Period Range',
                             type: 'date',
                             valueSources: ['value'],
-                            operators: ['between'],
+                            operators: ['date_range'],
                         },
                     },
                 },
@@ -1134,7 +1258,7 @@ export default (skin) => {
                             label: 'Period Range',
                             type: 'date',
                             valueSources: ['value'],
-                            operators: ['between'],
+                            operators: ['date_range'],
                         },
                     },
                 },
@@ -1155,6 +1279,31 @@ export default (skin) => {
                                 'not_equal',
                                 'between',
                             ],
+                            fieldSettings: {
+                                min: 0,
+                                max: 999999999999999999,
+                            },
+                            mainWidgetProps: {
+                                valueLabel: 'Amount',
+                                validateValue: (val, fieldDef, flag, valueArr, operator) => {
+                                    if (val === undefined && flag) {
+                                        return "No value entered"
+                                    }
+                                    const regex =  /^\$?(?!0.00)(([0-9]{1,3},([0-9]{3},)*)[0-9]{3}|[0-9]{1,19})(\.[0-9]{0,3}[^-_.])?$/g;
+                                    const validRegex = regex.test(val);
+
+                                    if (valueArr && val !== undefined) {
+                                        if(valueArr[0] > valueArr[1] || valueArr[0] === valueArr[1]) {
+                                            return "Value 'from' must be less than 'till'"
+                                        }
+                                    } else if (!validRegex && val !== undefined) {
+                                        return  "Invalid format"
+                                    } else if (operator === 'less' && val <= 0 && val !== undefined ) {
+                                        return "Value must be greater than 0 "
+                                    }
+                                    return true;
+                                },
+                            },
                         },
                         currency: {
                             label: 'Currency',
@@ -1186,7 +1335,7 @@ export default (skin) => {
                             label: 'Period Range',
                             type: 'date',
                             valueSources: ['value'],
-                            operators: ['between'],
+                            operators: ['date_range'],
                         },
                     },
                 },
@@ -1207,6 +1356,31 @@ export default (skin) => {
                                 'not_equal',
                                 'between',
                             ],
+                            fieldSettings: {
+                                min: 0,
+                                max: 999999999999999999,
+                            },
+                            mainWidgetProps: {
+                                valueLabel: 'Amount',
+                                validateValue: (val, fieldDef, flag, valueArr, operator) => {
+                                    if (val === undefined && flag) {
+                                        return "No value entered"
+                                    }
+                                    const regex =  /^\$?(?!0.00)(([0-9]{1,3},([0-9]{3},)*)[0-9]{3}|[0-9]{1,19})(\.[0-9]{0,3}[^-_.])?$/g;
+                                    const validRegex = regex.test(val);
+
+                                    if (valueArr && val !== undefined) {
+                                        if(valueArr[0] > valueArr[1] || valueArr[0] === valueArr[1]) {
+                                            return "Value 'from' must be less than 'till'"
+                                        }
+                                    } else if (!validRegex && val !== undefined) {
+                                        return  "Invalid format"
+                                    } else if (operator === 'less' && val <= 0 && val !== undefined ) {
+                                        return "Value must be greater than 0 "
+                                    }
+                                    return true;
+                                },
+                            },
                         },
                         currency: {
                             label: 'Currency',
@@ -1293,6 +1467,31 @@ export default (skin) => {
                                 'not_equal',
                                 'between',
                             ],
+                            fieldSettings: {
+                                min: 0,
+                                max: 999999999999999999,
+                            },
+                            mainWidgetProps: {
+                                valueLabel: 'Amount',
+                                validateValue: (val, fieldDef, flag, valueArr, operator) => {
+                                    if (val === undefined && flag) {
+                                        return "No value entered"
+                                    }
+                                    const regex =  /^\$?(?!0.00)(([0-9]{1,3},([0-9]{3},)*)[0-9]{3}|[0-9]{1,19})(\.[0-9]{0,3}[^-_.])?$/g;
+                                    const validRegex = regex.test(val);
+
+                                    if (valueArr && val !== undefined) {
+                                        if(valueArr[0] > valueArr[1] || valueArr[0] === valueArr[1]) {
+                                            return "Value 'from' must be less than 'till'"
+                                        }
+                                    } else if (!validRegex && val !== undefined) {
+                                        return  "Invalid format"
+                                    } else if (operator === 'less' && val <= 0 && val !== undefined ) {
+                                        return "Value must be greater than 0 "
+                                    }
+                                    return true;
+                                },
+                            },
                         },
                         currency: {
                             label: 'Currency',
@@ -1325,7 +1524,7 @@ export default (skin) => {
                             label: 'Period Range',
                             type: 'date',
                             valueSources: ['value'],
-                            operators: ['between'],
+                            operators: ['date_range'],
                         },
                     },
                 },
@@ -1346,6 +1545,31 @@ export default (skin) => {
                                 'not_equal',
                                 'between',
                             ],
+                            fieldSettings: {
+                                min: 0,
+                                max: 999999999999999999,
+                            },
+                            mainWidgetProps: {
+                                valueLabel: 'Amount',
+                                validateValue: (val, fieldDef, flag, valueArr, operator) => {
+                                    if (val === undefined && flag) {
+                                        return "No value entered"
+                                    }
+                                    const regex =  /^\$?(?!0.00)(([0-9]{1,3},([0-9]{3},)*)[0-9]{3}|[0-9]{1,19})(\.[0-9]{0,3}[^-_.])?$/g;
+                                    const validRegex = regex.test(val);
+
+                                    if (valueArr && val !== undefined) {
+                                        if(valueArr[0] > valueArr[1] || valueArr[0] === valueArr[1]) {
+                                            return "Value 'from' must be less than 'till'"
+                                        }
+                                    } else if (!validRegex && val !== undefined) {
+                                        return  "Invalid format"
+                                    } else if (operator === 'less' && val <= 0 && val !== undefined ) {
+                                        return "Value must be greater than 0 "
+                                    }
+                                    return true;
+                                },
+                            },
                         },
                         currency: {
                             label: 'Currency',
@@ -1378,7 +1602,7 @@ export default (skin) => {
                             label: 'Period Range',
                             type: 'date',
                             valueSources: ['value'],
-                            operators: ['between'],
+                            operators: ['date_range'],
                         },
                     },
                 },
@@ -1397,7 +1621,7 @@ export default (skin) => {
                                 'less_or_equal',
                                 'equal',
                                 'not_equal',
-                                'between',
+                                'date_range',
                             ],
                         },
                         currency: {
@@ -1428,7 +1652,7 @@ export default (skin) => {
                                 'less_or_equal',
                                 'equal',
                                 'not_equal',
-                                'between',
+                                'date_range',
                             ],
                         },
                         currency: {
@@ -1495,7 +1719,7 @@ export default (skin) => {
                             label: 'Period Range',
                             type: 'date',
                             valueSources: ['value'],
-                            operators: ['between'],
+                            operators: ['date_range'],
                         },
                     },
                 },
@@ -1550,7 +1774,7 @@ export default (skin) => {
                             label: 'Period Range',
                             type: 'date',
                             valueSources: ['value'],
-                            operators: ['between'],
+                            operators: ['date_range'],
                         },
                     },
                 },
@@ -1605,7 +1829,7 @@ export default (skin) => {
                             label: 'Period Range',
                             type: 'date',
                             valueSources: ['value'],
-                            operators: ['between'],
+                            operators: ['date_range'],
                         },
                     },
                 },
@@ -1681,6 +1905,31 @@ export default (skin) => {
                                 'not_equal',
                                 'between',
                             ],
+                            fieldSettings: {
+                                min: 0,
+                                max: 999999999999999999,
+                            },
+                            mainWidgetProps: {
+                                valueLabel: 'Amount',
+                                validateValue: (val, fieldDef, flag, valueArr, operator) => {
+                                    if (val === undefined && flag) {
+                                        return "No value entered"
+                                    }
+                                    const regex =  /^\$?(?!0.00)(([0-9]{1,3},([0-9]{3},)*)[0-9]{3}|[0-9]{1,19})(\.[0-9]{0,3}[^-_.])?$/g;
+                                    const validRegex = regex.test(val);
+
+                                    if (valueArr && val !== undefined) {
+                                        if(valueArr[0] > valueArr[1] || valueArr[0] === valueArr[1]) {
+                                            return "Value 'from' must be less than 'till'"
+                                        }
+                                    } else if (!validRegex && val !== undefined) {
+                                        return  "Invalid format"
+                                    } else if (operator === 'less' && val <= 0 && val !== undefined ) {
+                                        return "Value must be greater than 0 "
+                                    }
+                                    return true;
+                                },
+                            },
                         },
                         currency: {
                             label: 'Currency',
@@ -1746,7 +1995,7 @@ export default (skin) => {
                             label: 'Period Range',
                             type: 'date',
                             valueSources: ['value'],
-                            operators: ['between'],
+                            operators: ['date_range'],
                         },
                     },
                 },
@@ -1767,6 +2016,31 @@ export default (skin) => {
                                 'not_equal',
                                 'between',
                             ],
+                            fieldSettings: {
+                                min: 0,
+                                max: 999999999999999999,
+                            },
+                            mainWidgetProps: {
+                                valueLabel: 'Withdrawal average',
+                                validateValue: (val, fieldDef, flag, valueArr, operator) => {
+                                    if (val === undefined && flag) {
+                                        return "No value entered"
+                                    }
+                                    const regex =  /^\$?(?!0.00)(([0-9]{1,3},([0-9]{3},)*)[0-9]{3}|[0-9]{1,19})(\.[0-9]{0,3}[^-_.])?$/g;
+                                    const validRegex = regex.test(val);
+
+                                    if (valueArr && val !== undefined) {
+                                        if(valueArr[0] > valueArr[1] || valueArr[0] === valueArr[1]) {
+                                            return "Value 'from' must be less than 'till'"
+                                        }
+                                    } else if (!validRegex && val !== undefined) {
+                                        return  "Invalid format"
+                                    } else if (operator === 'less' && val <= 0 && val !== undefined ) {
+                                        return "Value must be greater than 0 "
+                                    }
+                                    return true;
+                                },
+                            },
                         },
                         currency: {
                             label: 'Currency',
@@ -1832,7 +2106,7 @@ export default (skin) => {
                             label: 'Period Range',
                             type: 'date',
                             valueSources: ['value'],
-                            operators: ['between'],
+                            operators: ['date_range'],
                         },
                     },
                 },
@@ -1853,6 +2127,31 @@ export default (skin) => {
                                 'not_equal',
                                 'between',
                             ],
+                            fieldSettings: {
+                                min: 0,
+                                max: 999999999999999999,
+                            },
+                            mainWidgetProps: {
+                                valueLabel: 'Account value',
+                                validateValue: (val, fieldDef, flag, valueArr, operator) => {
+                                    if (val === undefined && flag) {
+                                        return "No value entered"
+                                    }
+                                    const regex =  /^\$?(?!0.00)(([0-9]{1,3},([0-9]{3},)*)[0-9]{3}|[0-9]{1,19})(\.[0-9]{0,3}[^-_.])?$/g;
+                                    const validRegex = regex.test(val);
+
+                                    if (valueArr && val !== undefined) {
+                                        if(valueArr[0] > valueArr[1] || valueArr[0] === valueArr[1]) {
+                                            return "Value 'from' must be less than 'till'"
+                                        }
+                                    } else if (!validRegex && val !== undefined) {
+                                        return  "Invalid format"
+                                    } else if (operator === 'less' && val <= 0 && val !== undefined ) {
+                                        return "Value must be greater than 0 "
+                                    }
+                                    return true;
+                                },
+                            },
                         },
                         currency: {
                             label: 'Currency',
@@ -1885,7 +2184,7 @@ export default (skin) => {
                             label: 'Period Range',
                             type: 'date',
                             valueSources: ['value'],
-                            operators: ['between'],
+                            operators: ['date_range'],
                         },
                     },
                 },
@@ -1906,6 +2205,31 @@ export default (skin) => {
                                 'not_equal',
                                 'between',
                             ],
+                            fieldSettings: {
+                                min: 0,
+                                max: 999999999999999999,
+                            },
+                            mainWidgetProps: {
+                                valueLabel: 'Account lifetime value',
+                                validateValue: (val, fieldDef, flag, valueArr, operator) => {
+                                    if (val === undefined && flag) {
+                                        return "No value entered"
+                                    }
+                                    const regex =  /^\$?(?!0.00)(([0-9]{1,3},([0-9]{3},)*)[0-9]{3}|[0-9]{1,19})(\.[0-9]{0,3}[^-_.])?$/g;
+                                    const validRegex = regex.test(val);
+
+                                    if (valueArr && val !== undefined) {
+                                        if(valueArr[0] > valueArr[1] || valueArr[0] === valueArr[1]) {
+                                            return "Value 'from' must be less than 'till'"
+                                        }
+                                    } else if (!validRegex && val !== undefined) {
+                                        return  "Invalid format"
+                                    } else if (operator === 'less' && val <= 0 && val !== undefined ) {
+                                        return "Value must be greater than 0 "
+                                    }
+                                    return true;
+                                },
+                            },
                         },
                         currency: {
                             label: 'Currency',
@@ -1938,7 +2262,7 @@ export default (skin) => {
                             label: 'Period Range',
                             type: 'date',
                             valueSources: ['value'],
-                            operators: ['between'],
+                            operators: ['date_range'],
                         },
                     },
                 },
@@ -1960,6 +2284,31 @@ export default (skin) => {
                                 'not_equal',
                                 'between',
                             ],
+                            fieldSettings: {
+                                min: 0,
+                                max: 999999999999999999,
+                            },
+                            mainWidgetProps: {
+                                valueLabel: 'Revenue',
+                                validateValue: (val, fieldDef, flag, valueArr, operator) => {
+                                    if (val === undefined && flag) {
+                                        return "No value entered"
+                                    }
+                                    const regex =  /^\$?(?!0.00)(([0-9]{1,3},([0-9]{3},)*)[0-9]{3}|[0-9]{1,19})(\.[0-9]{0,3}[^-_.])?$/g;
+                                    const validRegex = regex.test(val);
+
+                                    if (valueArr && val !== undefined) {
+                                        if(valueArr[0] > valueArr[1] || valueArr[0] === valueArr[1]) {
+                                            return "Value 'from' must be less than 'till'"
+                                        }
+                                    } else if (!validRegex && val !== undefined) {
+                                        return  "Invalid format"
+                                    } else if (operator === 'less' && val <= 0 && val !== undefined ) {
+                                        return "Value must be greater than 0 "
+                                    }
+                                    return true;
+                                },
+                            },
                         },
                         currency: {
                             label: 'Currency',
@@ -1992,7 +2341,7 @@ export default (skin) => {
                             label: 'Period Range',
                             type: 'date',
                             valueSources: ['value'],
-                            operators: ['between'],
+                            operators: ['date_range '],
                         },
                     },
                 },
@@ -2013,6 +2362,31 @@ export default (skin) => {
                                 'not_equal',
                                 'between',
                             ],
+                            fieldSettings: {
+                                min: 0,
+                                max: 999999999999999999,
+                            },
+                            mainWidgetProps: {
+                                valueLabel: 'Hold',
+                                validateValue: (val, fieldDef, flag, valueArr, operator) => {
+                                    if (val === undefined && flag) {
+                                        return "No value entered"
+                                    }
+                                    const regex =  /^\$?(?!0.00)(([0-9]{1,3},([0-9]{3},)*)[0-9]{3}|[0-9]{1,19})(\.[0-9]{0,3}[^-_.])?$/g;
+                                    const validRegex = regex.test(val);
+
+                                    if (valueArr && val !== undefined) {
+                                        if(valueArr[0] > valueArr[1] || valueArr[0] === valueArr[1]) {
+                                            return "Value 'from' must be less than 'till'"
+                                        }
+                                    } else if (!validRegex && val !== undefined) {
+                                        return  "Invalid format"
+                                    } else if (operator === 'less' && val <= 0 && val !== undefined ) {
+                                        return "Value must be greater than 0 "
+                                    }
+                                    return true;
+                                },
+                            },
                         },
                         currency: {
                             label: 'Currency',
@@ -2073,6 +2447,31 @@ export default (skin) => {
                                     'not_equal',
                                     'between',
                                 ],
+                                fieldSettings: {
+                                    min: 0,
+                                    max: 999999999999999999,
+                                },
+                                mainWidgetProps: {
+                                    valueLabel: 'GGR',
+                                    validateValue: (val, fieldDef, flag, valueArr, operator) => {
+                                        if (val === undefined && flag) {
+                                            return "No value entered"
+                                        }
+                                        const regex =  /^\$?(?!0.00)(([0-9]{1,3},([0-9]{3},)*)[0-9]{3}|[0-9]{1,19})(\.[0-9]{0,3}[^-_.])?$/g;
+                                        const validRegex = regex.test(val);
+
+                                        if (valueArr && val !== undefined) {
+                                            if(valueArr[0] > valueArr[1] || valueArr[0] === valueArr[1]) {
+                                                return "Value 'from' must be less than 'till'"
+                                            }
+                                        } else if (!validRegex && val !== undefined) {
+                                            return  "Invalid format"
+                                        } else if (operator === 'less' && val <= 0 && val !== undefined ) {
+                                            return "Value must be greater than 0 "
+                                        }
+                                        return true;
+                                    },
+                                },
                             },
                             currency: {
                                 label: 'Currency',
@@ -2105,7 +2504,7 @@ export default (skin) => {
                                 label: 'Period Range',
                                 type: 'date',
                                 valueSources: ['value'],
-                                operators: ['between'],
+                                operators: ['date_range'],
                             },
                         },
                     },
@@ -2126,6 +2525,32 @@ export default (skin) => {
                                     'not_equal',
                                     'between',
                                 ],
+                                fieldSettings: {
+                                    min: 0,
+                                    max: 999999999999999999,
+                                },
+                                mainWidgetProps: {
+                                    valueLabel: 'RTP',
+                                    validateValue: (val, fieldDef, flag, valueArr, operator) => {
+                                        if (val === undefined && flag) {
+                                            return "No value entered"
+                                        }
+                                        const regex =  /^\$?(?!0.00)(([0-9]{1,3},([0-9]{3},)*)[0-9]{3}|[0-9]{1,19})(\.[0-9]{0,3}[^-_.])?$/g;
+                                        const validRegex = regex.test(val);
+
+                                        if (valueArr && val !== undefined) {
+                                            if(valueArr[0] > valueArr[1] || valueArr[0] === valueArr[1]) {
+                                                return "Value 'from' must be less than 'till'"
+                                            }
+                                        } else if (!validRegex && val !== undefined) {
+                                            return  "Invalid format"
+                                        } else if (operator === 'less' && val <= 0 && val !== undefined ) {
+                                            return "Value must be greater than 0 "
+                                        }
+                                        return true;
+                                    },
+                                },
+
                             },
                             currency: {
                                 label: 'Currency',
@@ -2158,7 +2583,7 @@ export default (skin) => {
                                 label: 'Period Range',
                                 type: 'date',
                                 valueSources: ['value'],
-                                operators: ['between'],
+                                operators: ['date_range'],
                             },
                         },
                     },
@@ -2180,6 +2605,31 @@ export default (skin) => {
                                     'not_equal',
                                     'between',
                                 ],
+                                fieldSettings: {
+                                    min: 0,
+                                    max: 999999999999999999,
+                                },
+                                mainWidgetProps: {
+                                    valueLabel: 'Bets amount',
+                                    validateValue: (val, fieldDef, flag, valueArr, operator) => {
+                                        if (val === undefined && flag) {
+                                            return "No value entered"
+                                        }
+                                        const regex =  /^\$?(?!0.00)(([0-9]{1,3},([0-9]{3},)*)[0-9]{3}|[0-9]{1,19})(\.[0-9]{0,3}[^-_.])?$/g;
+                                        const validRegex = regex.test(val);
+
+                                        if (valueArr && val !== undefined) {
+                                            if(valueArr[0] > valueArr[1] || valueArr[0] === valueArr[1]) {
+                                                return "Value 'from' must be less than 'till'"
+                                            }
+                                        } else if (!validRegex && val !== undefined) {
+                                            return  "Invalid format"
+                                        } else if (operator === 'less' && val <= 0 && val !== undefined ) {
+                                            return "Value must be greater than 0 "
+                                        }
+                                        return true;
+                                    },
+                                },
                             },
                             currency: {
                                 label: 'Currency',
@@ -2245,7 +2695,7 @@ export default (skin) => {
                                 label: 'Period Range',
                                 type: 'date',
                                 valueSources: ['value'],
-                                operators: ['between'],
+                                operators: ['date_range'],
                             },
                         },
                     },
@@ -2266,6 +2716,31 @@ export default (skin) => {
                                     'not_equal',
                                     'between',
                                 ],
+                                fieldSettings: {
+                                    min: 0,
+                                    max: 999999999999999999,
+                                },
+                                mainWidgetProps: {
+                                    valueLabel: 'Bets sum spins',
+                                    validateValue: (val, fieldDef, flag, valueArr, operator) => {
+                                        if (val === undefined && flag) {
+                                            return "No value entered"
+                                        }
+                                        const regex =  /^\$?(?!0.00)(([0-9]{1,3},([0-9]{3},)*)[0-9]{3}|[0-9]{1,19})(\.[0-9]{0,3}[^-_.])?$/g;
+                                        const validRegex = regex.test(val);
+
+                                        if (valueArr && val !== undefined) {
+                                            if(valueArr[0] > valueArr[1] || valueArr[0] === valueArr[1]) {
+                                                return "Value 'from' must be less than 'till'"
+                                            }
+                                        } else if (!validRegex && val !== undefined) {
+                                            return  "Invalid format"
+                                        } else if (operator === 'less' && val <= 0 && val !== undefined ) {
+                                            return "Value must be greater than 0 "
+                                        }
+                                        return true;
+                                    },
+                                },
                             },
                             currency: {
                                 label: 'Currency',
@@ -2331,7 +2806,7 @@ export default (skin) => {
                                 label: 'Period Range',
                                 type: 'date',
                                 valueSources: ['value'],
-                                operators: ['between'],
+                                operators: ['date_range'],
                             },
                         },
                     },
@@ -2352,6 +2827,31 @@ export default (skin) => {
                                     'not_equal',
                                     'between',
                                 ],
+                                fieldSettings: {
+                                    min: 0,
+                                    max: 999999999999999999,
+                                },
+                                mainWidgetProps: {
+                                    valueLabel: 'Bets average by spin',
+                                    validateValue: (val, fieldDef, flag, valueArr, operator) => {
+                                        if (val === undefined && flag) {
+                                            return "No value entered"
+                                        }
+                                        const regex =  /^\$?(?!0.00)(([0-9]{1,3},([0-9]{3},)*)[0-9]{3}|[0-9]{1,19})(\.[0-9]{0,3}[^-_.])?$/g;
+                                        const validRegex = regex.test(val);
+
+                                        if (valueArr && val !== undefined) {
+                                            if(valueArr[0] > valueArr[1] || valueArr[0] === valueArr[1]) {
+                                                return "Value 'from' must be less than 'till'"
+                                            }
+                                        } else if (!validRegex && val !== undefined) {
+                                            return  "Invalid format"
+                                        } else if (operator === 'less' && val <= 0 && val !== undefined ) {
+                                            return "Value must be greater than 0 "
+                                        }
+                                        return true;
+                                    },
+                                },
                             },
                             currency: {
                                 label: 'Currency',
@@ -2417,7 +2917,7 @@ export default (skin) => {
                                 label: 'Period Range',
                                 type: 'date',
                                 valueSources: ['value'],
-                                operators: ['between'],
+                                operators: ['date_range'],
                             },
                         },
                     },
@@ -2438,6 +2938,31 @@ export default (skin) => {
                                     'not_equal',
                                     'between',
                                 ],
+                                fieldSettings: {
+                                    min: 0,
+                                    max: 999999999999999999,
+                                },
+                                mainWidgetProps: {
+                                    valueLabel: 'Bets average',
+                                    validateValue: (val, fieldDef, flag, valueArr, operator) => {
+                                        if (val === undefined && flag) {
+                                            return "No value entered"
+                                        }
+                                        const regex =  /^\$?(?!0.00)(([0-9]{1,3},([0-9]{3},)*)[0-9]{3}|[0-9]{1,19})(\.[0-9]{0,3}[^-_.])?$/g;
+                                        const validRegex = regex.test(val);
+
+                                        if (valueArr && val !== undefined) {
+                                            if(valueArr[0] > valueArr[1] || valueArr[0] === valueArr[1]) {
+                                                return "Value 'from' must be less than 'till'"
+                                            }
+                                        } else if (!validRegex && val !== undefined) {
+                                            return  "Invalid format"
+                                        } else if (operator === 'less' && val <= 0 && val !== undefined ) {
+                                            return "Value must be greater than 0 "
+                                        }
+                                        return true;
+                                    },
+                                },
                             },
                             currency: {
                                 label: 'Currency',
@@ -2503,7 +3028,7 @@ export default (skin) => {
                                 label: 'Period Range',
                                 type: 'date',
                                 valueSources: ['value'],
-                                operators: ['between'],
+                                operators: ['date_range'],
                             },
                         },
                     },
@@ -2524,6 +3049,31 @@ export default (skin) => {
                                     'not_equal',
                                     'between',
                                 ],
+                                fieldSettings: {
+                                    min: 0,
+                                    max: 999999999999999999,
+                                },
+                                mainWidgetProps: {
+                                    valueLabel: 'Bets count',
+                                    validateValue: (val, fieldDef, flag, valueArr, operator) => {
+                                        if (val === undefined && flag) {
+                                            return "No value entered"
+                                        }
+                                        const regex =  /^\$?(?!0.00)(([0-9]{1,3},([0-9]{3},)*)[0-9]{3}|[0-9]{1,19})(\.[0-9]{0,3}[^-_.])?$/g;
+                                        const validRegex = regex.test(val);
+
+                                        if (valueArr && val !== undefined) {
+                                            if(valueArr[0] > valueArr[1] || valueArr[0] === valueArr[1]) {
+                                                return "Value 'from' must be less than 'till'"
+                                            }
+                                        } else if (!validRegex && val !== undefined) {
+                                            return  "Invalid format"
+                                        } else if (operator === 'less' && val <= 0 && val !== undefined ) {
+                                            return "Value must be greater than 0 "
+                                        }
+                                        return true;
+                                    },
+                                },
                             },
                             currency: {
                                 label: 'Currency',
@@ -2589,7 +3139,7 @@ export default (skin) => {
                                 label: 'Period Range',
                                 type: 'date',
                                 valueSources: ['value'],
-                                operators: ['between'],
+                                operators: ['date_range'],
                             },
                         },
                     },
@@ -2610,6 +3160,31 @@ export default (skin) => {
                                     'not_equal',
                                     'between',
                                 ],
+                                fieldSettings: {
+                                    min: 0,
+                                    max: 999999999999999999,
+                                },
+                                mainWidgetProps: {
+                                    valueLabel: 'Bets count game',
+                                    validateValue: (val, fieldDef, flag, valueArr, operator) => {
+                                        if (val === undefined && flag) {
+                                            return "No value entered"
+                                        }
+                                        const regex =  /^\$?(?!0.00)(([0-9]{1,3},([0-9]{3},)*)[0-9]{3}|[0-9]{1,19})(\.[0-9]{0,3}[^-_.])?$/g;
+                                        const validRegex = regex.test(val);
+
+                                        if (valueArr && val !== undefined) {
+                                            if(valueArr[0] > valueArr[1] || valueArr[0] === valueArr[1]) {
+                                                return "Value 'from' must be less than 'till'"
+                                            }
+                                        } else if (!validRegex && val !== undefined) {
+                                            return  "Invalid format"
+                                        } else if (operator === 'less' && val <= 0 && val !== undefined ) {
+                                            return "Value must be greater than 0 "
+                                        }
+                                        return true;
+                                    },
+                                },
                             },
                             currency: {
                                 label: 'Currency',
@@ -2675,7 +3250,7 @@ export default (skin) => {
                                 label: 'Period Range',
                                 type: 'date',
                                 valueSources: ['value'],
-                                operators: ['between'],
+                                operators: ['date_range'],
                             },
                         },
                     },
@@ -2696,6 +3271,31 @@ export default (skin) => {
                                     'not_equal',
                                     'between',
                                 ],
+                                fieldSettings: {
+                                    min: 0,
+                                    max: 999999999999999999,
+                                },
+                                mainWidgetProps: {
+                                    valueLabel: 'Bets count game type',
+                                    validateValue: (val, fieldDef, flag, valueArr, operator) => {
+                                        if (val === undefined && flag) {
+                                            return "No value entered"
+                                        }
+                                        const regex =  /^\$?(?!0.00)(([0-9]{1,3},([0-9]{3},)*)[0-9]{3}|[0-9]{1,19})(\.[0-9]{0,3}[^-_.])?$/g;
+                                        const validRegex = regex.test(val);
+
+                                        if (valueArr && val !== undefined) {
+                                            if(valueArr[0] > valueArr[1] || valueArr[0] === valueArr[1]) {
+                                                return "Value 'from' must be less than 'till'"
+                                            }
+                                        } else if (!validRegex && val !== undefined) {
+                                            return  "Invalid format"
+                                        } else if (operator === 'less' && val <= 0 && val !== undefined ) {
+                                            return "Value must be greater than 0 "
+                                        }
+                                        return true;
+                                    },
+                                },
                             },
                             currency: {
                                 label: 'Currency',
@@ -2761,7 +3361,7 @@ export default (skin) => {
                                 label: 'Period Range',
                                 type: 'date',
                                 valueSources: ['value'],
-                                operators: ['between'],
+                                operators: ['date_range'],
                             },
                         },
                     },
@@ -2782,6 +3382,31 @@ export default (skin) => {
                                     'not_equal',
                                     'between',
                                 ],
+                                fieldSettings: {
+                                    min: 0,
+                                    max: 999999999999999999,
+                                },
+                                mainWidgetProps: {
+                                    valueLabel: 'Bets count provider',
+                                    validateValue: (val, fieldDef, flag, valueArr, operator) => {
+                                        if (val === undefined && flag) {
+                                            return "No value entered"
+                                        }
+                                        const regex =  /^\$?(?!0.00)(([0-9]{1,3},([0-9]{3},)*)[0-9]{3}|[0-9]{1,19})(\.[0-9]{0,3}[^-_.])?$/g;
+                                        const validRegex = regex.test(val);
+
+                                        if (valueArr && val !== undefined) {
+                                            if(valueArr[0] > valueArr[1] || valueArr[0] === valueArr[1]) {
+                                                return "Value 'from' must be less than 'till'"
+                                            }
+                                        } else if (!validRegex && val !== undefined) {
+                                            return  "Invalid format"
+                                        } else if (operator === 'less' && val <= 0 && val !== undefined ) {
+                                            return "Value must be greater than 0 "
+                                        }
+                                        return true;
+                                    },
+                                },
                             },
                             currency: {
                                 label: 'Currency',
@@ -2847,7 +3472,7 @@ export default (skin) => {
                                 label: 'Period Range',
                                 type: 'date',
                                 valueSources: ['value'],
-                                operators: ['between'],
+                                operators: ['date_range'],
                             },
                         },
                     },
@@ -2868,6 +3493,31 @@ export default (skin) => {
                                     'not_equal',
                                     'between',
                                 ],
+                                fieldSettings: {
+                                    min: 0,
+                                    max: 999999999999999999,
+                                },
+                                mainWidgetProps: {
+                                    valueLabel: 'Winnings amount',
+                                    validateValue: (val, fieldDef, flag, valueArr, operator) => {
+                                        if (val === undefined && flag) {
+                                            return "No value entered"
+                                        }
+                                        const regex =  /^\$?(?!0.00)(([0-9]{1,3},([0-9]{3},)*)[0-9]{3}|[0-9]{1,19})(\.[0-9]{0,3}[^-_.])?$/g;
+                                        const validRegex = regex.test(val);
+
+                                        if (valueArr && val !== undefined) {
+                                            if(valueArr[0] > valueArr[1] || valueArr[0] === valueArr[1]) {
+                                                return "Value 'from' must be less than 'till'"
+                                            }
+                                        } else if (!validRegex && val !== undefined) {
+                                            return  "Invalid format"
+                                        } else if (operator === 'less' && val <= 0 && val !== undefined ) {
+                                            return "Value must be greater than 0 "
+                                        }
+                                        return true;
+                                    },
+                                },
                             },
                             currency: {
                                 label: 'Currency',
@@ -2933,12 +3583,12 @@ export default (skin) => {
                                 label: 'Period Range',
                                 type: 'date',
                                 valueSources: ['value'],
-                                operators: ['between'],
+                                operators: ['date_range'],
                             },
                         },
                     },
                     winningsCount: {
-                        label: 'Winnings amount',
+                        label: 'Winnings count',
                         type: '!group',
                         subfields: {
                             value: {
@@ -2954,6 +3604,31 @@ export default (skin) => {
                                     'not_equal',
                                     'between',
                                 ],
+                                fieldSettings: {
+                                    min: 0,
+                                    max: 999999999999999999,
+                                },
+                                mainWidgetProps: {
+                                    valueLabel: 'Winnings count',
+                                    validateValue: (val, fieldDef, flag, valueArr, operator) => {
+                                        if (val === undefined && flag) {
+                                            return "No value entered"
+                                        }
+                                        const regex =  /^\$?(?!0.00)(([0-9]{1,3},([0-9]{3},)*)[0-9]{3}|[0-9]{1,19})(\.[0-9]{0,3}[^-_.])?$/g;
+                                        const validRegex = regex.test(val);
+
+                                        if (valueArr && val !== undefined) {
+                                            if(valueArr[0] > valueArr[1] || valueArr[0] === valueArr[1]) {
+                                                return "Value 'from' must be less than 'till'"
+                                            }
+                                        } else if (!validRegex && val !== undefined) {
+                                            return  "Invalid format"
+                                        } else if (operator === 'less' && val <= 0 && val !== undefined ) {
+                                            return "Value must be greater than 0 "
+                                        }
+                                        return true;
+                                    },
+                                },
                             },
                             currency: {
                                 label: 'Currency',
@@ -3019,7 +3694,7 @@ export default (skin) => {
                                 label: 'Period Range',
                                 type: 'date',
                                 valueSources: ['value'],
-                                operators: ['between'],
+                                operators: ['date_range'],
                             },
                         },
                     },
@@ -3040,6 +3715,31 @@ export default (skin) => {
                                     'not_equal',
                                     'between',
                                 ],
+                                fieldSettings: {
+                                    min: 0,
+                                    max: 999999999999999999,
+                                },
+                                mainWidgetProps: {
+                                    valueLabel: 'Winnings average',
+                                    validateValue: (val, fieldDef, flag, valueArr, operator) => {
+                                        if (val === undefined && flag) {
+                                            return "No value entered"
+                                        }
+                                        const regex =  /^\$?(?!0.00)(([0-9]{1,3},([0-9]{3},)*)[0-9]{3}|[0-9]{1,19})(\.[0-9]{0,3}[^-_.])?$/g;
+                                        const validRegex = regex.test(val);
+
+                                        if (valueArr && val !== undefined) {
+                                            if(valueArr[0] > valueArr[1] || valueArr[0] === valueArr[1]) {
+                                                return "Value 'from' must be less than 'till'"
+                                            }
+                                        } else if (!validRegex && val !== undefined) {
+                                            return  "Invalid format"
+                                        } else if (operator === 'less' && val <= 0 && val !== undefined ) {
+                                            return "Value must be greater than 0 "
+                                        }
+                                        return true;
+                                    },
+                                },
                             },
                             currency: {
                                 label: 'Currency',
@@ -3105,7 +3805,7 @@ export default (skin) => {
                                 label: 'Period Range',
                                 type: 'date',
                                 valueSources: ['value'],
-                                operators: ['between'],
+                                operators: ['date_range'],
                             },
                         },
                     },
@@ -3124,10 +3824,6 @@ export default (skin) => {
                                 label: 'Amount',
                                 type: 'number',
                                 valueSources: ['value'],
-                                fieldSettings: {
-                                    min: 0,
-                                    max: 999999999999999999,
-                                },
                                 operators: [
                                     'greater',
                                     'greater_or_equal',
@@ -3137,6 +3833,10 @@ export default (skin) => {
                                     'not_equal',
                                     'between',
                                 ],
+                                fieldSettings: {
+                                    min: 0,
+                                    max: 999999999999999999,
+                                },
                                 mainWidgetProps: {
                                     valueLabel: 'Balance Amount',
                                     validateValue: (val, fieldDef, flag, valueArr, operator) => {
@@ -3189,6 +3889,31 @@ export default (skin) => {
                                     'not_equal',
                                     'between',
                                 ],
+                                fieldSettings: {
+                                    min: 0,
+                                    max: 999999999999999999,
+                                },
+                                mainWidgetProps: {
+                                    valueLabel: 'Balance Amount',
+                                    validateValue: (val, fieldDef, flag, valueArr, operator) => {
+                                        if (val === undefined && flag) {
+                                            return "No value entered"
+                                        }
+                                        const regex =  /^\$?(?!0.00)(([0-9]{1,3},([0-9]{3},)*)[0-9]{3}|[0-9]{1,19})(\.[0-9]{0,3}[^-_.])?$/g;
+                                        const validRegex = regex.test(val);
+
+                                        if (valueArr && val !== undefined) {
+                                            if(valueArr[0] > valueArr[1] || valueArr[0] === valueArr[1]) {
+                                                return "Value 'from' must be less than 'till'"
+                                            }
+                                        } else if (!validRegex && val !== undefined) {
+                                            return  "Invalid format"
+                                        } else if (operator === 'less' && val <= 0 && val !== undefined ) {
+                                            return "Value must be greater than 0 "
+                                        }
+                                        return true;
+                                    },
+                                },
                             },
                             currency: {
                                 label: 'Currency',
