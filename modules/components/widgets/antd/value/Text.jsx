@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Input, Col } from 'antd';
+import ReactInputMask from 'react-input-mask';
 
 export default class TextWidget extends PureComponent {
   static propTypes = {
@@ -20,7 +21,11 @@ export default class TextWidget extends PureComponent {
   }
 
   validateOnBlur() {
-    this.setValue(this.value, true);
+    if (this.value !== undefined) {
+      this.setValue(this.value.trim(), true);
+    } else {
+      this.setValue(this.value.trim(), true);
+    }
   }
   render() {
     const {config, placeholder, customProps, value, readonly, mask} = this.props;

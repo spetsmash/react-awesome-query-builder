@@ -104,9 +104,6 @@ export default (skin) => {
         // examples of  overriding
         text: {
             ...InitialConfig.widgets.text,
-            validateValue: (val, fieldDef) => {
-                return (val.length < 10);
-            },
         },
         slider: {
             ...InitialConfig.widgets.slider,
