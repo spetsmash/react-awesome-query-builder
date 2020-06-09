@@ -40,6 +40,30 @@ export const getItemByPath = (tree, path) => {
     return res;
 };
 
+export const getTreeBadFields = (tree) => {
+    let badFields = [];
+
+    function _processNode (item, path, lev) {
+        const id = item.get('id');
+        const children = item.get('children1');
+        const errorMessage = item.getIn(['properties', 'errorMessage']);
+        const field = item.getIn(['properties', 'field']);
+        if (errorMessage && errorMessage.length > 0) {
+            badFields.push(field);
+        }
+        if (children) {
+            children.map((child, _childId) => {
+                _processNode(child, path.concat(id), lev + 1);
+            });
+        }
+    };
+
+    if (tree)
+        _processNode(tree, [], 0);
+
+    return Array.from(new Set(badFields));
+};
+
 
 /**
  * Remove `path` in every item

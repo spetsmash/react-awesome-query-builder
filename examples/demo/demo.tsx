@@ -10,7 +10,7 @@ import loadedInitValue from './init_value';
 import loadedInitLogic from './init_logic';
 
 const stringify = JSON.stringify;
-const {queryBuilderFormat, jsonLogicFormat, queryString, mongodbFormat, sqlFormat, getTree, checkTree, loadTree, uuid, loadFromJsonLogic} = Utils;
+const {queryBuilderFormat, jsonLogicFormat, queryString, mongodbFormat, sqlFormat, getTree, checkTree, loadTree, uuid, loadFromJsonLogic, isValidTree} = Utils;
 const preStyle = { backgroundColor: 'darkgrey', margin: '10px', padding: '10px' };
 const preErrorStyle = { backgroundColor: 'lightpink', margin: '10px', padding: '10px' };
 
@@ -103,7 +103,7 @@ export default class DemoQueryBuilder extends Component<{}, DemoQueryBuilderStat
 
     clearValue = () => {
       this.setState({
-        tree: loadTree(emptyInitValue), 
+        tree: loadTree(emptyInitValue),
       });
     };
 
@@ -128,6 +128,9 @@ export default class DemoQueryBuilder extends Component<{}, DemoQueryBuilderStat
 
     renderResult = ({tree: immutableTree, config} : {tree: ImmutableTree, config: Config}) => {
       const {logic, data, errors} = jsonLogicFormat(immutableTree, config);
+      const isValid = isValidTree(immutableTree);
+      console.log(isValid);
+
       return (
       <div>
         <br />
