@@ -20,6 +20,7 @@ export default class FieldSelect extends PureComponent {
       selectedFullLabel: PropTypes.string,
       selectedOpts: PropTypes.object,
       readonly: PropTypes.bool,
+      childrenSelected: PropTypes.array,
       //actions
       setField: PropTypes.func.isRequired,
   };
@@ -40,7 +41,7 @@ export default class FieldSelect extends PureComponent {
   render() {
       const {
           config, customProps, items, placeholder,
-          selectedKey, selectedLabel, selectedOpts, selectedAltLabel, selectedFullLabel, readonly,
+          selectedKey, selectedLabel, selectedOpts, selectedAltLabel, selectedFullLabel, readonly, selectedPath, childrenSelected, parentField
       } = this.props;
       const {showSearch} = customProps || {};
 
@@ -54,7 +55,7 @@ export default class FieldSelect extends PureComponent {
       if (tooltipText == selectedLabel)
         tooltipText = null;
 
-      const fieldSelectItems = this.renderSelectItems(items);
+      const fieldSelectItems = this.renderSelectItems(items, childrenSelected);
 
       let res = (
           <Select
@@ -78,30 +79,34 @@ export default class FieldSelect extends PureComponent {
       return res;
   }
 
-  renderSelectItems(fields) {
+  renderSelectItems(fields, childrenSelected) {
     return keys(fields).map(fieldKey => {
         const field = fields[fieldKey];
         const {items, key, path, label, fullLabel, altLabel, tooltip, grouplabel} = field;
         const _path = path || key;
-        if (items) {
-            return <OptGroup
+        if (field.path.split('.').length <=2) {
+            childrenSelected = null;
+        }
+            if (items) {
+                return <OptGroup
                     key={_path}
                     label={label}
                 >
                     {this.renderSelectItems(items)}
                 </OptGroup>
-        } else {
-            const option = tooltip ? <Tooltip title={tooltip}>{label}</Tooltip> : label;
-            return <Option
-                key={_path}
-                value={_path}
-                title={altLabel}
-                grouplabel={grouplabel}
-                label={label}
-            >
-                {option}
-            </Option>;
-        }
+            } else {
+                const option = tooltip ? <Tooltip title={tooltip}>{label}</Tooltip> : label;
+                return <Option
+                    key={_path}
+                    value={_path}
+                    title={altLabel}
+                    grouplabel={grouplabel}
+                    label={label}
+                    disabled={childrenSelected && childrenSelected.some(el => el.keyField === field.path)}
+                >
+                    {option}
+                </Option>;
+            }
     });
   }
 

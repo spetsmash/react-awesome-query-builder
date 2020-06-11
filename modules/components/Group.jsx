@@ -180,6 +180,18 @@ export class Group extends PureComponent {
     const {config, actions, onDragStart} = props;
     const isRuleGroup = item.get('type') == 'group' && item.getIn(['properties', 'field']) != null;
     const type = isRuleGroup ? 'rule_group' : item.get('type');
+
+    const  childrenSelected  = this.props.children1;
+    let arrChildrenSelected = [];
+    childrenSelected.forEach(item => {
+      let temp = {
+        keyField: null,
+        // val: null
+      };
+      temp.keyField = item.get('properties').get('field');
+      // temp.val = item.get('properties').get('value');
+      arrChildrenSelected.push(temp);
+    });
     
     return (
       <Item
@@ -198,6 +210,9 @@ export class Group extends PureComponent {
         //tree={props.tree}
         treeNodesCnt={this.reordableNodesCnt()}
         onDragStart={onDragStart}
+        childrenSelected={childrenSelected}
+        arrChildrenSelected={arrChildrenSelected}
+
       />
     );
   };

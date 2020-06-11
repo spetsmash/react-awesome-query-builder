@@ -27,6 +27,7 @@ const typeMap = {
           parentField={props.parentField}
           validity={props.validity}
           errorMessage={props.errorMessage}
+          arrChildrenSelected={props.arrChildrenSelected}
       />
       <span style={validationSpanStyle}>{props.errorMessage}</span>
     </>
@@ -81,7 +82,8 @@ class Item extends PureComponent {
     onDragStart: PropTypes.func,
     parentField: PropTypes.string, //from RuleGroup
     validity:PropTypes.bool,
-      errorMessage:PropTypes.any
+      errorMessage:PropTypes.any,
+    arrChildrenSelected: PropTypes.array
   };
 
   render() {

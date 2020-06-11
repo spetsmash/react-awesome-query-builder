@@ -20,6 +20,7 @@ export default (Rule) => {
       operatorOptions: PropTypes.object,
       treeNodesCnt: PropTypes.number,
       parentField: PropTypes.string, //from RuleGroup
+        arrChildrenSelected: PropTypes.array,
       //connected:
       dragging: PropTypes.object, //{id, x, y, w, h}
         flag:PropTypes.bool
@@ -110,6 +111,7 @@ export default (Rule) => {
             operatorOptions={this.props.operatorOptions}
             config={this.props.config}
             treeNodesCnt={this.props.treeNodesCnt}
+            arrChildrenSelected={this.props.arrChildrenSelected}
           /> : null
         ,
           <Rule
@@ -131,6 +133,7 @@ export default (Rule) => {
             operatorOptions={this.props.operatorOptions}
             config={this.props.config}
             treeNodesCnt={this.props.treeNodesCnt}
+            arrChildrenSelected={this.props.arrChildrenSelected}
           />
         ]}
         </div>
