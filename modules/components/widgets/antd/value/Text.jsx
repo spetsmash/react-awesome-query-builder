@@ -28,12 +28,15 @@ export default class TextWidget extends PureComponent {
     }
   }
   render() {
-    const {config, placeholder, customProps, value, readonly, mask} = this.props;
+    const {config, placeholder, customProps, value, readonly, mask, operator} = this.props;
     const {renderSize} = config.settings;
     const _value = value != undefined ? value : null;
 
     return (
-      <Col>
+        <>
+          {operator === "exists" || operator === "not_exists" ?
+              null :
+              (<Col>
         <ReactInputMask
             mask={mask}
             onChange={this.handleChange} value={_value} onBlur={this.validateOnBlur.bind(this.props)}>
@@ -47,7 +50,8 @@ export default class TextWidget extends PureComponent {
           {...customProps}
         />
         </ReactInputMask>
-      </Col>
+      </Col>)}
+      </>
     );
 
   }

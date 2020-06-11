@@ -49,6 +49,23 @@ export default (skin) => {
     const operators: Operators = {
         ...InitialConfig.operators,
         // examples of  overriding
+        exists: {
+            ...BasicConfig.operators.like,
+            label: 'exists',
+            labelForFormat: 'exists',
+            reversedOp: 'not_exists',
+            sqlOp: 'EXISTS',
+            jsonLogic: 'exists',
+        },
+        not_exists: {
+            ...BasicConfig.operators.like,
+            label: 'not exists',
+            labelForFormat: 'not exists',
+            reversedOp: 'exists',
+            sqlOp: 'NOT_EXISTS',
+            jsonLogic: 'not_exists',
+        },
+
         between: {
             ...InitialConfig.operators.between,
             valueLabels: [
@@ -166,6 +183,24 @@ export default (skin) => {
                             label: "is not"
                         }
                     }
+                },
+            },
+        }),
+        text: merge(BasicConfig.types.text, {
+            widgets: {
+                text: {
+                    operators: [
+                        'equal',
+                        'not_equal',
+                        'is_empty',
+                        'is_not_empty',
+                        'like',
+                        'not_like',
+                        'contains',
+                        'not_contains',
+                        'exists',
+                        'not_exists'
+                    ],
                 },
             },
         }),
@@ -387,6 +422,8 @@ export default (skin) => {
                         'equal',
                         'not_equal',
                         'date_range',
+                        'exists',
+                        'not_exists'
                     ],
                     fieldSettings: {
                         dateFormat: 'DD-MM-YYYY',
@@ -403,10 +440,10 @@ export default (skin) => {
                     label: 'Country',
                     type: 'select',
                     operators: [
-                        'select_equals',
-                        'select_not_equals',
                         'select_any_in',
                         'select_not_any_in',
+                        'exists',
+                        'not_exists'
                     ],
                     valueSources: ['value'],
                     listValues: [
@@ -419,7 +456,7 @@ export default (skin) => {
                     type: 'text',
                     label: 'City',
                     valueSources: ['value'],
-                    operators: ['equal', 'not_equal', 'contains', 'not_contains'],
+                    operators: ['equal', 'not_equal', 'exists', 'not_exists'],
                 },
             },
         },

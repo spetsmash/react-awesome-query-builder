@@ -60,27 +60,30 @@ export default class DateWidget extends PureComponent {
 
         return (
             <>
-            {operator === "date_range" || operator === "not_date_range" ? (
-                <RangePicker
-                    disabled={readonly}
-                    key="widget-date"
-                    size={renderSize}
-                    format={dateFormat}
-                    value={dateValue}
-                    onChange={this.handleChange}
-                    {...customProps}
-                />
-                    ) : (
+                {operator === "exists" || operator === "not_exists" ?
+                    null :
+                    operator === "date_range" || operator === "not_date_range" ? (
+                    <RangePicker
+                        disabled={readonly}
+                        key="widget-date"
+                        size={renderSize}
+                        format={dateFormat}
+                        value={dateValue}
+                        onChange={this.handleChange}
+                        {...customProps}
+                    />
+                ) : (
                     <DatePicker
-                    disabled={readonly}
-                    key="widget-date"
-                    placeholder={placeholder}
-                    size={renderSize}
-                    format={dateFormat}
-                    value={dateValue}
-                    onChange={this.handleChange}
-                    {...customProps}
-                />)}
+                        disabled={readonly}
+                        key="widget-date"
+                        placeholder={placeholder}
+                        size={renderSize}
+                        format={dateFormat}
+                        value={dateValue}
+                        onChange={this.handleChange}
+                        {...customProps}
+                    />)}
+
        </>
         );
     }

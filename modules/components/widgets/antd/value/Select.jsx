@@ -47,7 +47,7 @@ export default class SelectWidget extends PureComponent {
   }
 
   render() {
-    const {config, placeholder, customProps, value, readonly} = this.props;
+    const {config, placeholder, customProps, value, readonly, operator} = this.props;
     const {renderSize} = config.settings;
     const placeholderWidth = calcTextWidth(placeholder);
     const dropdownWidth = this.optionsMaxWidth + SELECT_WIDTH_OFFSET_RIGHT;
@@ -55,7 +55,10 @@ export default class SelectWidget extends PureComponent {
     const _value = value != undefined ? value+"" : undefined;
 
     return (
-        <Select
+        <>
+        {operator === "exists" || operator === "not_exists" ?
+            null :
+            (<Select
             disabled={readonly}
             style={{ width }}
             key={"widget-select"}
@@ -67,7 +70,8 @@ export default class SelectWidget extends PureComponent {
             filterOption={this.filterOption}
             {...customProps}
           >{this.options}
-        </Select>
+        </Select>)}
+        </>
     );
   }
 }

@@ -644,7 +644,9 @@ const types = {
                   'is_not_empty',
                   'like',
                   'not_like',
-                  'proximity'
+                  'proximity',
+                  'exists',
+                  'not_exists'
               ],
               widgetProps: {},
               opProps: {},
@@ -655,6 +657,8 @@ const types = {
                   'equal',
                   'not_equal',
                   'proximity', //can exclude if you want
+                  'exists',
+                  'not_exists'
               ],
           }
       },
@@ -707,7 +711,9 @@ const types = {
                   "is_empty",
                   "is_not_empty",
                   "date_range",
-                  "not_date_range"
+                  "not_date_range",
+                  'exists',
+                  'not_exists'
               ]
           }
       },
@@ -757,7 +763,9 @@ const types = {
           select: {
               operators: [
                   'select_equals',
-                  'select_not_equals'
+                  'select_not_equals',
+                  'exists',
+                  'not_exists'
               ],
               widgetProps: {
                   customProps: {
@@ -768,7 +776,9 @@ const types = {
           multiselect: {
               operators: [
                   'select_any_in',
-                  'select_not_any_in'
+                  'select_not_any_in',
+                  'exists',
+                  'not_exists'
               ],
           },
       },

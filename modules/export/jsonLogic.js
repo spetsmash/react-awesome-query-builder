@@ -208,10 +208,13 @@ const jsonLogicFormatItem = (item, config, meta) => {
             return fv;
         });
         const hasUndefinedValues = value.filter(v => v === undefined).size > 0;
-        if (value.size < cardinality || hasUndefinedValues) {
-            meta.usedFields = _usedFields; // restore
-            return undefined;
+        if(operatorDefinition.jsonLogic !== 'exists' && operatorDefinition.jsonLogic !== 'not_exists') {
+            if (value.size < cardinality || hasUndefinedValues) {
+                meta.usedFields = _usedFields; // restore
+                return undefined;
+            }
         }
+
         const formattedValue = cardinality > 1 ? value.toArray() : (cardinality == 1 ? value.first() : null);
 
         // format field
