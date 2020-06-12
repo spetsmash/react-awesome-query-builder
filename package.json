@@ -13,7 +13,7 @@
   ],
   "main1": "modules",
   "main": "lib",
-  "types": "modules/index.d.ts",
+  "types": "lib/index.d.ts",
   "browserify1": {
     "transform": [
       "babelify"
@@ -21,7 +21,7 @@
   },
   "scripts": {
     "prepublish": "npm run build-npm",
-    "build-global": ".\\scripts\\build-global.sh",
+    "build-global": "NODE_ENV=production COMPRESS=1 ANALYZE=0 webpack modules/index.js",
     "build-npm": ".\\scripts\\build-npm.sh",
     "build-examples": ".\\scripts/build-examples.sh",
     "examples": "cd examples && npm i && npm start"
