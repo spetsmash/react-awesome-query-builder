@@ -55,7 +55,7 @@ export default (Widget) => {
             }
         }
 
-        _setValue = (isSpecialRange, delta, widgetType, value, flag = false, __isInternal) => {
+        _setValue = (isSpecialRange, delta, widgetType, value, __isInternal, flag = false) => {
 
             if (isSpecialRange && Array.isArray(value)) {
                 const oldRange = [this.props.value.get(0), this.props.value.get(1)];
