@@ -39,9 +39,8 @@ export default class TextWidget extends PureComponent {
               (<Col>
         <ReactInputMask
             mask={mask}
-            onChange={this.handleChange} value={_value} onBlur={this.validateOnBlur.bind(this.props)}>
+            onChange={this.handleChange} value={_value} onBlur={this.validateOnBlur.bind(this.props)} disabled={readonly}>
           <Input
-          disabled={readonly}
           key="widget-text"
           size={renderSize}
           type={"text"}
