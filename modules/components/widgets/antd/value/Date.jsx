@@ -37,11 +37,11 @@ export default class DateWidget extends PureComponent {
     handleChange = (_value) => {
         const {setValue, valueFormat} = this.props;
         if (Array.isArray(_value)) {
-            setValue([_value[0].format(valueFormat), _value[1].format(valueFormat)]);
+            setValue([_value[0].format(valueFormat), _value[1].format(valueFormat)], false);
         } else {
             const value = _value && _value.isValid() ? _value.format(valueFormat) : undefined;
             if (value || _value === null)
-                setValue(value);
+                setValue(value, false);
         }
 
     };

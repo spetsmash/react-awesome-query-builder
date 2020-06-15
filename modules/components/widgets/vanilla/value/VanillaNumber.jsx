@@ -8,7 +8,7 @@ export default (props) => {
       val = undefined;
     else
       val = parseInt(val);
-    setValue(val);
+    setValue(val, false);
   };
   return (
     <input type="number"  value={value} placeholder={placeholder} disabled={readonly} min={min} max={max} step={step} onChange={onChange} />

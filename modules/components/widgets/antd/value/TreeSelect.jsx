@@ -41,18 +41,18 @@ export default class TreeSelectWidget extends PureComponent {
 
   handleChange = (val) => {
     if (!this.props.treeMultiple) {
-      this.props.setValue(val);
+      this.props.setValue(val, false);
       return;
     }
     if (val && !val.length) {
-      this.props.setValue(undefined); //not allow []
+      this.props.setValue(undefined, false); //not allow []
       return;
     }
     if (typeof val[0] == 'object' && val[0].value !== undefined) {
       //`treeCheckStrictly` is on
       val = val.map(v => v.value)
     }
-    this.props.setValue(val);
+    this.props.setValue(val, false);
   }
 
   filterTreeNode = (input, option) => {

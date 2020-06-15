@@ -26,7 +26,7 @@ export default class DateTimeWidget extends PureComponent {
         const {valueFormat, value, setValue} = props;
         let mValue = value ? moment(value, valueFormat) : null;
         if (mValue && !mValue.isValid()) {
-            setValue(null);
+            setValue(null, false);
         }
     }
 

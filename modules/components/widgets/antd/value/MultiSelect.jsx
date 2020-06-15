@@ -42,7 +42,7 @@ export default class MultiSelectWidget extends PureComponent {
   handleChange = (val) => {
     if (val && !val.length)
       val = undefined; //not allow []
-    this.props.setValue(val);
+    this.props.setValue(val, false);
   }
 
   filterOption = (input, option) => {

@@ -38,7 +38,7 @@ export default class SelectWidget extends PureComponent {
   }
 
   handleChange = (val) => {
-    this.props.setValue(val);
+    this.props.setValue(val, false);
   }
 
   filterOption = (input, option) => {
