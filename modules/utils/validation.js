@@ -170,11 +170,12 @@ function validateRule (item, path, itemId, meta, c) {
 
 /**
  *
- * @param {bool} canFix true is useful for func values to remove bad args
- * @param {bool} isEndValue false if value is in process of editing by user
- * @param {bool} isRawValue false is used only internally from validateFuncValue
+ * @param {boolean} canFix true is useful for func values to remove bad args
+ * @param {boolean} isEndValue false if value is in process of editing by user
+ * @param {boolean} isRawValue false is used only internally from validateFuncValue
  * @param {array} valueArr array of valuer if valueType is Number and operator "between", "less"
  * @return {array} [validError, fixedValue] - if validError === null and canFix == true, fixedValue can differ from value if was fixed
+ * @param {boolean} flag false to validate onChange, true - onBlur
  */
 export const validateValue = (config, leftField, field, operator, value, valueType, valueSrc, flag, valueArr, canFix = false, isEndValue = false, isRawValue = true) => {
 	let validError = null;
@@ -185,7 +186,7 @@ export const validateValue = (config, leftField, field, operator, value, valueTy
 			if (valueSrc == 'field') {
 					[validError, fixedValue] = validateFieldValue(leftField, field, value, valueSrc, valueType, config, operator, isEndValue, canFix);
 			} else if (valueSrc == 'func') {
-					[validError, fixedValue] = validateFuncValue(leftField, field, value, valueSrc, valueType, config, operator, isEndValue, canFix);
+					[validError, fixedValue] = validateFuncValue(leftField, field, value, valueSrc, valueType, config, operator, isEndValue, flag, canFix);
 			} else if (valueSrc == 'value' || !valueSrc) {
 					[validError, fixedValue] = validateNormalValue(leftField, field, value, valueSrc, valueType, config, operator, isEndValue, canFix);
 			}
@@ -297,7 +298,7 @@ const validateFieldValue = (leftField, field, value, _valueSrc, valueType, confi
 /**
 * 
 */
-const validateFuncValue = (leftField, field, value, _valueSrc, valueType, config, operator = null, isEndValue = false, canFix = false) => {
+const validateFuncValue = (leftField, field, value, _valueSrc, valueType, config, flag, operator = null, isEndValue = false, canFix = false) => {
 	let fixedValue = value;
 	
 	if (value) {
@@ -316,7 +317,7 @@ const validateFuncValue = (leftField, field, value, _valueSrc, valueType, config
 									const argValueSrc = argVal ? argVal.get('valueSrc') : undefined;
 									if (argValue !== undefined) {
 											const [argValidError, fixedArgVal] = validateValue(
-													config, leftField, fieldDef, operator, argValue, argConfig.type, argValueSrc, canFix, isEndValue, false
+													config, leftField, fieldDef, operator, argValue, argConfig.type, argValueSrc, flag, canFix, isEndValue, false
 											);
 											if (argValidError !== null) {
 													if (canFix) {
@@ -402,7 +403,7 @@ export const getNewValueForFieldOp = function (config, oldConfig = null, current
 					const vSrc = currentValueSrc.get(i) || null;
 					const isValidSrc = (valueSources.find(v => v == vSrc) != null);
 					const isEndValue = !canFix;
-					const [validateError, fixedValue] = validateValue(config, newField, newField, newOperator, v, vType, vSrc, canFix, isEndValue);
+					const [validateError, fixedValue] = validateValue(config, newField, newField, newOperator, v, vType, vSrc, false, canFix, isEndValue);
 					const isValid = !validateError;
 					if (!isValidSrc || !isValid) {
 							canReuseValue = false;
