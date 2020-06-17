@@ -97,7 +97,9 @@ module.exports = {
         ],
         alias: {
             'ReactAwesomeQueryBuilder': __dirname + 'modules/',
-            'immutable': 'immutable'
+            'immutable': 'immutable',
+            'antd': path.resolve(__dirname, 'node_modules/antd'),
+            '@ant-design': path.resolve(__dirname, 'node_modules/@ant-design'),
         }
     },
     node: {

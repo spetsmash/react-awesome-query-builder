@@ -138,6 +138,9 @@ export default (skin) => {
             ...InitialConfig.widgets.date,
             dateFormat: 'DD.MM.YYYY',
             valueFormat: 'YYYY-MM-DD',
+            jsonLogic: val => {
+                return val.toString();
+            },
         },
         time: {
             ...InitialConfig.widgets.time,

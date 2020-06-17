@@ -389,6 +389,7 @@ interface DateTimeFieldSettings extends BasicFieldSettings {
   dateFormat?: String,
   valueFormat?: any,
   use12Hours?: Boolean,
+  jsonLogic: any
 };
 interface SelectFieldSettings extends BasicFieldSettings {
   listValues?: ListValues,
