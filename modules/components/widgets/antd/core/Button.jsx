@@ -1,8 +1,6 @@
 import React from 'react';
 import { Button } from 'antd';
-import PlusCircleOutlined from '@ant-design/icons/PlusCircleOutlined';
-import DeleteFilled  from '@ant-design/icons/DeleteFilled';
-import PlusOutlined from '@ant-design/icons/PlusOutlined';
+import { PlusOutlined, PlusCircleOutlined, DeleteFilled } from '@ant-design/icons';
 
 export default ({type, onClick, label, config: {settings}}) => {
   const typeToIcon = {
