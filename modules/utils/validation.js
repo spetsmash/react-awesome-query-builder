@@ -317,7 +317,7 @@ const validateFuncValue = (leftField, field, value, _valueSrc, valueType, config
 									const argValueSrc = argVal ? argVal.get('valueSrc') : undefined;
 									if (argValue !== undefined) {
 											const [argValidError, fixedArgVal] = validateValue(
-													config, leftField, fieldDef, operator, argValue, argConfig.type, argValueSrc, flag, canFix, isEndValue, false
+													config, leftField, fieldDef, operator, argValue, argConfig.type, argValueSrc, flag, canFix, Array.isArray(argValue), isEndValue, false
 											);
 											if (argValidError !== null) {
 													if (canFix) {
@@ -403,7 +403,7 @@ export const getNewValueForFieldOp = function (config, oldConfig = null, current
 					const vSrc = currentValueSrc.get(i) || null;
 					const isValidSrc = (valueSources.find(v => v == vSrc) != null);
 					const isEndValue = !canFix;
-					const [validateError, fixedValue] = validateValue(config, newField, newField, newOperator, v, vType, vSrc, true, canFix, isEndValue);
+					const [validateError, fixedValue] = validateValue(config, newField, newField, newOperator, v, vType, vSrc, true, Array.isArray(v), canFix, isEndValue);
 					const isValid = !validateError;
 					if (!isValidSrc || !isValid) {
 							canReuseValue = false;
