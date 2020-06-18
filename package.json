@@ -11,9 +11,9 @@
     "antd",
     "antdesign"
   ],
-  "main1": "modules",
-  "main": "lib",
-  "types": "lib/index.d.ts",
+  "main": "modules",
+  "main1": "lib",
+  "types": "modules/index.d.ts",
   "browserify1": {
     "transform": [
       "babelify"
@@ -37,7 +37,7 @@
   "license": "MIT",
   "homepage": "https://lab.megatron.pw/react-app/ce-react-awesome-query-builder",
   "dependencies": {
-    "antd": "4.3.0",
+    "antd": "4.3.4",
     "classnames": "^2.2.5",
     "clone": "^2.1.1",
     "immutable": "^3.7.6",
