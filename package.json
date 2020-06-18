@@ -11,9 +11,9 @@
     "antd",
     "antdesign"
   ],
-  "main": "modules",
-  "main1": "lib",
-  "types": "modules/index.d.ts",
+  "main1": "modules",
+  "main": "lib",
+  "types": "lib/index.d.ts",
   "browserify1": {
     "transform": [
       "babelify"
