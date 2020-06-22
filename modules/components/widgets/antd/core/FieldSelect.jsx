@@ -102,7 +102,16 @@ export default class FieldSelect extends PureComponent {
                     title={altLabel}
                     grouplabel={grouplabel}
                     label={label}
-                    disabled={childrenSelected && childrenSelected.some(el => el.keyField === field.path)}
+                    disabled={( childrenSelected && childrenSelected.keyField !== null && childrenSelected.some(el => el.keyField === field.path)) ||
+                    (childrenSelected && childrenSelected.some(el => {
+                        if (el.keyField === null) return;
+                        if (el.keyField.split('.')[2] === 'range' && field.path.split('.')[2] === 'period') {
+                            return true;
+                        }
+                        if (el.keyField.split('.')[2] === 'period' && field.path.split('.')[2] === 'range') {
+                            return true;
+                        }
+                    }))}
                 >
                     {option}
                 </Option>;
