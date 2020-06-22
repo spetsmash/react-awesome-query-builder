@@ -285,7 +285,11 @@ const operators = {
           return isForDisplay ? `${field} IS EMPTY` : `!${field}`;
       },
       mongoFormatOp: mongoFormatOp1.bind(null, '$exists', v => false, false),
-      jsonLogic: "!",
+      // jsonLogic: "!",
+      jsonLogic: (field, op, vals) => ({
+          // it's not "equals", but "includes" operator - just for example
+          "!": [field, null]
+      }),
   },
   is_not_empty: {
       label: 'Is not empty',
@@ -297,7 +301,11 @@ const operators = {
           return isForDisplay ? `${field} IS NOT EMPTY` : `!!${field}`;
       },
       mongoFormatOp: mongoFormatOp1.bind(null, '$exists', v => true, false),
-      jsonLogic: "!!",
+      // jsonLogic: "!!",
+      jsonLogic: (field, op, vals) => ({
+          // it's not "equals", but "includes" operator - just for example
+          "!!": [field, null]
+      }),
   },
   select_equals: {
       label: '==',
@@ -645,15 +653,13 @@ const types = {
                   'like',
                   'not_like',
                   'proximity',
-                  'exists',
-                  'not_exists'
               ],
               widgetProps: {},
               opProps: {},
           },
           field: {
               operators: [
-                  //unary ops (like `is_empty`) will be excluded anyway, see getWidgetsForFieldOp()
+                  //unary ops (like `is_empty`) will be excluded anyway, see widgetOpProps()
                   'equal',
                   'not_equal',
                   'proximity', //can exclude if you want
@@ -712,8 +718,6 @@ const types = {
                   "is_not_empty",
                   "date_range",
                   "not_date_range",
-                  'exists',
-                  'not_exists'
               ]
           }
       },
@@ -764,8 +768,8 @@ const types = {
               operators: [
                   'select_equals',
                   'select_not_equals',
-                  'exists',
-                  'not_exists'
+                  "is_empty",
+                  "is_not_empty",
               ],
               widgetProps: {
                   customProps: {
@@ -777,8 +781,6 @@ const types = {
               operators: [
                   'select_any_in',
                   'select_not_any_in',
-                  'exists',
-                  'not_exists'
               ],
           },
       },

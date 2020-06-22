@@ -55,10 +55,7 @@ export default class SelectWidget extends PureComponent {
     const _value = value != undefined ? value+"" : undefined;
 
     return (
-        <>
-        {operator === "exists" || operator === "not_exists" ?
-            null :
-            (<Select
+            <Select
             disabled={readonly}
             style={{ width }}
             key={"widget-select"}
@@ -70,8 +67,7 @@ export default class SelectWidget extends PureComponent {
             filterOption={this.filterOption}
             {...customProps}
           >{this.options}
-        </Select>)}
-        </>
+        </Select>
     );
   }
 }

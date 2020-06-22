@@ -33,10 +33,7 @@ export default class TextWidget extends PureComponent {
     const _value = value != undefined ? value : null;
 
     return (
-        <>
-          {operator === "exists" || operator === "not_exists" ?
-              null :
-              (<Col>
+        <Col>
         <ReactInputMask
             mask={mask}
             onChange={this.handleChange} value={_value} onBlur={this.validateOnBlur.bind(this.props)} disabled={readonly}>
@@ -49,9 +46,6 @@ export default class TextWidget extends PureComponent {
           {...customProps}
         />
         </ReactInputMask>
-      </Col>)}
-      </>
-    );
-
+      </Col>)
   }
 }
