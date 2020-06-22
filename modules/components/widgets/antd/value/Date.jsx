@@ -60,9 +60,7 @@ export default class DateWidget extends PureComponent {
 
         return (
             <>
-                {operator === "exists" || operator === "not_exists" ?
-                    null :
-                    operator === "date_range" || operator === "not_date_range" ? (
+                {operator === "date_range" || operator === "not_date_range" ? (
                     <RangePicker
                         disabled={readonly}
                         key="widget-date"
