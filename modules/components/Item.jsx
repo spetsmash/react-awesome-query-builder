@@ -7,12 +7,12 @@ import RuleGroup from './RuleGroup';
 const typeMap = {
   rule: (props) => {
 
-    const validationSpanStyle = {
-      color: 'red',
-      fontFamily: "Arial",
-      fontSize: '13px',
-      display: (props.validity || props.validity === undefined) && props.config.settings.showErrorMessage? 'none' : 'block',
-    };
+    // const validationSpanStyle = {
+    //   color: 'red',
+    //   fontFamily: "Arial",
+    //   fontSize: '13px',
+    //   display: (props.validity || props.validity === undefined) && props.config.settings.showErrorMessage? 'none' : 'block',
+    // };
 
     return  (
         <>
@@ -29,7 +29,7 @@ const typeMap = {
           errorMessage={props.errorMessage}
           arrChildrenSelected={props.arrChildrenSelected}
       />
-      <span style={validationSpanStyle}>{props.errorMessage}</span>
+      {/*<span style={validationSpanStyle}>{props.errorMessage}</span>*/}
     </>
     )
   },
@@ -50,6 +50,7 @@ const typeMap = {
     />
   ),
   rule_group: (props) => (
+      <>
     <RuleGroup 
       {...props.properties.toObject()}
       id={props.id}
@@ -64,6 +65,8 @@ const typeMap = {
       validity={props.validity}
       errorMessage={props.errorMessage}
     />
+        <span>{props.errorMessage}</span>
+        </>
   )
 };
 
@@ -82,7 +85,7 @@ class Item extends PureComponent {
     onDragStart: PropTypes.func,
     parentField: PropTypes.string, //from RuleGroup
     validity:PropTypes.bool,
-      errorMessage:PropTypes.any,
+    errorMessage:PropTypes.any,
     arrChildrenSelected: PropTypes.array
   };
 

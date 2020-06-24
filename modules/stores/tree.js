@@ -296,7 +296,9 @@ const setField = (state, path, newField, config) => {
             .set('operatorOptions', newOperatorOptions)
             .set('value', newValue)
             .set('valueSrc', newValueSrc)
-            .set('valueType', newValueType);
+            .set('valueType', newValueType)
+            .set('validity', true)
+            .set('errorMessage', false);
     }))
 };
 
@@ -323,7 +325,9 @@ const setOperator = (state, path, newOperator, config) => {
             .set('operatorOptions', newOperatorOptions)
             .set('value', newValue)
             .set('valueSrc', newValueSrc)
-            .set('valueType', newValueType);
+            .set('valueType', newValueType)
+            .set('validity', true)
+            .set('errorMessage', false);
     }));
 };
 
@@ -333,9 +337,11 @@ const setOperator = (state, path, newOperator, config) => {
  * @param {integer} delta
  * @param {*} value
  * @param {string} valueType
+ * @param {boolean} flag
+ * @param {object} config
  * @param {boolean} __isInternal
  */
-const setValue = ( state, path, delta, value, valueType,flag, config, __isInternal) => {
+const setValue = ( state, path, delta, value, valueType, flag, config, __isInternal) => {
     const fieldSeparator = config.settings.fieldSeparator;
     const showErrorMessage = config.settings.showErrorMessage;
     const valueSrc = state.getIn(expandTreePath(path, 'properties', 'valueSrc', delta + '')) || null;

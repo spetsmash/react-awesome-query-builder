@@ -64,6 +64,43 @@ export const getTreeBadFields = (tree) => {
     return Array.from(new Set(badFields));
 };
 
+/**
+ * Set errorMessage and validity to the rule if value is empty
+ * @param {Immutable.Map} tree
+ * @return {Immutable.Map} tree
+ */
+export const setErrorEmptyValues = (tree) => {
+    let newTree = tree;
+
+    function _processNode (item, path) {
+        const itemPath = path.push(item.get('id'));
+
+        let properties = item.get('properties');
+        if (properties) {
+            let field = properties.get('field');
+            let value = properties.get('value');
+            if (field) {
+                if (value && value.toJS().length > 0 && !value.toJS()[0]) {
+                    console.log(field);
+                    newTree = newTree.setIn(expandTreePath(itemPath, 'properties', 'validity'), false);
+                    newTree = newTree.setIn(expandTreePath(itemPath, 'properties', 'errorMessage'), 'No value entered');
+                }
+            }
+        }
+        const children = item.get('children1');
+
+        if (children) {
+            children.map((child, _childId) => {
+                _processNode(child, itemPath);
+            });
+        }
+    }
+
+    if (tree)
+        _processNode(tree, new Immutable.List());
+
+    return newTree;
+};
 
 /**
  * Remove `path` in every item

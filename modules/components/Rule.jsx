@@ -41,6 +41,8 @@ class Rule extends PureComponent {
         setValue: PropTypes.func,
         setValueSrc: PropTypes.func,
         treeNodesCnt: PropTypes.number,
+        validity: PropTypes.bool,
+        errorMessage: PropTypes.any,
     };
 
     constructor(props) {
@@ -107,7 +109,7 @@ class Rule extends PureComponent {
     }
 
     render () {
-        const {config} = this.props;
+        const {config , errorMessage} = this.props;
         const {arrChildrenSelected} = this.props;
         const {
             selectedFieldPartsLabels, selectedFieldWidgetConfig,
@@ -115,7 +117,7 @@ class Rule extends PureComponent {
         } = this.meta;
         const {
             deleteLabel, renderBeforeWidget, renderAfterWidget, renderSize, 
-            immutableGroupsMode, immutableFieldsMode, immutableOpsMode, immutableValuesMode,
+            immutableGroupsMode, immutableFieldsMode, immutableOpsMode, immutableValuesMode, showErrorMessage,
             renderButton: Btn
         } = config.settings;
 
@@ -205,8 +207,12 @@ class Rule extends PureComponent {
             />}
             </div>
         );
+        const error = showErrorMessage && errorMessage &&
+            <div className="rule--error">
+                { errorMessage}
+            </div>;
 
-        const body = <div key="rule-body" className="rule--body">{parts}</div>;
+        const body = <div key="rule-body" className="rule--body">{parts}{error}</div>;
 
         return [
             drag,
