@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {getFieldConfig} from "../../utils/configUtils";
 import {pureShouldComponentUpdate} from "../../utils/renderUtils";
 import {connect} from 'react-redux';
+const classNames = require('classnames');
 
 
 export default (Rule) => {
@@ -89,7 +90,7 @@ export default (Rule) => {
 
       return (
         <div
-          className={'group-or-rule-container rule-container'}
+          className={classNames('group-or-rule-container', 'rule-container',  this.props.errorMessage ? 'rule-with-error' : null)}
           data-id={this.props.id}
         >
         {[
@@ -112,6 +113,8 @@ export default (Rule) => {
             config={this.props.config}
             treeNodesCnt={this.props.treeNodesCnt}
             arrChildrenSelected={this.props.arrChildrenSelected}
+            validity={this.props.validity}
+            errorMessage={this.props.errorMessage}
           /> : null
         ,
           <Rule
@@ -134,6 +137,8 @@ export default (Rule) => {
             config={this.props.config}
             treeNodesCnt={this.props.treeNodesCnt}
             arrChildrenSelected={this.props.arrChildrenSelected}
+            validity={this.props.validity}
+            errorMessage={this.props.errorMessage}
           />
         ]}
         </div>

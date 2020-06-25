@@ -137,6 +137,16 @@ const removeItem = (state, path) => {
 
 /**
  * @param {Immutable.Map} state
+ * @param {Immutable.List} path
+ * @param {object} config
+ */
+const removeErrorGroup = (state, path, config) => {
+    state = state.setIn(expandTreePath(path, 'properties', 'validity'), true);
+    state = state.deleteIn(expandTreePath(path, 'properties', 'errorMessage'));
+    return state;
+};
+/**
+ * @param {Immutable.Map} state
  * @param {Immutable.List} fromPath
  * @param {Immutable.List} toPath
  * @param {string} placement, see constants PLACEMENT_*: PLACEMENT_AFTER, PLACEMENT_BEFORE, PLACEMENT_APPEND, PLACEMENT_PREPEND
@@ -296,7 +306,9 @@ const setField = (state, path, newField, config) => {
             .set('operatorOptions', newOperatorOptions)
             .set('value', newValue)
             .set('valueSrc', newValueSrc)
-            .set('valueType', newValueType);
+            .set('valueType', newValueType)
+            .set('validity', true)
+            .set('errorMessage', false);
     }))
 };
 
@@ -323,7 +335,9 @@ const setOperator = (state, path, newOperator, config) => {
             .set('operatorOptions', newOperatorOptions)
             .set('value', newValue)
             .set('valueSrc', newValueSrc)
-            .set('valueType', newValueType);
+            .set('valueType', newValueType)
+            .set('validity', true)
+            .set('errorMessage', false);
     }));
 };
 
@@ -333,9 +347,11 @@ const setOperator = (state, path, newOperator, config) => {
  * @param {integer} delta
  * @param {*} value
  * @param {string} valueType
+ * @param {boolean} flag
+ * @param {object} config
  * @param {boolean} __isInternal
  */
-const setValue = ( state, path, delta, value, valueType,flag, config, __isInternal) => {
+const setValue = ( state, path, delta, value, valueType, flag, config, __isInternal) => {
     const fieldSeparator = config.settings.fieldSeparator;
     const showErrorMessage = config.settings.showErrorMessage;
     const valueSrc = state.getIn(expandTreePath(path, 'properties', 'valueSrc', delta + '')) || null;
@@ -484,6 +500,9 @@ export default (config) => {
 
             case constants.REMOVE_GROUP:
                 return Object.assign({}, state, {...unset}, {tree: removeGroup(state.tree, action.path, action.config)});
+
+            case constants.REMOVE_ERROR:
+                return Object.assign({}, state, {...unset}, {tree: removeErrorGroup(state.tree, action.path, action.config)});
 
             case constants.ADD_RULE:
                 return Object.assign({}, state, {...unset}, {tree: addItem(state.tree, action.path, 'rule', action.id, action.properties, action.config)});

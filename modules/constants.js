@@ -1,5 +1,6 @@
 export const ADD_GROUP = 'ADD_GROUP';
 export const REMOVE_GROUP = 'REMOVE_GROUP';
+export const REMOVE_ERROR = 'REMOVE_ERROR';
 export const SET_CONJUNCTION = 'SET_CONJUNCTION';
 export const SET_NOT = 'SET_NOT';
 

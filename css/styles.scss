@@ -76,6 +76,44 @@ body.qb-dragging {
   padding: 10px;
 }
 
+.rule-with-error .rule {
+  border: 1px solid #e0a1a1;
+}
+
+.rule--body--wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.rule-group-rows {
+  display: flex;
+  flex-direction: row;
+}
+
+.rule--error {
+  color: red;
+  margin-bottom: -5px;
+  margin-top: 5px;
+}
+
+.icon-red {
+  color: red;
+  margin-right: 10px;
+}
+
+.rule--group-error {
+  border: 1px solid #ff00004a;
+  margin-right: 10px;
+  background-color: #ff000012;
+  p {
+    margin: 10px;
+    span {
+      font-weight: 600;
+    }
+  }
+}
+
 .group-or-rule {
   border-radius: 5px;
   position: relative;
@@ -507,9 +545,9 @@ $rule_actions: ".widget--valuesrc", ".rule--drag-handler", ".rule--header";
 
 
 .qb-lite {
-  @include visible_only_for_hovered_group($group_actions);
-  @include display_only_for_hovered_group($inactive_conjs, $active_conjs);
-  @include show_only_for_hovered_rule($rule_actions);
+  //@include visible_only_for_hovered_group($group_actions);
+  //@include display_only_for_hovered_group($inactive_conjs, $active_conjs);
+  //@include show_only_for_hovered_rule($rule_actions);
 
   &.qb-dragging {
     @include force_unvisible(#{$rule_actions, $group_actions});

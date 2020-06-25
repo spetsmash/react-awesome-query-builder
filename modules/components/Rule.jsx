@@ -8,6 +8,7 @@ import Widget from './Widget';
 import OperatorOptions from './OperatorOptions';
 import {getFieldConfig, getFieldPathLabels, getOperatorConfig, getFieldWidgetConfig} from "../utils/configUtils";
 import {useOnPropsChanged} from "../utils/stuff";
+import { ExclamationCircleFilled } from '@ant-design/icons';
 
 const Col = ({children, ...props}) => (<div {...props}>{children}</div>);
 const dummyFn = () => {};
@@ -41,6 +42,8 @@ class Rule extends PureComponent {
         setValue: PropTypes.func,
         setValueSrc: PropTypes.func,
         treeNodesCnt: PropTypes.number,
+        validity: PropTypes.bool,
+        errorMessage: PropTypes.any,
     };
 
     constructor(props) {
@@ -107,7 +110,7 @@ class Rule extends PureComponent {
     }
 
     render () {
-        const {config} = this.props;
+        const {config , errorMessage} = this.props;
         const {arrChildrenSelected} = this.props;
         const {
             selectedFieldPartsLabels, selectedFieldWidgetConfig,
@@ -115,7 +118,7 @@ class Rule extends PureComponent {
         } = this.meta;
         const {
             deleteLabel, renderBeforeWidget, renderAfterWidget, renderSize, 
-            immutableGroupsMode, immutableFieldsMode, immutableOpsMode, immutableValuesMode,
+            immutableGroupsMode, immutableFieldsMode, immutableOpsMode, immutableValuesMode, showErrorMessage,
             renderButton: Btn
         } = config.settings;
 
@@ -205,8 +208,12 @@ class Rule extends PureComponent {
             />}
             </div>
         );
+        const error = showErrorMessage && errorMessage &&
+            <div className="rule--error">
+                <ExclamationCircleFilled className="icon-red"/>{ errorMessage}
+            </div>;
 
-        const body = <div key="rule-body" className="rule--body">{parts}</div>;
+        const body = <div key="rule-body" className="rule--body">{parts}{error}</div>;
 
         return [
             drag,

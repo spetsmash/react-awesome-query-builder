@@ -64,6 +64,66 @@ export const getTreeBadFields = (tree) => {
     return Array.from(new Set(badFields));
 };
 
+/**
+ * Set errorMessage and validity to the rule if value is empty
+ * @param {Immutable.Map} tree
+ * @return {Immutable.Map} tree
+ */
+export const setErrorEmptyValues = (tree) => {
+    let newTree = tree;
+
+    function _processNode (item, path) {
+        const itemPath = path.push(item.get('id'));
+
+        let properties = item.get('properties');
+        let type = item.get('type');
+        if (properties) {
+            if (type && type === 'rule_group') {
+                newTree = _checkNestedRule(item.get('children1'), newTree, itemPath);
+            }
+            let field = properties.get('field');
+            let value = properties.get('value');
+            if (field) {
+                if (value && value.toJS().length > 0 && !value.toJS()[0]) {
+                    console.log(field);
+                    newTree = newTree.setIn(expandTreePath(itemPath, 'properties', 'validity'), false);
+                    newTree = newTree.setIn(expandTreePath(itemPath, 'properties', 'errorMessage'), 'No value selected');
+                }
+            }
+        }
+        const children = item.get('children1');
+
+        if (children) {
+            children.map((child, _childId) => {
+                _processNode(child, itemPath);
+            });
+        }
+    }
+
+    function _checkNestedRule (children, newTree, itemPath) {
+        let requiredRules = ['currency', 'value'];
+        children.valueSeq().forEach(v => {
+            if (v.getIn(['properties', 'field']) && v.getIn(['properties', 'field']) !== null) {
+                let temp = v.getIn(['properties', 'field']).split('.')[2];
+                let index = requiredRules.indexOf(temp);
+                if (index !== -1) {
+                    requiredRules.splice(index, 1)
+                }
+            }
+        });
+        if (requiredRules.length > 0) {
+            newTree = newTree.setIn(expandTreePath(itemPath, 'properties', 'validity'), false);
+            newTree = newTree.setIn(expandTreePath(itemPath, 'properties', 'errorMessage'), 'Required fields are empty');
+        }
+
+        return newTree;
+    }
+
+    if (tree)
+        _processNode(tree, new Immutable.List());
+
+    return newTree;
+};
 
 /**
  * Remove `path` in every item

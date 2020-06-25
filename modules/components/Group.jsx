@@ -203,6 +203,7 @@ export class Group extends PureComponent {
         //path={props.path.push(item.get('id'))}
         path={item.get('path')}
         type={type}
+        item={item}
         properties={item.get('properties')}
         config={config}
         actions={actions}

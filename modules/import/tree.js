@@ -2,7 +2,7 @@ import Immutable, { fromJS, Map } from 'immutable';
 const transit = require('transit-immutable-js');
 import {validateTree} from "../utils/validation";
 import {extendConfig} from "../utils/configUtils";
-import {getTreeBadFields} from "../utils/treeUtils";
+import {getTreeBadFields, setErrorEmptyValues} from "../utils/treeUtils";
 
 export const getTree = (immutableTree, light = true) => {
   if (!immutableTree) return undefined;
@@ -36,6 +36,11 @@ export const checkTree = (tree, config) => {
 export const isValidTree = (tree) => {
     return getTreeBadFields(tree).length == 0;
 };
+
+export const validateEmptyValuesTree = (tree) => {
+    return setErrorEmptyValues(tree);
+};
+
 
 function _fromJS(tree) {
   return fromJS(tree, function (key, value) {
