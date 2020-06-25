@@ -10,6 +10,7 @@ export default (Group) => {
   class GroupContainer extends Component {
     static propTypes = {
       //tree: PropTypes.instanceOf(Immutable.Map).isRequired,
+      item: PropTypes.any,
       config: PropTypes.object.isRequired,
       actions: PropTypes.object.isRequired, //{setConjunction: Funciton, removeGroup, addGroup, addRule, ...}
       path: PropTypes.any.isRequired, //instanceOf(Immutable.List)
@@ -91,6 +92,10 @@ export default (Group) => {
       this.props.actions.removeGroup(this.props.path);
     }
 
+    removeError = () => {
+      this.props.actions.removeError(this.props.path);
+    }
+
     addGroup = () => {
       this.props.actions.addGroup(this.props.path);
     }
@@ -137,13 +142,15 @@ export default (Group) => {
             addGroup={this.dummyFn}
             addRule={this.dummyFn}
             setField={this.dummyFn}
+            removeError={this.removeError}
             config={this.props.config}
             children1={this.props.children1}
             actions={this.props.actions}
-            //tree={this.props.tree}
+            // tree={this.props.tree}
             treeNodesCnt={this.props.treeNodesCnt}
             selectedField={this.props.field || null}
             parentField={this.props.parentField || null}
+            item={this.props.item}
           /> : null
         ,
           <Group
@@ -162,13 +169,15 @@ export default (Group) => {
             addGroup={this.addGroup}
             addRule={this.addRule}
             setField={this.setField}
+            removeError={this.removeError}
             config={this.props.config}
             children1={this.props.children1}
             actions={this.props.actions}
-            //tree={this.props.tree}
+            // tree={this.props.tree}
             treeNodesCnt={this.props.treeNodesCnt}
             selectedField={this.props.field || null}
             parentField={this.props.parentField || null}
+            item={this.props.item}
           />
         ]}
         </div>

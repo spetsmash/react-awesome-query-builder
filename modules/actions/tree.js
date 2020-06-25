@@ -59,6 +59,15 @@ export const removeGroup = (config, path) => ({
 });
 
 /**
+ * @param {Immutable.List} path
+ */
+export const removeError = (config, path) => ({
+    type: constants.REMOVE_ERROR,
+    config: config,
+    path: path
+});
+
+/**
  * @param {object} config
  * @param {Array} fromPath
  * @param {Array} toPath

@@ -137,6 +137,16 @@ const removeItem = (state, path) => {
 
 /**
  * @param {Immutable.Map} state
+ * @param {Immutable.List} path
+ * @param {object} config
+ */
+const removeErrorGroup = (state, path, config) => {
+    state = state.setIn(expandTreePath(path, 'properties', 'validity'), true);
+    state = state.deleteIn(expandTreePath(path, 'properties', 'errorMessage'));
+    return state;
+};
+/**
+ * @param {Immutable.Map} state
  * @param {Immutable.List} fromPath
  * @param {Immutable.List} toPath
  * @param {string} placement, see constants PLACEMENT_*: PLACEMENT_AFTER, PLACEMENT_BEFORE, PLACEMENT_APPEND, PLACEMENT_PREPEND
@@ -490,6 +500,9 @@ export default (config) => {
 
             case constants.REMOVE_GROUP:
                 return Object.assign({}, state, {...unset}, {tree: removeGroup(state.tree, action.path, action.config)});
+
+            case constants.REMOVE_ERROR:
+                return Object.assign({}, state, {...unset}, {tree: removeErrorGroup(state.tree, action.path, action.config)});
 
             case constants.ADD_RULE:
                 return Object.assign({}, state, {...unset}, {tree: addItem(state.tree, action.path, 'rule', action.id, action.properties, action.config)});
