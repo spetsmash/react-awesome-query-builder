@@ -68,11 +68,6 @@ export default class DateWidget extends PureComponent {
                         format={dateFormat}
                         value={dateValue}
                         onChange={this.handleChange}
-                        ranges={{
-                            Today: [moment(), moment()],
-                            'This Month': [moment().startOf('month'), moment().endOf('month')],
-                            'Lasrt Depostr': [moment().startOf('month'), moment().endOf('month')],
-                        }}
                         {...customProps}
                     />
                 ) : (
