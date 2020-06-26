@@ -56,6 +56,9 @@ export const getTreeBadFields = (tree) => {
                 _processNode(child, path.concat(id), lev + 1);
             });
         }
+        // else {
+        //     badFields.push('empty tree');
+        // }
     };
 
     if (tree)
@@ -84,8 +87,7 @@ export const setErrorEmptyValues = (tree) => {
             let field = properties.get('field');
             let value = properties.get('value');
             if (field) {
-                if (value && value.toJS().length > 0 && !value.toJS()[0]) {
-                    console.log(field);
+                if (value && value.toJS().length > 0 && value.toJS()[0] === undefined) {
                     newTree = newTree.setIn(expandTreePath(itemPath, 'properties', 'validity'), false);
                     newTree = newTree.setIn(expandTreePath(itemPath, 'properties', 'errorMessage'), 'No value selected');
                 }
