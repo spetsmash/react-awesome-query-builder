@@ -34,13 +34,13 @@ export const checkTree = (tree, config) => {
 }
 
 export const isValidTree = (tree) => {
-    return getTreeBadFields(tree).length == 0;
+    if (Array.from(tree).length <= 3) return false;
+    return getTreeBadFields(tree).length === 0;
 };
 
 export const validateEmptyValuesTree = (tree) => {
     return setErrorEmptyValues(tree);
 };
-
 
 function _fromJS(tree) {
   return fromJS(tree, function (key, value) {
