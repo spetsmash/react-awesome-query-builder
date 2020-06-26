@@ -34,7 +34,7 @@ export const checkTree = (tree, config) => {
 }
 
 export const isValidTree = (tree) => {
-    if (Array.from(tree).length <= 3) return false;
+    if (Array.from(tree).length < 3) return false;
     return getTreeBadFields(tree).length === 0;
 };
 

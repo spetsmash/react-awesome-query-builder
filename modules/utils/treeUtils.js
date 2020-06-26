@@ -56,9 +56,6 @@ export const getTreeBadFields = (tree) => {
                 _processNode(child, path.concat(id), lev + 1);
             });
         }
-        // else {
-        //     badFields.push('empty tree');
-        // }
     };
 
     if (tree)
