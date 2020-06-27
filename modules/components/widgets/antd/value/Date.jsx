@@ -46,6 +46,11 @@ export default class DateWidget extends PureComponent {
 
     };
 
+    disabledDate = (current) => {
+        // Can not select days before today and today
+        return current && current > moment().endOf('day');
+    };
+
     render() {
         const {placeholder, customProps, value, valueFormat, dateFormat, config, readonly, operator} = this.props;
         const {renderSize} = config.settings;
@@ -68,20 +73,21 @@ export default class DateWidget extends PureComponent {
                         format={dateFormat}
                         value={dateValue}
                         onChange={this.handleChange}
+                        disabledDate={this.disabledDate}
                         {...customProps}
                     />
                 ) : (
                     <DatePicker
                         disabled={readonly}
                         key="widget-date"
-                        placeholder={placeholder}
                         size={renderSize}
+                        defaultValue={placeholder}
                         format={dateFormat}
                         value={dateValue}
                         onChange={this.handleChange}
+                        disabledDate={this.disabledDate}
                         {...customProps}
                     />)}
-
        </>
         );
     }
