@@ -80,15 +80,14 @@ export default class DateWidget extends PureComponent {
                     <DatePicker
                         disabled={readonly}
                         key="widget-date"
-                        placeholder={placeholder}
                         size={renderSize}
+                        defaultValue={placeholder}
                         format={dateFormat}
                         value={dateValue}
                         onChange={this.handleChange}
                         disabledDate={this.disabledDate}
                         {...customProps}
                     />)}
-
        </>
         );
     }
