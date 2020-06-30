@@ -65,16 +65,20 @@ class RuleGroup extends Group {
   }
 
   errorMessageRequiredField(fields) {
-    const {selectedField, config} = this.props;
+    const {config} = this.props;
     let newFields = [...fields];
-    let label = config.fields[selectedField.split('.')[0]].subfields[selectedField.split('.')[1]].subfields.value.label;
-    let index = newFields.indexOf('value');
-    if (index !== -1) {
-      newFields.splice(index, 1, 'Amount');
+    // let label = config.fields[selectedField.split('.')[0]].subfields[selectedField.split('.')[1]].subfields.value.label;
+    let indexVal = newFields.indexOf('value');
+    let indexCur = newFields.indexOf('currency');
+    if (indexVal !== -1) {
+      newFields.splice(indexVal, 1, config.settings.amountLabel);
+    }
+    if (indexCur !== -1) {
+      newFields.splice(indexCur, 1, config.settings.currencyLabel);
     }
     newFields = newFields.map(el => el.charAt(0).toUpperCase() + el.slice(1));
        return <div className="rule--group-error">
-          <p><ExclamationCircleFilled className="icon-red"/> Please add the required parameter(s):
+          <p><ExclamationCircleFilled className="icon-red"/> {config.settings.addRequiredFieldMessage}
             <span> {newFields.join(', ')}</span>
           </p>
       </div>

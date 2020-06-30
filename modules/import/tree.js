@@ -38,8 +38,8 @@ export const isValidTree = (tree) => {
     return getTreeBadFields(tree).length === 0;
 };
 
-export const validateEmptyValuesTree = (tree) => {
-    return setErrorEmptyValues(tree);
+export const validateEmptyValuesTree = (tree, config) => {
+    return setErrorEmptyValues(tree, config);
 };
 
 function _fromJS(tree) {

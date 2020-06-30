@@ -568,7 +568,13 @@ export interface BehaviourSettings {
   immutableOpsMode?: Boolean,
   immutableValuesMode?: Boolean,
   showErrorMessage?: Boolean,
-    maxNumberOfRules?: Number
+  maxNumberOfRules?: Number,
+  // translations
+  requiredFieldsMessage?: String,
+  addRequiredFieldMessage?: String,
+  noValueMessage?: String,
+  amountLabel?: String,
+  currencyLabel?: String,
 };
 
 export interface OtherSettings {
