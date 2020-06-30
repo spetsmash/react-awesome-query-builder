@@ -69,7 +69,7 @@ export const getTreeBadFields = (tree) => {
  * @param {Immutable.Map} tree
  * @return {Immutable.Map} tree
  */
-export const setErrorEmptyValues = (tree) => {
+export const setErrorEmptyValues = (tree, config) => {
     let newTree = tree;
 
     function _processNode (item, path) {
@@ -86,7 +86,7 @@ export const setErrorEmptyValues = (tree) => {
             if (field) {
                 if (value && value.toJS().length > 0 && value.toJS()[0] === undefined) {
                     newTree = newTree.setIn(expandTreePath(itemPath, 'properties', 'validity'), false);
-                    newTree = newTree.setIn(expandTreePath(itemPath, 'properties', 'errorMessage'), 'No value selected');
+                    newTree = newTree.setIn(expandTreePath(itemPath, 'properties', 'errorMessage'), config.settings.noValueMessage);
                 }
             }
         }
@@ -112,7 +112,7 @@ export const setErrorEmptyValues = (tree) => {
         });
         if (requiredRules.length > 0) {
             newTree = newTree.setIn(expandTreePath(itemPath, 'properties', 'validity'), false);
-            newTree = newTree.setIn(expandTreePath(itemPath, 'properties', 'errorMessage'), 'Required fields are empty');
+            newTree = newTree.setIn(expandTreePath(itemPath, 'properties', 'errorMessage'), config.settings.requiredFieldsMessage);
         }
 
         return newTree;
