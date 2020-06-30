@@ -519,11 +519,13 @@ export interface LocaleSettings {
       title?: String,
       okText?: String,
       okType?: String,
+      cancelText?: String
   },
   removeGroupConfirmOptions?: {
     title?: String,
     okText?: String,
     okType?: String,
+    cancelText?: String
   },
 };
 
