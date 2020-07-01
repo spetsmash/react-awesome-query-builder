@@ -21,7 +21,6 @@ export default class DateWidget extends PureComponent {
 
     constructor(props) {
         super(props);
-
         const {valueFormat, value, setValue} = props;
         let mValue = value ? moment(value, valueFormat) : null;
         if (mValue && !mValue.isValid()) {
@@ -35,6 +34,7 @@ export default class DateWidget extends PureComponent {
     };
 
     handleChange = (_value) => {
+
         const {setValue, valueFormat} = this.props;
         if (Array.isArray(_value)) {
             setValue([_value[0].format(valueFormat), _value[1].format(valueFormat)], false);
@@ -81,7 +81,7 @@ export default class DateWidget extends PureComponent {
                         disabled={readonly}
                         key="widget-date"
                         size={renderSize}
-                        defaultValue={placeholder}
+                        defaultValue={dateValue}
                         format={dateFormat}
                         value={dateValue}
                         onChange={this.handleChange}

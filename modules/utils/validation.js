@@ -84,6 +84,7 @@ function validateRule (item, path, itemId, meta, c) {
 	let operatorOptions = properties.get('operatorOptions');
 	let valueSrc = properties.get('valueSrc');
 	let value = properties.get('value');
+	let validity = properties.get('validity');
 	const oldSerialized = {
 		field,
 		operator,
@@ -141,7 +142,7 @@ function validateRule (item, path, itemId, meta, c) {
 	valueSrc = properties.get('valueSrc');
 	value = properties.get('value');
 	let {newValue, newValueSrc} = 
-			getNewValueForFieldOp(config, oldConfig, properties, field, operator, null, true);
+			getNewValueForFieldOp(config, oldConfig, properties, field, operator, validity, null, true);
 	value = newValue;
 	valueSrc = newValueSrc;
 	properties = properties.set('value', value);
@@ -350,10 +351,11 @@ const validateFuncValue = (leftField, field, value, _valueSrc, valueType, config
  * @param {Immutable.Map} current
  * @param {string} newField
  * @param {string} newOperator
+ * @param {string} validity
  * @param {string} changedField
  * @return {object} - {canReuseValue, newValue, newValueSrc, newValueType}
  */
-export const getNewValueForFieldOp = function (config, oldConfig = null, current, newField, newOperator, changedField = null, canFix = true) {
+export const getNewValueForFieldOp = function (config, oldConfig = null, current, newField, newOperator, validity, changedField = null, canFix = true) {
 	if (!oldConfig)
 			oldConfig = config;
 	const currentField = current.get('field');
@@ -425,7 +427,7 @@ export const getNewValueForFieldOp = function (config, oldConfig = null, current
 							}
 					}
 			} else if (operatorCardinality == 1 && (firstWidgetConfig || newFieldConfig)) {
-					if (newFieldConfig.defaultValue !== undefined)
+					if (newFieldConfig.defaultValue !== undefined && validity)
 							v = newFieldConfig.defaultValue;
 					else if (newFieldConfig.fieldSettings && newFieldConfig.fieldSettings.defaultValue !== undefined)
 							v = newFieldConfig.fieldSettings.defaultValue;
