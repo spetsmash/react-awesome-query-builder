@@ -426,8 +426,8 @@ export const getNewValueForFieldOp = function (config, oldConfig = null, current
 									v = valueFixes[i];
 							}
 					}
-			} else if (operatorCardinality == 1 && (firstWidgetConfig || newFieldConfig)) {
-					if (newFieldConfig.defaultValue !== undefined && touched !== undefined && touched)
+			} else if (operatorCardinality == 1 && (firstWidgetConfig || newFieldConfig) && touched === false) {
+					if (newFieldConfig.defaultValue !== undefined && touched === false)
 							v = newFieldConfig.defaultValue;
 					else if (newFieldConfig.fieldSettings && newFieldConfig.fieldSettings.defaultValue !== undefined)
 							v = newFieldConfig.fieldSettings.defaultValue;
