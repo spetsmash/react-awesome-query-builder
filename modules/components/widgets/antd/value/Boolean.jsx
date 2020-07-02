@@ -16,7 +16,7 @@ export default class BooleanWidget extends PureComponent {
     }
 
     handleChange = (val) => {
-        this.props.setValue(val, false);
+        this.props.setValue(val, false, true);
     }
 
     static defaultProps = {

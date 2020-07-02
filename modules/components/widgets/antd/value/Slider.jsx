@@ -46,7 +46,7 @@ export default class SliderWidget extends PureComponent {
     if (val === '')
       val = undefined;
     if (__isInternal)
-      this.setState({internalValue: val});
+      this.setState({internalValue: val}, false, true);
     this.props.setValue(val, __isInternal);
   }
 

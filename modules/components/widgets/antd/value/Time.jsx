@@ -43,7 +43,7 @@ export default class TimeWidget extends PureComponent {
         }
         const value = _value && _value.isValid() ? _value.format(valueFormat) : undefined;
         if (value || _value === null)
-            setValue(value, false);
+            setValue(value, false, true);
     }
 
     render() {

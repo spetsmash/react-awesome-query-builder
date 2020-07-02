@@ -52,7 +52,7 @@ export default class TreeSelectWidget extends PureComponent {
       //`treeCheckStrictly` is on
       val = val.map(v => v.value)
     }
-    this.props.setValue(val, false);
+    this.props.setValue(val, false, true);
   }
 
   filterTreeNode = (input, option) => {

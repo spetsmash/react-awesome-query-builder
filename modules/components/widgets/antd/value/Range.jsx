@@ -33,7 +33,7 @@ export default class RangeWidget extends PureComponent {
   }
   
   handleChange = (value) => {
-    this.props.setValue(value, false);
+    this.props.setValue(value, false, true);
   }
 
   handleChangeFrom = (valueFrom) => {

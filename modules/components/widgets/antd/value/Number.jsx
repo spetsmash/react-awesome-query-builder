@@ -22,7 +22,7 @@ export default class NumberWidget extends PureComponent {
     if (val === '' || val === null || typeof val === 'string') {
       val = undefined;
     }
-    this.props.setValue(val, false);
+    this.props.setValue(val, false, true);
   };
 
   static defaultProps = {
