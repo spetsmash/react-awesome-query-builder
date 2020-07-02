@@ -143,7 +143,7 @@ function validateRule (item, path, itemId, meta, c) {
 	value = properties.get('value');
 	let {newValue, newValueSrc} = 
 			getNewValueForFieldOp(config, oldConfig, properties, field, operator, touched, null, true);
-	if (!value || !value.toJS()[0]) {
+	if (value === undefined || value.toJS()[0] === undefined) {
         value = newValue;
     }
 	valueSrc = newValueSrc;
