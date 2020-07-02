@@ -6,11 +6,11 @@ import Immutable  from 'immutable';
  * @return {Immutable.List}
  */
 export const expandTreePath = (path, ...suffix) =>
-  path.interpose('children1').withMutations((list) => {
-    list.skip(1);
-    list.push.apply(list, suffix);
-    return list;
-  });
+    path.interpose('children1').withMutations((list) => {
+        list.skip(1);
+        list.push.apply(list, suffix);
+        return list;
+    });
 
 
 /**
@@ -19,10 +19,10 @@ export const expandTreePath = (path, ...suffix) =>
  * @return {Immutable.List}
  */
 export const expandTreeSubpath = (path, ...suffix) =>
-  path.interpose('children1').withMutations((list) => {
-    list.push.apply(list, suffix);
-    return list;
-  });
+    path.interpose('children1').withMutations((list) => {
+        list.push.apply(list, suffix);
+        return list;
+    });
 
 
 /**
@@ -88,6 +88,9 @@ export const setErrorEmptyValues = (tree, config) => {
                     newTree = newTree.setIn(expandTreePath(itemPath, 'properties', 'validity'), false);
                     newTree = newTree.setIn(expandTreePath(itemPath, 'properties', 'errorMessage'), config.settings.noValueMessage);
                 }
+            } else {
+                newTree = newTree.setIn(expandTreePath(itemPath, 'properties', 'validity'), false);
+                newTree = newTree.setIn(expandTreePath(itemPath, 'properties', 'errorMessage'), config.settings.noValueMessage);
             }
         }
         const children = item.get('children1');
@@ -135,7 +138,7 @@ export const removePathsInTree = (tree) => {
     function _processNode (item, path) {
         const itemPath = path.push(item.get('id'));
         if (item.get('path')) {
-          newTree = newTree.removeIn(expandTreePath(itemPath, 'path'))
+            newTree = newTree.removeIn(expandTreePath(itemPath, 'path'))
         }
 
         const children = item.get('children1');
@@ -165,7 +168,7 @@ export const fixPathsInTree = (tree) => {
         const itemPath = path.push(item.get('id'));
         const currItemPath = item.get('path');
         if (!currItemPath || !currItemPath.equals(itemPath)) {
-          newTree = newTree.setIn(expandTreePath(itemPath, 'path'), itemPath)
+            newTree = newTree.setIn(expandTreePath(itemPath, 'path'), itemPath)
         }
 
         const children = item.get('children1');
@@ -217,7 +220,7 @@ export const getFlatTree = (tree) => {
         const itemsAfter = flat.length;
         const _bottom = realHeight;
         const height = info.height;
-        
+
         items[id] = {
             type: type,
             parent: path.length ? path[path.length-1] : null,
@@ -276,6 +279,6 @@ export const getTotalNodesCountInTree = (tree) => {
     };
 
     _processNode(tree, [], 0);
-    
+
     return cnt - 1; // -1 for root
 };
