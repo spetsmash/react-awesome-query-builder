@@ -33,13 +33,14 @@ export const setOperator = (config, path, operator) => ({
  * @param {boolean} flag
  * @param {boolean} __isInternal
  */
-export const setValue = (config, path, delta, value, valueType, flag,  __isInternal) => ({
+export const setValue = (config, path, delta, value, valueType, flag, touched,  __isInternal) => ({
   type: constants.SET_VALUE,
   path: path,
   delta: delta,
   value: value,
   valueType: valueType,
   flag: flag,
+  touched: touched,
   config: config,
   __isInternal: __isInternal
 });

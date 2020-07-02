@@ -17,7 +17,7 @@ export default class TextWidget extends PureComponent {
   handleChange = (ev) => {
     const v = ev.target.value;
     const val = v === '' ? undefined : v; // don't allow empty value
-    this.props.setValue(val, false);
+    this.props.setValue(val, false, true);
   }
 
   validateOnBlur() {

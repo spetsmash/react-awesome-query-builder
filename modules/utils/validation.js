@@ -84,7 +84,7 @@ function validateRule (item, path, itemId, meta, c) {
 	let operatorOptions = properties.get('operatorOptions');
 	let valueSrc = properties.get('valueSrc');
 	let value = properties.get('value');
-	let validity = properties.get('validity');
+	let touched = properties.get('touched');
 	const oldSerialized = {
 		field,
 		operator,
@@ -142,7 +142,7 @@ function validateRule (item, path, itemId, meta, c) {
 	valueSrc = properties.get('valueSrc');
 	value = properties.get('value');
 	let {newValue, newValueSrc} = 
-			getNewValueForFieldOp(config, oldConfig, properties, field, operator, validity, null, true);
+			getNewValueForFieldOp(config, oldConfig, properties, field, operator, touched, null, true);
 	value = newValue;
 	valueSrc = newValueSrc;
 	properties = properties.set('value', value);
@@ -178,7 +178,7 @@ function validateRule (item, path, itemId, meta, c) {
  * @return {array} [validError, fixedValue] - if validError === null and canFix == true, fixedValue can differ from value if was fixed
  * @param {boolean} flag false to validate onChange, true - onBlur
  */
-export const validateValue = (config, leftField, field, operator, value, valueType, valueSrc, flag, valueArr, canFix = false, isEndValue = false, isRawValue = true) => {
+export const validateValue = (config, leftField, field, operator, value, valueType, valueSrc, flag, touched, valueArr, canFix = false, isEndValue = false, isRawValue = true) => {
 	let validError = null;
 	let fixedValue = value;
 	let validResult;
@@ -187,7 +187,7 @@ export const validateValue = (config, leftField, field, operator, value, valueTy
 			if (valueSrc == 'field') {
 					[validError, fixedValue] = validateFieldValue(leftField, field, value, valueSrc, valueType, config, operator, isEndValue, canFix);
 			} else if (valueSrc == 'func') {
-					[validError, fixedValue] = validateFuncValue(leftField, field, value, valueSrc, valueType, config, flag, operator, isEndValue, flag, canFix);
+					[validError, fixedValue] = validateFuncValue(leftField, field, value, valueSrc, valueType, config, flag, touched, operator, isEndValue, flag, canFix);
 			} else if (valueSrc == 'value' || !valueSrc) {
 					[validError, fixedValue] = validateNormalValue(leftField, field, value, valueSrc, valueType, config, operator, isEndValue, canFix);
 			}
@@ -318,7 +318,7 @@ const validateFuncValue = (leftField, field, value, _valueSrc, valueType, config
 									const argValueSrc = argVal ? argVal.get('valueSrc') : undefined;
 									if (argValue !== undefined) {
 											const [argValidError, fixedArgVal] = validateValue(
-													config, leftField, fieldDef, operator, argValue, argConfig.type, argValueSrc, flag, canFix, Array.isArray(argValue), isEndValue, false
+													config, leftField, fieldDef, operator, argValue, argConfig.type, argValueSrc, flag, touched, canFix, Array.isArray(argValue), isEndValue, false
 											);
 											if (argValidError !== null) {
 													if (canFix) {
@@ -355,7 +355,7 @@ const validateFuncValue = (leftField, field, value, _valueSrc, valueType, config
  * @param {string} changedField
  * @return {object} - {canReuseValue, newValue, newValueSrc, newValueType}
  */
-export const getNewValueForFieldOp = function (config, oldConfig = null, current, newField, newOperator, validity, changedField = null, canFix = true) {
+export const getNewValueForFieldOp = function (config, oldConfig = null, current, newField, newOperator, touched, changedField = null, canFix = true) {
 	if (!oldConfig)
 			oldConfig = config;
 	const currentField = current.get('field');
@@ -427,7 +427,7 @@ export const getNewValueForFieldOp = function (config, oldConfig = null, current
 							}
 					}
 			} else if (operatorCardinality == 1 && (firstWidgetConfig || newFieldConfig)) {
-					if (newFieldConfig.defaultValue !== undefined && validity)
+					if (newFieldConfig.defaultValue !== undefined && touched !== undefined && touched)
 							v = newFieldConfig.defaultValue;
 					else if (newFieldConfig.fieldSettings && newFieldConfig.fieldSettings.defaultValue !== undefined)
 							v = newFieldConfig.fieldSettings.defaultValue;

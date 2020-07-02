@@ -41,7 +41,7 @@ export default class DateTimeWidget extends PureComponent {
         const {setValue, valueFormat} = this.props;
         const value = _value && _value.isValid() ? _value.format(valueFormat) : undefined;
         if (value || _value === null)
-            setValue(value);
+            setValue(value, false, true);
     }
 
     render() {

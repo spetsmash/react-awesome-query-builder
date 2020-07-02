@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { DatePicker } from 'antd';
 const { RangePicker } = DatePicker;
 import moment from 'moment';
+import boolean from "less/lib/less/functions/boolean";
 
 
 export default class DateWidget extends PureComponent {
@@ -19,13 +20,17 @@ export default class DateWidget extends PureComponent {
         valueFormat: PropTypes.string,
     };
 
+    wasChanged = false;
+
     constructor(props) {
         super(props);
-        const {valueFormat, value, setValue} = props;
+        const {valueFormat, value, setValue, field} = props;
         let mValue = value ? moment(value, valueFormat) : null;
         if (mValue && !mValue.isValid()) {
             setValue(null);
         }
+        let arr = field.split('.');
+
     }
 
     static defaultProps = {
@@ -41,7 +46,7 @@ export default class DateWidget extends PureComponent {
         } else {
             const value = _value && _value.isValid() ? _value.format(valueFormat) : undefined;
             if (value || _value === null)
-                setValue(value, false);
+                setValue(value, false, true);  // touched
         }
 
     };
@@ -81,7 +86,7 @@ export default class DateWidget extends PureComponent {
                         disabled={readonly}
                         key="widget-date"
                         size={renderSize}
-                        defaultValue={dateValue}
+                        // defaultValue={}
                         format={dateFormat}
                         value={dateValue}
                         onChange={this.handleChange}

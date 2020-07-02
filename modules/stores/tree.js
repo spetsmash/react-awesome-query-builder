@@ -348,10 +348,11 @@ const setOperator = (state, path, newOperator, config) => {
  * @param {*} value
  * @param {string} valueType
  * @param {boolean} flag
+ * @param {boolean} touched
  * @param {object} config
  * @param {boolean} __isInternal
  */
-const setValue = ( state, path, delta, value, valueType, flag, config, __isInternal) => {
+const setValue = ( state, path, delta, value, valueType, flag, touched, config, __isInternal) => {
     const fieldSeparator = config.settings.fieldSeparator;
     const showErrorMessage = config.settings.showErrorMessage;
     const valueSrc = state.getIn(expandTreePath(path, 'properties', 'valueSrc', delta + '')) || null;
@@ -386,6 +387,7 @@ const setValue = ( state, path, delta, value, valueType, flag, config, __isInter
         state = state.setIn(expandTreePath(path, 'properties', 'valueType', delta + ''), calculatedValueType);
         state = state.setIn(expandTreePath(path, 'properties', 'validity'), validResult);
         state = state.setIn(expandTreePath(path, 'properties', 'errorMessage'), errorMessage);
+        state = state.setIn(expandTreePath(path, 'properties', 'touched'), touched);
         state.__isInternalValueChange = __isInternal && !isLastEmpty;
     } else {
         if (isValid && true) {
@@ -394,6 +396,7 @@ const setValue = ( state, path, delta, value, valueType, flag, config, __isInter
                 state = state.setIn(expandTreePath(path, 'properties', 'valueType', delta + ''), null);
                 state = state.setIn(expandTreePath(path, 'properties', 'validity'), validResult);
                 state = state.setIn(expandTreePath(path, 'properties', 'errorMessage'), errorMessage);
+                state = state.setIn(expandTreePath(path, 'properties', 'touched'), touched);
             } else {
                 const lastValue = state.getIn(expandTreePath(path, 'properties', 'value', delta + ''));
                 const isLastEmpty = lastValue == undefined;
@@ -401,6 +404,7 @@ const setValue = ( state, path, delta, value, valueType, flag, config, __isInter
                 state = state.setIn(expandTreePath(path, 'properties', 'valueType', delta + ''), calculatedValueType);
                 state = state.setIn(expandTreePath(path, 'properties', 'validity'), validResult);
                 state = state.setIn(expandTreePath(path, 'properties', 'errorMessage'), errorMessage);
+                state = state.setIn(expandTreePath(path, 'properties', 'touched'), touched);
                 state.__isInternalValueChange = __isInternal && !isLastEmpty;
             }
         }
@@ -524,7 +528,7 @@ export default (config) => {
 
             case constants.SET_VALUE:
                 let set = {};
-                const tree = setValue(state.tree, action.path, action.delta, action.value, action.valueType, action.flag, action.config, action.__isInternal);
+                const tree = setValue(state.tree, action.path, action.delta, action.value, action.valueType, action.flag, action.touched, action.config, action.__isInternal);
                 if (tree.__isInternalValueChange)
                     set.__isInternalValueChange = true;
                 return Object.assign({}, state, {...unset, ...set}, {tree});
