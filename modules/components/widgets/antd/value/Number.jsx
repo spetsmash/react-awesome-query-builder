@@ -32,7 +32,7 @@ export default class NumberWidget extends PureComponent {
   };
 
   validateOnBlur() {
-    this.setValue(this.value, true);
+    this.setValue(this.value, true, true);
   }
 
   render() {
