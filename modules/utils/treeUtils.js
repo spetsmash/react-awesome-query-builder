@@ -78,6 +78,7 @@ export const setErrorEmptyValues = (tree, config) => {
         let properties = item.get('properties');
         let type = item.get('type');
         if (properties) {
+
             if (type && type === 'rule_group') {
                 newTree = _checkNestedRule(item.get('children1'), newTree, itemPath);
             }
@@ -88,7 +89,7 @@ export const setErrorEmptyValues = (tree, config) => {
                     newTree = newTree.setIn(expandTreePath(itemPath, 'properties', 'validity'), false);
                     newTree = newTree.setIn(expandTreePath(itemPath, 'properties', 'errorMessage'), config.settings.noValueMessage);
                 }
-            } else {
+            } else if (field === null) {
                 newTree = newTree.setIn(expandTreePath(itemPath, 'properties', 'validity'), false);
                 newTree = newTree.setIn(expandTreePath(itemPath, 'properties', 'errorMessage'), config.settings.noValueMessage);
             }
