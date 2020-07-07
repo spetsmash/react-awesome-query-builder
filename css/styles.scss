@@ -54,7 +54,6 @@ body.qb-dragging {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 1.25;
-  margin: 1rem;
 }
 
 .query-builder.qb-dragging {
@@ -522,6 +521,10 @@ div.tooltip-inner {
   }
 }
 
+.ant-select-selection--single {
+  pointer-events: none;
+}
+
 @mixin force_unvisible($what) {
   #{$what} {
     opacity: 0 !important;
@@ -576,7 +579,6 @@ $rule_actions: ".widget--valuesrc", ".rule--drag-handler", ".rule--header";
 .group-or-rule-container {
   margin-top: 10px;
   margin-bottom: 10px;
-  padding-right: 10px;
   &:first-child {
     margin-top: 0px !important;
   }
