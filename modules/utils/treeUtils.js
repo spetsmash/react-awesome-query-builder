@@ -26,7 +26,7 @@ export const expandTreeSubpath = (path, ...suffix) =>
 
 
 /**
- * @param {Immutable.Map} path
+ * @param {Immutable.Map} tree
  * @param {Immutable.List} path
  * @return {Immutable.Map}
  */
