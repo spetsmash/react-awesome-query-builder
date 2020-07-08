@@ -54,7 +54,6 @@ body.qb-dragging {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 1.25;
-  margin: 1rem;
 }
 
 .query-builder.qb-dragging {
@@ -576,7 +575,6 @@ $rule_actions: ".widget--valuesrc", ".rule--drag-handler", ".rule--header";
 .group-or-rule-container {
   margin-top: 10px;
   margin-bottom: 10px;
-  padding-right: 10px;
   &:first-child {
     margin-top: 0px !important;
   }
@@ -587,4 +585,12 @@ $rule_actions: ".widget--valuesrc", ".rule--drag-handler", ".rule--header";
 .group--children {
   margin-top: 10px;
   margin-bottom: 10px;
+}
+
+.rule-container {
+  padding-right: 10px;
+}
+
+.ant-select-arrow .anticon:not(.ant-select-suffix) {
+  pointer-events: none !important;
 }
