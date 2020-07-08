@@ -590,3 +590,7 @@ $rule_actions: ".widget--valuesrc", ".rule--drag-handler", ".rule--header";
 .rule-container {
   padding-right: 10px;
 }
+
+.ant-select-arrow .anticon:not(.ant-select-suffix) {
+  pointer-events: none !important;
+}
