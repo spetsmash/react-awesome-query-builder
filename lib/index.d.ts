@@ -41,6 +41,7 @@ type JsonGroup = {
   properties?: {
     conjunction: String,
     not?: Boolean,
+    numberOfRules?: number
   }
 };
 type JsonRuleGroup = {
