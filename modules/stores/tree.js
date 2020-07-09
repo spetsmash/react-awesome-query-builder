@@ -282,6 +282,7 @@ const setField = (state, path, newField, config) => {
         });
         state = state.setIn(expandTreePath(path, 'properties'), groupProperties);
         state = state.setIn(expandTreePath(path, 'children1'), new Immutable.OrderedMap());
+        state = addItem(state, path, 'rule', uuid(), defaultRuleProperties(config, newField), config);
         state = fixPathsInTree(state);
 
         return state;
