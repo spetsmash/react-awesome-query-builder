@@ -43,7 +43,7 @@ export const rulesMaxNumberReached = (tree, config) => {
     if (properties) {
         let numberOfRules = properties.get('numberOfRules');
         if (numberOfRules) {
-            return numberOfRules > config.settings.maxNumberOfRules
+            return numberOfRules >= config.settings.maxNumberOfRules
         } else {
             return false;
         }
