@@ -31,11 +31,24 @@ export const checkTree = (tree, config) => {
   if (!tree) return undefined;
   const extendedConfig = extendConfig(config);
   return validateTree(tree, null, extendedConfig, extendedConfig, true, true);
-}
+};
 
 export const isValidTree = (tree) => {
     if (Array.from(tree).length < 3) return false;
     return getTreeBadFields(tree).length === 0;
+};
+
+export const rulesMaxNumberReached = (tree, config) => {
+    let properties = tree.get('properties');
+    if (properties) {
+        let numberOfRules = properties.get('numberOfRules');
+        if (numberOfRules) {
+            return numberOfRules >= config.settings.maxNumberOfRules
+        } else {
+            return false;
+        }
+    }
+    return false;
 };
 
 export const validateEmptyValuesTree = (tree, config) => {

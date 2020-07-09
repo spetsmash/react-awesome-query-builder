@@ -9,7 +9,7 @@ import {useOnPropsChanged} from "../../utils/stuff";
 export default (Group) => {
   class GroupContainer extends Component {
     static propTypes = {
-      //tree: PropTypes.instanceOf(Immutable.Map).isRequired,
+      tree: PropTypes.any,
       item: PropTypes.any,
       config: PropTypes.object.isRequired,
       actions: PropTypes.object.isRequired, //{setConjunction: Funciton, removeGroup, addGroup, addRule, ...}
@@ -128,6 +128,7 @@ export default (Group) => {
           isDraggingMe ? <Group
             key={"dragging"}
             id={this.props.id}
+            path={this.props.path}
             isDraggingMe={isDraggingMe}
             isDraggingTempo={true}
             dragging={this.props.dragging}
@@ -146,7 +147,7 @@ export default (Group) => {
             config={this.props.config}
             children1={this.props.children1}
             actions={this.props.actions}
-            // tree={this.props.tree}
+            tree={this.props.tree}
             treeNodesCnt={this.props.treeNodesCnt}
             selectedField={this.props.field || null}
             parentField={this.props.parentField || null}
@@ -156,6 +157,7 @@ export default (Group) => {
           <Group
             key={this.props.id}
             id={this.props.id}
+            path={this.props.path}
             isDraggingMe={isDraggingMe}
             onDragStart={this.props.onDragStart}
             isRoot={isRoot}
@@ -173,7 +175,7 @@ export default (Group) => {
             config={this.props.config}
             children1={this.props.children1}
             actions={this.props.actions}
-            // tree={this.props.tree}
+            tree={this.props.tree}
             treeNodesCnt={this.props.treeNodesCnt}
             selectedField={this.props.field || null}
             parentField={this.props.parentField || null}

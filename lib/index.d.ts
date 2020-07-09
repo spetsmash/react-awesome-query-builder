@@ -41,6 +41,7 @@ type JsonGroup = {
   properties?: {
     conjunction: String,
     not?: Boolean,
+    numberOfRules?: number
   }
 };
 type JsonRuleGroup = {
@@ -84,6 +85,7 @@ export interface Utils {
   checkTree(tree: ImmutableTree, config: Config): ImmutableTree;
   isValidTree(tree: ImmutableTree): boolean;
   validateEmptyValuesTree(tree: ImmutableTree, config: Config): any;
+  rulesMaxNumberReached(tree: ImmutableTree, config: Config): boolean;
   // import
   loadFromJsonLogic(logicTree: JsonLogicTree, config: Config): ImmutableTree;
   // other

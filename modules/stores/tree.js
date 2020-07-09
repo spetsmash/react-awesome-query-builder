@@ -51,7 +51,7 @@ const addNewGroup = (state, path, properties, config) => {
  * @param {Immutable.Map} properties
  */
 const removeGroup = (state, path, config) => {
-    state = removeItem(state, path);
+    state = removeItem(state, path, config);
 
     const parentPath = path.slice(0, -1);
     const isEmptyGroup = !hasChildren(state, parentPath);
@@ -60,7 +60,16 @@ const removeGroup = (state, path, config) => {
     if (isEmptyGroup && !canLeaveEmpty) {
         state = addItem(state, parentPath, 'rule', uuid(), defaultRuleProperties(config), config);
     }
+    const rulesNumber = countRules(Utils.getTree(state).children1);
+    const pathRoot = state.get('path');
+    if (!config.settings.maxNumberOfRules || rulesNumber < config.settings.maxNumberOfRules) {
+
+        state = state.setIn(expandTreePath(pathRoot, 'properties', 'numberOfRules'), rulesNumber);
+    } else {
+        state = state.setIn(expandTreePath(pathRoot, 'properties', 'numberOfRules'), rulesNumber);
+    }
     state = fixPathsInTree(state);
+
     return state;
 };
 
@@ -69,7 +78,7 @@ const removeGroup = (state, path, config) => {
  * @param {Immutable.List} path
  */
 const removeRule = (state, path, config) => {
-    state = removeItem(state, path);
+    state = removeItem(state, path, config);
 
     const parentPath = path.pop();
     const parent = state.getIn(expandTreePath(parentPath));
@@ -84,6 +93,14 @@ const removeRule = (state, path, config) => {
         } else if (!canLeaveEmpty) {
             state = addItem(state, parentPath, 'rule', uuid(), defaultRuleProperties(config, parentField), config);
         }
+    }
+    const rulesNumber = countRules(Utils.getTree(state).children1);
+    const pathRoot = state.get('path');
+    if (!config.settings.maxNumberOfRules || rulesNumber < config.settings.maxNumberOfRules) {
+
+        state = state.setIn(expandTreePath(pathRoot, 'properties', 'numberOfRules'), rulesNumber);
+    } else {
+        state = state.setIn(expandTreePath(pathRoot, 'properties', 'numberOfRules'), rulesNumber);
     }
     state = fixPathsInTree(state);
     return state;
@@ -114,12 +131,16 @@ const setConjunction = (state, path, conjunction) =>
  * @param {object} config
  */
 const addItem = (state, path, type, id, properties, config) => {
-    const rulesNumber = countRules(Utils.getTree(state).children1);
-
-    if (!config.settings.maxNumberOfRules || rulesNumber < config.settings.maxNumberOfRules) {
+    let rulesNumber = countRules(Utils.getTree(state).children1);
+    const pathRoot = state.get('path');
+    if (!config.settings.maxNumberOfRules || rulesNumber-1  < config.settings.maxNumberOfRules) {
         state = state.mergeIn(expandTreePath(path, 'children1'), new Immutable.OrderedMap({
             [id]: new Immutable.Map({type, id, properties})
         }));
+         rulesNumber = countRules(Utils.getTree(state).children1);
+            state = state.setIn(expandTreePath(pathRoot, 'properties', 'numberOfRules'), rulesNumber);
+
+
     }
     state = fixPathsInTree(state);
     return state;
@@ -128,12 +149,15 @@ const addItem = (state, path, type, id, properties, config) => {
 /**
  * @param {Immutable.Map} state
  * @param {Immutable.List} path
+ * @param {object} config
  */
-const removeItem = (state, path) => {
+const removeItem = (state, path, config) => {
+
+
     state = state.deleteIn(expandTreePath(path));
     state = fixPathsInTree(state);
     return state;
-}
+};
 
 /**
  * @param {Immutable.Map} state

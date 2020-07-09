@@ -18,7 +18,7 @@ const DragIcon = () => (
 
 export class Group extends PureComponent {
   static propTypes = {
-    //tree: PropTypes.instanceOf(Immutable.Map).isRequired,
+    tree: PropTypes.any,
     treeNodesCnt: PropTypes.number,
     conjunctionOptions: PropTypes.object.isRequired,
     allowFurtherNesting: PropTypes.bool.isRequired,
@@ -153,7 +153,7 @@ export class Group extends PureComponent {
   }
 
   renderActions() {
-    const {config, addRule, addGroup} = this.props;
+    const {config, addRule, addGroup, tree} = this.props;
 
     return <GroupActions
       config={config}
@@ -163,6 +163,7 @@ export class Group extends PureComponent {
       canAddRule={this.canAddRule()}
       canDeleteGroup={this.canDeleteGroup()}
       removeSelf={this.removeSelf}
+      tree={tree}
     />;
   }
 
@@ -201,6 +202,7 @@ export class Group extends PureComponent {
         validity={item.get('properties').get('validity')}
         errorMessage={item.get('properties').get('errorMessage')}
         //path={props.path.push(item.get('id'))}
+        // path={props.path}
         path={item.get('path')}
         type={type}
         item={item}
@@ -208,7 +210,7 @@ export class Group extends PureComponent {
         config={config}
         actions={actions}
         children1={item.get('children1')}
-        //tree={props.tree}
+        tree={props.tree}
         treeNodesCnt={this.reordableNodesCnt()}
         onDragStart={onDragStart}
         childrenSelected={childrenSelected}

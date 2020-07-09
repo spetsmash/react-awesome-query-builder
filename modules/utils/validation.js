@@ -223,10 +223,10 @@ export const validateValue = (config, leftField, field, operator, value, valueTy
 			}
 	}
 
-	if (isRawValue && validError && validResult) {
-			validError = `Field ${field}: ${validError}`;
-			console.warn("[RAQB validate]", validError);
-	}
+	// if (isRawValue && validError && validResult) {
+	// 		validError = `Field ${field}: ${validError}`;
+	// 		console.warn("[RAQB validate]", validError);
+	// }
 
 	return [validError, validError ? value : fixedValue, validResult];
 };
