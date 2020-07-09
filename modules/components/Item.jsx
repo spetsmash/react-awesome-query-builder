@@ -31,7 +31,7 @@ const typeMap = {
       path={props.path}
       actions={props.actions}
       config={props.config}
-      // tree={props.tree}
+      tree={props.tree}
       item={props.item}
       treeNodesCnt={props.treeNodesCnt}
       onDragStart={props.onDragStart}
@@ -49,7 +49,7 @@ const typeMap = {
       path={props.path}
       actions={props.actions}
       config={props.config}
-      //tree={props.tree}
+      tree={props.tree}
       treeNodesCnt={props.treeNodesCnt}
       onDragStart={props.onDragStart}
       children1={props.children1}
@@ -65,7 +65,7 @@ const typeMap = {
 
 class Item extends PureComponent {
   static propTypes = {
-    //tree: PropTypes.instanceOf(Immutable.Map).isRequired,
+    tree: PropTypes.any.isRequired,
     config: PropTypes.object.isRequired,
     id: PropTypes.string.isRequired,
     type: PropTypes.oneOf(Object.keys(typeMap)).isRequired,

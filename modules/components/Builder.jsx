@@ -61,7 +61,7 @@ export default class Builder extends Component {
         config={this.props.config}
         actions={this.props.actions}
         children1={this.props.tree.get('children1') || new Map()}
-        //tree={this.props.tree}
+        tree={this.props.tree}
         treeNodesCnt={treeNodesCnt}
         onDragStart={this.props.onDragStart}
       />

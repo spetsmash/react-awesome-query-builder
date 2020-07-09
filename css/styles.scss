@@ -67,6 +67,7 @@ body.qb-dragging {
 .group {
   background: rgba(250, 240, 210, 0.5);
   border: 1px solid #DCC896;
+  margin-right: 10px;
 }
 
 .rule {
@@ -103,8 +104,9 @@ body.qb-dragging {
 
 .rule--group-error {
   border: 1px solid #ff00004a;
-  margin-right: 10px;
+  margin-right: 6px;
   background-color: #ff000012;
+  margin-bottom: 10px;
   p {
     margin: 10px;
     span {

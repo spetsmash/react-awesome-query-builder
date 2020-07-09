@@ -32,7 +32,6 @@ const countRules = (children) => {
 const addNewGroup = (state, path, properties, config) => {
     const groupUuid = uuid();
     const rulesNumber = countRules(Utils.getTree(state).children1);
-    const pathRoot = state.get('path');
 
     if (!config.settings.maxNumberOfRules || rulesNumber < config.settings.maxNumberOfRules) {
         state = addItem(state, path, 'group', groupUuid, defaultGroupProperties(config).merge(properties || {}), config);
@@ -41,10 +40,6 @@ const addNewGroup = (state, path, properties, config) => {
         // If we don't set the empty map, then the following merge of addItem will create a Map rather than an OrderedMap for some reason
         state = state.setIn(expandTreePath(groupPath, 'children1'), new Immutable.OrderedMap());
         state = addItem(state, groupPath, 'rule', uuid(), defaultRuleProperties(config), config);
-
-        state = state.setIn(expandTreePath(pathRoot, 'properties', 'numberOfRules'), rulesNumber + 1);
-    } else {
-        state = state.setIn(expandTreePath(pathRoot, 'properties', 'numberOfRules'), rulesNumber + 1);
     }
     state = fixPathsInTree(state);
     return state;
@@ -65,7 +60,16 @@ const removeGroup = (state, path, config) => {
     if (isEmptyGroup && !canLeaveEmpty) {
         state = addItem(state, parentPath, 'rule', uuid(), defaultRuleProperties(config), config);
     }
+    const rulesNumber = countRules(Utils.getTree(state).children1);
+    const pathRoot = state.get('path');
+    if (!config.settings.maxNumberOfRules || rulesNumber < config.settings.maxNumberOfRules) {
+
+        state = state.setIn(expandTreePath(pathRoot, 'properties', 'numberOfRules'), rulesNumber);
+    } else {
+        state = state.setIn(expandTreePath(pathRoot, 'properties', 'numberOfRules'), rulesNumber);
+    }
     state = fixPathsInTree(state);
+
     return state;
 };
 
@@ -89,6 +93,14 @@ const removeRule = (state, path, config) => {
         } else if (!canLeaveEmpty) {
             state = addItem(state, parentPath, 'rule', uuid(), defaultRuleProperties(config, parentField), config);
         }
+    }
+    const rulesNumber = countRules(Utils.getTree(state).children1);
+    const pathRoot = state.get('path');
+    if (!config.settings.maxNumberOfRules || rulesNumber < config.settings.maxNumberOfRules) {
+
+        state = state.setIn(expandTreePath(pathRoot, 'properties', 'numberOfRules'), rulesNumber);
+    } else {
+        state = state.setIn(expandTreePath(pathRoot, 'properties', 'numberOfRules'), rulesNumber);
     }
     state = fixPathsInTree(state);
     return state;
@@ -121,13 +133,11 @@ const setConjunction = (state, path, conjunction) =>
 const addItem = (state, path, type, id, properties, config) => {
     const rulesNumber = countRules(Utils.getTree(state).children1);
     const pathRoot = state.get('path');
-    if (!config.settings.maxNumberOfRules || rulesNumber < config.settings.maxNumberOfRules) {
+    if (!config.settings.maxNumberOfRules || rulesNumber - 1 < config.settings.maxNumberOfRules) {
         state = state.mergeIn(expandTreePath(path, 'children1'), new Immutable.OrderedMap({
             [id]: new Immutable.Map({type, id, properties})
         }));
-        state = state.setIn(expandTreePath(pathRoot, 'properties', 'numberOfRules'), rulesNumber + 1);
-    } else {
-        state = state.setIn(expandTreePath(pathRoot, 'properties', 'numberOfRules'), rulesNumber + 1);
+        state = state.setIn(expandTreePath(pathRoot, 'properties', 'numberOfRules'), rulesNumber+1);
     }
     state = fixPathsInTree(state);
     return state;
@@ -143,14 +153,6 @@ const removeItem = (state, path, config) => {
 
     state = state.deleteIn(expandTreePath(path));
     state = fixPathsInTree(state);
-    const rulesNumber = countRules(Utils.getTree(state).children1);
-    const pathRoot = state.get('path');
-    if (!config.settings.maxNumberOfRules || rulesNumber < config.settings.maxNumberOfRules) {
-
-        state = state.setIn(expandTreePath(pathRoot, 'properties', 'numberOfRules'), rulesNumber);
-    } else {
-        state = state.setIn(expandTreePath(pathRoot, 'properties', 'numberOfRules'), rulesNumber);
-    }
     return state;
 };
 
@@ -280,7 +282,6 @@ const setField = (state, path, newField, config) => {
         });
         state = state.setIn(expandTreePath(path, 'properties'), groupProperties);
         state = state.setIn(expandTreePath(path, 'children1'), new Immutable.OrderedMap());
-        state = addItem(state, path, 'rule', uuid(), defaultRuleProperties(config, newField), config);
         state = fixPathsInTree(state);
 
         return state;
