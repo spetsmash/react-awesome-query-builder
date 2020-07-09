@@ -131,13 +131,16 @@ const setConjunction = (state, path, conjunction) =>
  * @param {object} config
  */
 const addItem = (state, path, type, id, properties, config) => {
-    const rulesNumber = countRules(Utils.getTree(state).children1);
+    let rulesNumber = countRules(Utils.getTree(state).children1);
     const pathRoot = state.get('path');
-    if (!config.settings.maxNumberOfRules || rulesNumber - 1 < config.settings.maxNumberOfRules) {
+    if (!config.settings.maxNumberOfRules || rulesNumber-1  < config.settings.maxNumberOfRules) {
         state = state.mergeIn(expandTreePath(path, 'children1'), new Immutable.OrderedMap({
             [id]: new Immutable.Map({type, id, properties})
         }));
-        state = state.setIn(expandTreePath(pathRoot, 'properties', 'numberOfRules'), rulesNumber+1);
+         rulesNumber = countRules(Utils.getTree(state).children1);
+            state = state.setIn(expandTreePath(pathRoot, 'properties', 'numberOfRules'), rulesNumber);
+
+
     }
     state = fixPathsInTree(state);
     return state;
