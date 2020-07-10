@@ -180,7 +180,7 @@ function validateRule (item, path, itemId, meta, c) {
  * @return {array} [validError, fixedValue] - if validError === null and canFix == true, fixedValue can differ from value if was fixed
  * @param {boolean} flag false to validate onChange, true - onBlur
  */
-export const validateValue = (config, leftField, field, operator, value, valueType, valueSrc, flag, touched, valueArr, canFix = false, isEndValue = false, isRawValue = true) => {
+export const validateValue = (config, leftField, field, operator, value, valueType, valueSrc, flag,  valueArr, touched, canFix = false, isEndValue = false, isRawValue = true) => {
 	let validError = null;
 	let fixedValue = value;
 	let validResult;
