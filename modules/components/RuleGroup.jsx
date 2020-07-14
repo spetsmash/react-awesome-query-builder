@@ -126,9 +126,7 @@ class RuleGroup extends Group {
           }
         }
     if (requiredRules.length <= 0) {
-      setTimeout(() => {
         this.props.removeError();
-      }, 100);
     }
 
     this.arrRequiredFields = requiredRules;
