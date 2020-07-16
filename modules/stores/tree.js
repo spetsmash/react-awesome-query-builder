@@ -86,12 +86,13 @@ const removeRule = (state, path, config) => {
     const isParentRuleGroup = parent.get('type') == 'rule_group';
     const isEmptyGroup = !hasChildren(state, parentPath);
     const isEmptyRoot = isEmptyGroup && parentPath.size == 1;
-    const canLeaveEmpty = isEmptyGroup && (isParentRuleGroup ? true : config.settings.canLeaveEmptyGroup && !isEmptyRoot);
+    const canLeaveEmpty = isEmptyGroup && (config.settings.canLeaveEmptyGroup && !isEmptyRoot);
     if (isEmptyGroup) {
         if (isParentRuleGroup) {
             state = state.deleteIn(expandTreePath(parentPath));
-        } else if (!canLeaveEmpty) {
-            state = addItem(state, parentPath, 'rule', uuid(), defaultRuleProperties(config, parentField), config);
+        }
+        if (!canLeaveEmpty) {
+            state = addItem(state, state.get('path'), 'rule', uuid(), defaultRuleProperties(config, parentField), config);
         }
     }
     const rulesNumber = countRules(Utils.getTree(state).children1);
