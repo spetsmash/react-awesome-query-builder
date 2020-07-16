@@ -1,16 +1,20 @@
 import React from 'react';
 import { Button } from 'antd';
 import { PlusOutlined, PlusCircleOutlined, DeleteFilled } from '@ant-design/icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faTrashAlt,
+} from '@fortawesome/free-solid-svg-icons';
 
 export default ({type, onClick, label, config: {settings}, disabled}) => {
   const typeToIcon = {
     "addRule": <PlusOutlined />,
     "addGroup": <PlusCircleOutlined />,
-    "delRule": <DeleteFilled />, //?
-    "delGroup": <DeleteFilled />,
+    "delRule": <FontAwesomeIcon icon={faTrashAlt} size="1x" />,
+    "delGroup": <FontAwesomeIcon icon={faTrashAlt} size="1x" />,
 
     "addRuleGroup": <PlusOutlined />,
-    "delRuleGroup": <DeleteFilled />,
+    "delRuleGroup": <FontAwesomeIcon icon={faTrashAlt} size="1x" />,
   };
 
   const typeToClass = {
@@ -20,7 +24,7 @@ export default ({type, onClick, label, config: {settings}, disabled}) => {
     "delGroup": "action action--DELETE",
 
     "addRuleGroup": <PlusOutlined />,
-    "delRuleGroup": <DeleteFilled />,
+    "delRuleGroup": <FontAwesomeIcon icon={faTrashAlt} size="1x" />,
   };
 
   const typeToType = {

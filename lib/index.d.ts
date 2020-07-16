@@ -519,12 +519,14 @@ export interface LocaleSettings {
   valueSourcesPopupTitle?: String,
   removeRuleConfirmOptions?: {
       title?: String,
+      text?: String,
       okText?: String,
       okType?: String,
       cancelText?: String
   },
   removeGroupConfirmOptions?: {
     title?: String,
+    text?: String,
     okText?: String,
     okType?: String,
     cancelText?: String

@@ -43,6 +43,9 @@
 /** COMMON ********************************************************************/
 /******************************************************************************/
 
+body {
+  font-family: Arial,sans-serif;
+}
 
 body.qb-dragging {
   .ant-tooltip {
@@ -288,7 +291,7 @@ ul.ant-select-selection__rendered {
   }
 
   .action--DELETE {
-    margin-top: -1px;
+    margin-top: 0;
   }
 }
 
