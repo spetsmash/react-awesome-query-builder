@@ -86,13 +86,29 @@ const removeRule = (state, path, config) => {
     const isParentRuleGroup = parent.get('type') == 'rule_group';
     const isEmptyGroup = !hasChildren(state, parentPath);
     const isEmptyRoot = isEmptyGroup && parentPath.size == 1;
-    const canLeaveEmpty = isEmptyGroup && (config.settings.canLeaveEmptyGroup && !isEmptyRoot);
+    const canLeaveEmpty = isEmptyGroup && config.settings.canLeaveEmptyGroup && !isEmptyRoot;
     if (isEmptyGroup) {
         if (isParentRuleGroup) {
             state = state.deleteIn(expandTreePath(parentPath));
+
+            // taking the parent group
+            const groupPath = parent.get('path').slice(0, -1);
+            const groupItem = getItemByPath(state, groupPath);
+            if (parent.get('path').slice(-2, -1).toArray()[0] !== state.get('id') && groupItem.get('children1').size === 0) {
+                state = removeGroup(state, groupPath, config)
+            }
+
         }
-        if (!canLeaveEmpty) {
-            state = addItem(state, state.get('path'), 'rule', uuid(), defaultRuleProperties(config, parentField), config);
+        const rulesNumber = countRules(Utils.getTree(state).children1);
+        if(rulesNumber === 0) {
+            state = addItem(state, state.get('path'), 'rule', uuid(), defaultRuleProperties(config), config);
+        }
+
+        if (!isParentRuleGroup && !canLeaveEmpty && state.getIn(expandTreePath(parentPath)).get('children1').size === 0) {
+            state = addItem(state, parentPath, 'rule', uuid(), defaultRuleProperties(config, parentField), config);
+            state = state.deleteIn(expandTreePath(parent.get('path')));
+        } else if (!isParentRuleGroup && !canLeaveEmpty && parent.get('children1').size !== 0) {
+            state = state.deleteIn(expandTreePath(parent.get('path')));
         }
     }
     const rulesNumber = countRules(Utils.getTree(state).children1);
@@ -244,6 +260,14 @@ const moveItem = (state, fromPath, toPath, placement, config) => {
         state = state.updateIn(expandTreePath(sourcePath, 'children1'), (_oldChildren) => newSourceChildren);
     if (!isTargetInsideSource)
         state = state.updateIn(expandTreePath(targetPath, 'children1'), (_oldChildren) => newTargetChildren);
+
+    const groupPath = from.get('path').slice(0, -1);
+    const groupItem = getItemByPath(state, groupPath);
+    if (from.get('path').slice(-2, -1).toArray()[0] !== state.get('id') && groupItem.get('children1').size === 0) {
+        state = removeGroup(state, groupPath, config)
+    }
+
+
 
     state = fixPathsInTree(state);
     return state;
