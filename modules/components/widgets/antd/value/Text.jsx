@@ -47,7 +47,7 @@ export default class TextWidget extends PureComponent {
           {mask ?
               (
                   <MaskedInput
-                      mask={[/\d./]}
+                      mask={mask}
                       guide={false}
                       value={_value}
                       showMask
