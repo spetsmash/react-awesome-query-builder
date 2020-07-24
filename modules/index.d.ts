@@ -164,7 +164,7 @@ export interface BaseWidget {
   customProps?: {},
   type: String,
   jsType?: String,
-  mask?: Array<String> | String,
+  mask?: any,
   placeholderInput?: String,
   factory: Factory<WidgetProps>,
   valueSrc?: ValueSource,
