@@ -38,9 +38,9 @@ export default class TextWidget extends PureComponent {
     }
   }
   render() {
-    const {config, placeholder, customProps, value, readonly, mask, operator} = this.props;
+    const {config, placeholder, placeholderInput, customProps, value, readonly, mask} = this.props;
     const {renderSize} = config.settings;
-    const _value = value != undefined ? value : null;
+    const _value = value !== undefined ? value : null;
 
     return (
         <Col>
@@ -61,7 +61,7 @@ export default class TextWidget extends PureComponent {
                                 onChange={this.handleChange}
                                 key="widget-text"
                                 size={renderSize}
-                                placeholder={placeholder}
+                                placeholder={placeholderInput || placeholder}
                                 onBlur={this.validateOnBlur.bind(this.props)}
                             />)}} />
               ) : (
