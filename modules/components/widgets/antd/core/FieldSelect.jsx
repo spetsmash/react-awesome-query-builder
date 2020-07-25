@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Tooltip, Select } from 'antd';
+import { Tooltip, Select, Typography } from 'antd';
 import {BUILT_IN_PLACEMENTS, SELECT_WIDTH_OFFSET_RIGHT, calcTextWidth} from "../../../../utils/stuff";
 import PropTypes from 'prop-types';
 const { Option, OptGroup } = Select;
@@ -57,20 +57,29 @@ export default class FieldSelect extends PureComponent {
 
       const fieldSelectItems = this.renderSelectItems(items, childrenSelected);
 
-      let res = (
-          <Select
-              dropdownAlign={dropdownAlign}
-              dropdownMatchSelectWidth={false}
-              style={{ width }}
-              placeholder={placeholder}
-              size={config.settings.renderSize}
-              onChange={this.onChange}
-              value={selectedKey || undefined}
-              filterOption={this.filterOption}
-              disabled={readonly}
-              {...customProps}
-          >{fieldSelectItems}</Select>
-      );
+      let res;
+      if (placeholder && items  && items.length === 1) {
+          res = <div className='single-operator'>
+              <span>
+              {selectedLabel}
+                </span>
+              </div>
+      } else  {
+          res = (
+              <Select
+                  dropdownAlign={dropdownAlign}
+                  dropdownMatchSelectWidth={false}
+                  style={{ width }}
+                  placeholder={placeholder}
+                  size={config.settings.renderSize}
+                  onChange={this.onChange}
+                  value={selectedKey || undefined}
+                  filterOption={this.filterOption}
+                  disabled={readonly}
+                  {...customProps}
+              >{fieldSelectItems}</Select>
+          );
+      }
 
       // if (tooltipText && !selectedOpts.tooltip) {
       //   res = <Tooltip title={tooltipText}>{res}</Tooltip>;

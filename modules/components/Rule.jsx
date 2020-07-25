@@ -270,7 +270,7 @@ class OperatorWrapper extends PureComponent {
             </Col>;
         const hiddenOperator = showOperatorLabel &&
             <Col key={"operators-for-"+(selectedFieldPartsLabels || []).join("_")} className="rule--operator">
-                <div className="rule--operator">
+                <div className="rule--operator single-operator">
                     {config.settings.showLabels ?
                         <label>&nbsp;</label>
                     : null}
