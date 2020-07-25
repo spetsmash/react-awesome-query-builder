@@ -10,14 +10,25 @@ import loadedInitValue from './init_value';
 import loadedInitLogic from './init_logic';
 
 const stringify = JSON.stringify;
-const {queryBuilderFormat, jsonLogicFormat, queryString, mongodbFormat, sqlFormat, getTree, checkTree, loadTree, uuid, loadFromJsonLogic, isValidTree} = Utils;
+const {queryBuilderFormat, jsonLogicFormat, queryString, mongodbFormat, sqlFormat, getTree, checkTree, loadTree, uuid, loadFromJsonLogic, isValidTree, validateEmptyValuesTree, rulesMaxNumberReached} = Utils;
 const preStyle = { backgroundColor: 'darkgrey', margin: '10px', padding: '10px' };
 const preErrorStyle = { backgroundColor: 'lightpink', margin: '10px', padding: '10px' };
 
 const initialSkin = "antd";
-const emptyInitValue: JsonTree = {id: uuid(), type: "group"};
+const emptyInitValue: JsonTree = {id: uuid(), type: "group", properties: {conjunction: "AND"}, children1: {
+        [Utils.uuid()]: {
+            type: 'rule',
+            properties: {
+                field: null,
+                operator: null,
+                value: [],
+                valueSrc: [],
+            },
+        },
+    },};
+// const emptyInitValue: JsonTree = {id: uuid(), type: "group"};
 const loadedConfig = loadConfig(initialSkin);
-let initValue: JsonTree = loadedInitValue && Object.keys(loadedInitValue).length > 0 ? loadedInitValue as JsonTree : emptyInitValue;
+let initValue: JsonTree =  emptyInitValue;
 let initLogic: JsonLogicTree = loadedInitLogic && Object.keys(loadedInitLogic).length > 0 ? loadedInitLogic as JsonLogicTree : undefined;
 let initTree;
 initTree = checkTree(loadTree(initValue), loadedConfig);
@@ -70,6 +81,7 @@ export default class DemoQueryBuilder extends Component<{}, DemoQueryBuilderStat
         </select>
         <button onClick={this.resetValue}>reset</button>
         <button onClick={this.clearValue}>clear</button>
+        <button onClick={this.checkEmptyTree}>checkTree</button>
 
         <div className="query-builder-result">
           {this.renderResult(this.state)}
@@ -107,6 +119,12 @@ export default class DemoQueryBuilder extends Component<{}, DemoQueryBuilderStat
       });
     };
 
+    checkEmptyTree = () => {
+        this.setState({
+            tree: validateEmptyValuesTree(this.immutableTree, this.state.config)
+        });
+    };
+
     renderBuilder = (props: BuilderProps) => (
       <div className="query-builder-container" style={{padding: '10px'}}>
           <div className="query-builder qb-lite">
@@ -119,6 +137,7 @@ export default class DemoQueryBuilder extends Component<{}, DemoQueryBuilderStat
       this.immutableTree = immutableTree;
       this.config = config;
       this.updateResult();
+        // console.log('rules reached the max number ' + rulesMaxNumberReached (immutableTree, config));
       const jsonTree = getTree(immutableTree); //can be saved to backend
     }
 
@@ -129,7 +148,8 @@ export default class DemoQueryBuilder extends Component<{}, DemoQueryBuilderStat
     renderResult = ({tree: immutableTree, config} : {tree: ImmutableTree, config: Config}) => {
       const {logic, data, errors} = jsonLogicFormat(immutableTree, config);
       const isValid = isValidTree(immutableTree);
-      console.log(isValid);
+
+      // console.log(isValid);
 
       return (
       <div>

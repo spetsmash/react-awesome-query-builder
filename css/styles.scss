@@ -599,3 +599,10 @@ $rule_actions: ".widget--valuesrc", ".rule--drag-handler", ".rule--header";
 .ant-select-arrow .anticon:not(.ant-select-suffix) {
   pointer-events: none !important;
 }
+
+.single-operator {
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 14px;
+  font-variant: tabular-nums;
+  margin-left: 0;
+}
