@@ -60,9 +60,9 @@ export default class FieldSelect extends PureComponent {
       let res;
       if (placeholder && items  && items.length === 1) {
           res = <div className='single-operator'>
-              <Typography.Text>
+              <span>
               {selectedLabel}
-          </Typography.Text>
+                </span>
               </div>
       } else  {
           res = (
