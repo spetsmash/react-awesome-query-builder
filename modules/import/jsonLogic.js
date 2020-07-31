@@ -88,7 +88,8 @@ const convertFromLogic = (logic, conv, config, expectedType, meta, not = false, 
       || convertFunc(op, vals, conv, config, not, fieldConfig, meta) 
       || convertVal(logic, fieldConfig, widget, config, meta);
   } else if(expectedType == 'rule') {
-    ret = convertConj(op, vals, conv, config, not, meta) 
+
+    ret = convertRuleGroup(op, vals, conv, config, not, meta) || convertConj(op, vals, conv, config, not, meta)
     || convertOp(op, vals, conv, config, not, meta);
   }
 
@@ -355,6 +356,58 @@ const convertOp = (op, vals, conv, config, not, meta) => {
       valueType: convertedArgs.map(v => v.valueType),
     }
   };
+};
+
+const convertRuleGroup = (op, vals, conv, config, not, meta) => {  ///TODO
+
+  const conjKey = conv.conjunctions[op];
+
+  if (conjKey) {
+    let resultObject = vals.reduce((acc, el) => Object.assign(acc,el),{});
+
+    // console.log(resultObject)
+    let rulesOnly = Object.keys(resultObject).some(el => el === 'and'  || el === 'or');
+
+    let field = undefined;
+    if(!rulesOnly && vals.length > 1) {
+      for (let obj of vals) {
+        for (let [_, value] of Object.entries(obj)) {
+          for (let v of value) {
+            if (v.var) {
+              let str = v.var.split('.');
+              if(str.length === 3) {
+                str = str.slice(0, 2).join('.')
+              } else {
+                str = str[0]
+              }
+              if (!field) {
+                field = str;
+              } else {
+                if (field !== str) {
+                  return undefined;
+                }
+              }
+            }
+          }
+        }
+      }
+      let children = vals
+          .map(v => convertFromLogic(v, conv, config, 'rule', meta, false))
+          .filter(r => r !== undefined)
+          .reduce((acc, r) => ({...acc, [r.id] : r}), {});
+      return {
+        type: "rule_group",
+        id: uuid(),
+        children1: children,
+        properties: {
+          conjunction: conjKey,
+          field: field
+        }
+      };
+    }
+  }
+
+  return undefined;
 };
 
 const isLogic = (logic) => (
