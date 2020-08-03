@@ -1,7 +1,8 @@
 # react-awesome-query-builder
-[![Financial Contributors on Open Collective](https://opencollective.com/react-awesome-query-builder/all/badge.svg?label=financial+contributors)](https://opencollective.com/react-awesome-query-builder) [![npm](https://img.shields.io/npm/v/react-awesome-query-builder.svg)](https://www.npmjs.com/package/react-awesome-query-builder) [![github](https://img.shields.io/github/package-json/v/ukrbublik/react-awesome-query-builder.svg)](https://github.com/ukrbublik/react-awesome-query-builder/packages/48416) [![travis](https://travis-ci.org/ukrbublik/react-awesome-query-builder.svg?branch=master)](https://github.com/ukrbublik/react-awesome-query-builder)
+[![npm](https://img.shields.io/npm/v/react-awesome-query-builder.svg)](https://www.npmjs.com/package/react-awesome-query-builder) [![demo](https://img.shields.io/github/package-json/v/ukrbublik/react-awesome-query-builder.svg)](https://ukrbublik.github.io/react-awesome-query-builder/) [![travis](https://travis-ci.org/ukrbublik/react-awesome-query-builder.svg?branch=master)](https://github.com/ukrbublik/react-awesome-query-builder) [![codecov](https://codecov.io/gh/ukrbublik/react-awesome-query-builder/branch/master/graph/badge.svg)](https://codecov.io/gh/ukrbublik/react-awesome-query-builder) [![Financial Contributors on Open Collective](https://opencollective.com/react-awesome-query-builder/all/badge.svg?label=financial+contributors)](https://opencollective.com/react-awesome-query-builder)
 
-[![Open in codesandbox.io](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/ukrbublik/react-awesome-query-builder/tree/master/sandbox?module=%2Fsrc%2Fdemo%2Fconfig.js)
+
+[![Open in codesandbox.io](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/ukrbublik/react-awesome-query-builder/tree/master/sandbox?file=/src/demo/config_simple.tsx)
 
 User-friendly React component to build queries.
 
@@ -22,7 +23,7 @@ Using awesome [Ant Design](https://ant.design/) v4 for widgets
 - Comparison operators can be:
   - binary (== != < > ..)
   - unary (is empty, is null)
-  - 'between' (for numbers)
+  - 'between' (for numbers, dates, times)
   - complex operators like 'proximity'
 - Values of fields can be compared with:
   - values
@@ -86,11 +87,13 @@ const config = {
         label: 'Color',
         type: 'select',
         valueSources: ['value'],
-        listValues: [
-          { value: 'yellow', title: 'Yellow' },
-          { value: 'green', title: 'Green' },
-          { value: 'orange', title: 'Orange' }
-        ],
+        fieldSettings: {
+          listValues: [
+            { value: 'yellow', title: 'Yellow' },
+            { value: 'green', title: 'Green' },
+            { value: 'orange', title: 'Orange' }
+          ],
+        }
     },
     is_promotion: {
         label: 'Promo?',
@@ -164,7 +167,7 @@ Props:
 *Notes*:
 - If you put query builder component inside [Material-UI](https://github.com/mui-org/material-ui)'s `<Dialog />` or `<Popover />`, please:
   - use prop `disableEnforceFocus={true}` for dialog or popver
-  - set css `.MuiPopover-root, .MuiDialog-root { z-index: 1000 !important; }`
+  - set css `.MuiPopover-root, .MuiDialog-root { z-index: 900 !important; }` (or 1000 for AntDesign v3)
 
 ### `<Builder />`
 Render this component only inside `Query.renderBuilder()` like in example above:
@@ -191,7 +194,10 @@ Wrapping in `div.query-builder-container` is necessary if you put query builder 
   You can use it to load saved value from backend and pass as `value` prop to `<Query>` (don't forget to also apply `checkTree()`).
   #### checkTree (immutableValue, config) -> Immutable
   Validate query value corresponding to config. 
-  Invalid parts of query (eg. if field was removed from config) will be deleted.
+  Invalid parts of query (eg. if field was removed from config) will be always deleted. 
+  Invalid values (values not passing `validateValue` in config, bad ranges) will be deleted if `showErrorMessage` is false OR marked with errors if `showErrorMessage` is true.
+  #### isValidTree (immutableValue) -> Boolean
+  If `showErrorMessage` in config.settings is true, use this method to check is query has bad values.
 - Export:
   #### queryString (immutableValue, config, isForDisplay) -> String
   Convert query value to custom string representation. `isForDisplay` = true can be used to make string more "human readable".
@@ -230,21 +236,22 @@ Then to enable new widgets you need to create config overrides like this:
 ## Development
 To build the component locally, clone this repo then run:  
 `npm install`  
-`npm run examples`  
+`npm start`  
 Then open localhost:3001 in a browser.
 
 Scripts:
-- `npm run examples` - Builds with webpack the examples and runs a dev-server on localhost:3001.
-- `npm run build-examples` - Builds with webpack the examples. Output path: `examples`
-- `npm run build-npm` - Builds a npm module. Output path: `lib`
-
-The repo sticks in general to the [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript).
+- `npm test` - Run tests with Karma and update coverage. Recommended before commits.
+- `npm run lint` - Run ESLint. Recommended before commits.
+- `npm run lint-fix` - Run ESLint with `--fix` option. Recommended before commits.
+- `npm run build-examples` - Build examples with webpack. Output path: `examples`
+- `npm run build-npm` - Build npm module that can be published. Output path: `lib`
 
 Feel free to open PR to add new reusable types/widgets/operators (eg., regex operator for string, IP type & widget).  
 Pull Requests are always welcomed :)
 
 
 ## Contributors
+
 
 ### Code Contributors
 
@@ -273,6 +280,12 @@ Support this project with your organization. Your logo will show up here with a 
 <a href="https://opencollective.com/react-awesome-query-builder/organization/7/website"><img src="https://opencollective.com/react-awesome-query-builder/organization/7/avatar.svg"></a>
 <a href="https://opencollective.com/react-awesome-query-builder/organization/8/website"><img src="https://opencollective.com/react-awesome-query-builder/organization/8/avatar.svg"></a>
 <a href="https://opencollective.com/react-awesome-query-builder/organization/9/website"><img src="https://opencollective.com/react-awesome-query-builder/organization/9/avatar.svg"></a>
+
+
+react-awesome-query-builder is being sponsored by the following tool; please help to support us by taking a look and signing up to a free trial
+
+<!--<a href="https://tracking.gitads.io/?repo=react-awesome-query-builder"> <img src="https://images.gitads.io/react-awesome-query-builder" alt="GitAds"/> </a>-->
+
 
 ## License
 MIT. See also `LICENSE.txt`

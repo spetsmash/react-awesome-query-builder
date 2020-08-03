@@ -1,4 +1,4 @@
-import * as Widgets from '../components/widgets';
+import * as Widgets from "../components/widgets";
 import React from "react";
 const {
   VanillaFieldSelect,
@@ -13,9 +13,9 @@ const {
 export const settings = {
   formatField: (field, parts, label2, fieldDefinition, config, isForDisplay) => {
     if (isForDisplay)
-        return label2;
+      return label2;
     else
-        return field;
+      return field;
   },
 
   renderField: (props) => <VanillaFieldSelect {...props} />,
@@ -29,23 +29,30 @@ export const settings = {
   renderConfirm: vanillaConfirm,
 
   valueSourcesInfo: {
-      value: {},
+    value: {},
   },
-  fieldSeparator: '.',
-  fieldSeparatorDisplay: '.',
+  fieldSeparator: ".",
+  fieldSeparatorDisplay: ".",
   renderSize: "small",
   maxLabelsLength: 100,
   hideConjForOne: true,
   canReorder: true,
   canRegroup: true,
   showNot: true,
-  groupActionsPosition: 'topRight', // oneOf [topLeft, topCenter, topRight, bottomLeft, bottomCenter, bottomRight]
-  setOpOnChangeField: ['keep', 'default'], // 'default' (default if present), 'keep' (keep prev from last field), 'first', 'none'
+  canShortMongoQuery: true,
+  groupActionsPosition: "topRight", // oneOf [topLeft, topCenter, topRight, bottomLeft, bottomCenter, bottomRight]
+  setOpOnChangeField: ["keep", "default"], // 'default' (default if present), 'keep' (keep prev from last field), 'first', 'none'
+
+  convertableWidgets: {
+    "number": ["slider", "rangeslider"],
+    "slider": ["number", "rangeslider"],
+    "rangeslider": ["number", "slider"],
+  },
 
   // localization
   locale: {
-    short: 'en',
-    full: 'en-US',
+    short: "en",
+    full: "en-US",
   },
   valueLabel: "Value",
   valuePlaceholder: "Value",

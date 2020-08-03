@@ -1,4 +1,37 @@
 # Changelog
+- 2.1.7
+  - Fixed TS def for conjunctionOptions (#247)
+- 2.1.6
+  - Temporary disable AntDesign 4.5.0+ because of "Invalid hook call" problem
+- 2.1.4
+  - Fixed issue #249 with importing rules with group fields from JsonLogic format
+- 2.1.3
+  - Fixed issue #255 with reordering
+- 2.1.2
+  - Added config `maxNumberOfRules`
+  - Bugfix: respect `maxNesting` and `canLeaveEmptyGroup` settings during drag-n-drop
+  - Enabled ESLint for examples with TS
+- 2.1.1
+  - Fixed export of `not_like` op to JsonLogic
+- 2.1.0
+  - Added displaying of rule validation errors, see `showErrorMessage` in config.settings
+  - Added `QbUtils.isValidTree()`
+  - `validateValue` moved from widget settings to field's `fieldSettings`
+  - Added ESLint (unused vars & props are off for now)
+- 2.0.11
+  - Added `starts_with`, `ends_with` operators for text type
+- 2.0.10
+  - Fixed bug with missing `funcs` in config
+- 2.0.9
+  - Fixed issues #215, #214, #208
+  - Fixed `validateValue`
+  - Simpler sandbox demo
+- 2.0.8
+  - Fixed issue #207
+- 2.0.7
+  - Added `canShortMongoQuery` to `config.settings`
+- 2.0.6
+  - Fixed issue #176
 - 2.0.5
   - Fixed TS types. Updated sandbox to TS
 - 2.0.4

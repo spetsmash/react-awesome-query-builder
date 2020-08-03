@@ -1,7 +1,8 @@
-import uuid from '../utils/uuid';
-import {defaultRuleProperties, defaultGroupProperties} from '../utils/defaultUtils';
-import * as constants from '../constants';
-import Immutable from 'immutable';
+import uuid from "../utils/uuid";
+import {defaultRuleProperties, defaultGroupProperties} from "../utils/defaultUtils";
+import * as constants from "../constants";
+import Immutable from "immutable";
+
 
 
 /**
@@ -22,7 +23,8 @@ export const addRule = (config, path, properties) => ({
   type: constants.ADD_RULE,
   path: path,
   id: uuid(),
-  properties: defaultRuleProperties(config).merge(properties || {})
+  properties: defaultRuleProperties(config).merge(properties || {}),
+  config: config
 });
 
 /**
@@ -41,10 +43,10 @@ export const removeRule = (config, path) => ({
  * @param {Immutable.Map} properties
  */
 export const addGroup = (config, path, properties) => ({
-    type: constants.ADD_NEW_GROUP,
-    path: path,
-    properties: defaultGroupProperties(config).merge(properties || {}),
-    config: config
+  type: constants.ADD_NEW_GROUP,
+  path: path,
+  properties: defaultGroupProperties(config).merge(properties || {}),
+  config: config
 });
 
 /**
@@ -52,9 +54,9 @@ export const addGroup = (config, path, properties) => ({
  * @param {Immutable.List} path
  */
 export const removeGroup = (config, path) => ({
-    type: constants.REMOVE_GROUP,
-    path: path,
-    config: config
+  type: constants.REMOVE_GROUP,
+  path: path,
+  config: config
 });
 
 /**

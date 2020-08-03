@@ -6,14 +6,7 @@ export default
         {
           "var": "user.login"
         },
-        {
-          "method": [
-            {
-              "var": "user.firstName"
-            },
-            "toLowerCase"
-          ]
-        }
+        "batman"
       ]
     },
     {
@@ -33,4 +26,4 @@ export default
       ]
     }
   ]
-}
+};

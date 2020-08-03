@@ -76,6 +76,22 @@ body.qb-dragging {
   padding: 10px;
 }
 
+.rule-with-error .rule {
+  border: 1px solid #e0a1a1;
+}
+
+.rule--body--wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.rule--error {
+  color: red;
+  margin-bottom: -5px;
+  margin-top: 5px;
+}
+
 .group-or-rule {
   border-radius: 5px;
   position: relative;
@@ -164,7 +180,7 @@ ul.ant-select-selection__rendered {
   }
 
 
-  &.rule_group--children > .group-or-rule-container:first-child > .group-or-rule {
+  &.hide--conjs > .group-or-rule-container:first-child > .group-or-rule {
       &::before {
         display: none;
       }
@@ -174,13 +190,21 @@ ul.ant-select-selection__rendered {
       }
   }
 
+  &.rule_group--children > .group-or-rule-container:first-child > .group-or-rule {
+      &::before {
+        display: none;
+      }
+      &::after {
+        border-radius: 4px 0 0 0;
+        border-width: 2px 0 0 2px;
+      }
+  }
   & > .group-or-rule-container:first-child > .group-or-rule {
       &::before {
         top: -12px;
         height: calc(50% + 14px);
       }
   }
-
   & > .group-or-rule-container:last-child > .group-or-rule {
       &::before {
         border-radius: 0 0 0 4px;
