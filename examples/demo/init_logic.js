@@ -4,17 +4,17 @@ export default
     {
       "==": [
         {
-          "var": "results.product"
+          "var": "ggr.currency"
         },
         "abc"
       ]
     },
     {
-      "==": [
+      "between": [
         {
-          "var": "results.score"
+          "var": "ggr.value"
         },
-        0
+        0,564
       ]
     }
   ]
