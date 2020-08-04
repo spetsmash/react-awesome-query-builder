@@ -151,7 +151,7 @@ const jsonLogicFormatItem = (item, config, meta) => {
 
         let resultQuery = {};
         if (list.size == 1)
-            resultQuery = list.first();
+            resultQuery[conj] = list.toList().toJS();
         else
             resultQuery[conj] = list.toList().toJS();
         if (not) {
