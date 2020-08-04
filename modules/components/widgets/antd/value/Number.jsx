@@ -8,7 +8,7 @@ export default class NumberWidget extends PureComponent {
     placeholder: PropTypes.string,
     config: PropTypes.object.isRequired,
     field: PropTypes.string.isRequired,
-    value: PropTypes.number,
+    value: PropTypes.any,
     customProps: PropTypes.object,
     fieldDefinition: PropTypes.object,
     readonly: PropTypes.bool,

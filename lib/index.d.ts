@@ -318,6 +318,7 @@ interface BaseOperator {
   sqlOp?: String,
   sqlFormatOp?: SqlFormatOperator,
   jsonLogic?: String | JsonLogicFormatOperator,
+  jsonLogic2?: String | JsonLogicFormatOperator,
   _jsonLogicIsRevArgs?: Boolean,
   valueSources?: Array<ValueSource>,
 };
