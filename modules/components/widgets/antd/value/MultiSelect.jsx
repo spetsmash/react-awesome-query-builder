@@ -34,8 +34,11 @@ export default class MultiSelectWidget extends PureComponent {
     });
     this.optionsMaxWidth = optionsMaxWidth;
 
-    this.options = mapListValues(listValues, ({title, value}) => {
-      return (<Option key={value} value={value}>{title}</Option>);
+    this.options = mapListValues(listValues, ({title, value, id = null}) => {
+      return (<Option key={title} value={value}>
+        {id && id !== null ? <span className={'multiselect-flag-icon flag-icon flag-icon-'+ id}></span> : null}
+        {title} {value}
+      </Option>);
     });
   }
 
@@ -46,6 +49,9 @@ export default class MultiSelectWidget extends PureComponent {
   }
 
   filterOption = (input, option) => {
+    if (Array.isArray(option.children)) {
+      option.children = option.children.filter(el => typeof el === 'string').toString();
+    }
     const dataForFilter = option; // tip: props was available on antd < 4
     return dataForFilter.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
   }
