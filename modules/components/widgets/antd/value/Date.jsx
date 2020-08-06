@@ -53,6 +53,10 @@ export default class DateWidget extends PureComponent {
 
     disabledDate = (current) => {
         // Can not select days before today and today
+        const {restrictions} = this.props;
+        if (restrictions === 'financial') {
+            return current && (current > moment().endOf('day') || current < moment().subtract(3,'months'));
+        }
         return current && current > moment().endOf('day');
     };
 

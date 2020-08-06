@@ -165,6 +165,7 @@ export interface BaseWidget {
   type: String,
   jsType?: String,
   mask?: any,
+  restrictions?: String
   placeholderInput?: String,
   factory: Factory<WidgetProps>,
   valueSrc?: ValueSource,
