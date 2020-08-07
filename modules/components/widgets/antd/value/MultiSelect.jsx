@@ -37,7 +37,7 @@ export default class MultiSelectWidget extends PureComponent {
     this.options = mapListValues(listValues, ({title, value, id = null}) => {
       return (<Option key={title} value={value}>
         {id && id !== null ? <span className={'multiselect-flag-icon flag-icon flag-icon-'+ id}></span> : null}
-        {title} {value}
+        {title} {id && id !== null ? value : null }
       </Option>);
     });
   }
