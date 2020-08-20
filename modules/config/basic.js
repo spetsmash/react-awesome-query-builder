@@ -536,6 +536,10 @@ const widgets = {
       valueFormat: 'YYYY-MM-DD',
       valueLabel: "Date",
       valuePlaceholder: "Enter date",
+      valueLabels: [
+          { label: 'Time from', placeholder: 'Enter time from' },
+          { label: 'Time to', placeholder: 'Enter time to' },
+      ],
       formatValue: (val, fieldDef, wgtDef, isForDisplay) => {
           const dateVal = moment(val, wgtDef.valueFormat);
           return isForDisplay ? '"' + dateVal.format(wgtDef.dateFormat) + '"' : JSON.stringify(val);
