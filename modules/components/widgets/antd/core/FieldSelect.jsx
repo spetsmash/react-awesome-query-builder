@@ -91,7 +91,7 @@ export default class FieldSelect extends PureComponent {
   renderSelectItems(fields, childrenSelected) {
     return keys(fields).map(fieldKey => {
         const field = fields[fieldKey];
-        const {items, key, path, label, fullLabel, altLabel, tooltip, grouplabel} = field;
+        const {items, key, path, label, fullLabel, altLabel, tooltip, grouplabel, icon} = field;
         const _path = path || key;
         if (field.path.split('.').length <=2) {
             childrenSelected = null;
@@ -111,6 +111,7 @@ export default class FieldSelect extends PureComponent {
                     title={altLabel}
                     grouplabel={grouplabel}
                     label={label}
+                    // className={{width: '100% !important'}}
                     disabled={( childrenSelected && childrenSelected.keyField !== null && childrenSelected.some(el => el.keyField === field.path)) ||
                     (childrenSelected && childrenSelected.some(el => {
                         if (el.keyField === null) return;
@@ -122,7 +123,7 @@ export default class FieldSelect extends PureComponent {
                         }
                     }))}
                 >
-                    {option}
+                    <i className={icon}></i>{option}
                 </Option>;
             }
     });
