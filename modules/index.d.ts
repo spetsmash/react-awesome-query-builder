@@ -378,6 +378,7 @@ interface TreeItem extends ListItem {
   selectable?: Boolean,
   disableCheckbox?: Boolean,
   checkable?: Boolean,
+  icon?: String,
 };
 type TreeData = Array<TreeItem>;
 type ListValues = TypedMap<String> | TypedKeyMap<String | number, String> | Array<ListItem> | Array<String | number>;
@@ -419,6 +420,7 @@ interface BaseField {
 };
 interface ValueField extends BaseField {
   type: String,
+  icon?: String,
   preferWidgets?: Array<String>,
   valueSources?: Array<ValueSource>,
   funcs?: Array<String>,
@@ -466,11 +468,13 @@ export type FieldItem = {
   altLabel?: String, 
   tooltip?: String,
   disabled?: Boolean,
+  icon?: String,
 };
 type FieldItems = TypedMap<FieldItem>;
 
 export interface FieldProps {
   items: FieldItems,
+  icon?: String,
   setField(path: String): void,
   selectedKey: String | Empty,
   selectedKeys?: Array<String> | Empty,
