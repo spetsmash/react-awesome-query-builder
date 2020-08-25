@@ -320,6 +320,7 @@ export default (skin) => {
                 gender: {
                     type: 'select',
                     label: 'Gender',
+                    icon: 'fa fa-venus-mars',
                     operators: ['select_any_in'],
                     valueSources: ['value'],
                     listValues: [

@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import {Utils} from "../index";
 
 const groupActionsPositionList = {
   topLeft: 'group--actions--tl',
@@ -21,9 +22,21 @@ export class GroupActions extends PureComponent {
     const position = groupActionsPositionList[groupActionsPosition || defaultPosition];
 
     let disabled;
+    const countRules = (children) => {
+      let count = 0;
+      for (let obj in children) {
+        if (children[obj].type === "rule" || children[obj].type === "rule_group") {
+          count += 1 ;
+        } else {
+          count +=  countRules(children[obj].children1)
+        }
+      }
+      return count;
+    };
     let properties = tree.get('properties');
     if (properties) {
-      let numberOfRues = properties.get('numberOfRules');
+      // let numberOfRues = properties.get('numberOfRules');
+      let numberOfRues = countRules(Utils.getTree(tree).children1);
 
       if (numberOfRues && numberOfRues >= config.settings.maxNumberOfRules) {
         disabled = true;
