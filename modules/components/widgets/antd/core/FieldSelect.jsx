@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Tooltip, Select, Typography } from 'antd';
-import {BUILT_IN_PLACEMENTS, SELECT_WIDTH_OFFSET_RIGHT, calcTextWidth} from "../../../../utils/stuff";
+import {BUILT_IN_PLACEMENTS, SELECT_WIDTH_OFFSET_RIGHT, SELECT_WIDTH_ICON, calcTextWidth} from "../../../../utils/stuff";
 import PropTypes from 'prop-types';
 const { Option, OptGroup } = Select;
 import keys from 'lodash/keys';
@@ -50,7 +50,7 @@ export default class FieldSelect extends PureComponent {
       const isFieldSelected = !!selectedKey;
       const dropdownPlacement = config.settings.dropdownPlacement;
       const dropdownAlign = dropdownPlacement ? BUILT_IN_PLACEMENTS[dropdownPlacement] : undefined;
-      const width = isFieldSelected && !showSearch ? null : selectWidth + SELECT_WIDTH_OFFSET_RIGHT;
+      const width = isFieldSelected && !showSearch ? null : selectWidth + SELECT_WIDTH_OFFSET_RIGHT + SELECT_WIDTH_ICON;
       let tooltipText = selectedAltLabel || selectedFullLabel;
       if (tooltipText == selectedLabel)
         tooltipText = null;
