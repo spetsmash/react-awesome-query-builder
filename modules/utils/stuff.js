@@ -4,6 +4,7 @@ import React from 'react';
 
 
 export const SELECT_WIDTH_OFFSET_RIGHT = 48;
+export const SELECT_WIDTH_ICON = 16;
 const DEFAULT_FONT_SIZE = '14px';
 const DEFAULT_FONT_FAMILY = "'Helvetica Neue', Helvetica, Arial, sans-serif";
 

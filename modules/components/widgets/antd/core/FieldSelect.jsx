@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Tooltip, Select, Typography } from 'antd';
-import {BUILT_IN_PLACEMENTS, SELECT_WIDTH_OFFSET_RIGHT, calcTextWidth} from "../../../../utils/stuff";
+import {BUILT_IN_PLACEMENTS, SELECT_WIDTH_OFFSET_RIGHT, SELECT_WIDTH_ICON, calcTextWidth} from "../../../../utils/stuff";
 import PropTypes from 'prop-types';
 const { Option, OptGroup } = Select;
 import keys from 'lodash/keys';
@@ -50,7 +50,7 @@ export default class FieldSelect extends PureComponent {
       const isFieldSelected = !!selectedKey;
       const dropdownPlacement = config.settings.dropdownPlacement;
       const dropdownAlign = dropdownPlacement ? BUILT_IN_PLACEMENTS[dropdownPlacement] : undefined;
-      const width = isFieldSelected && !showSearch ? null : selectWidth + SELECT_WIDTH_OFFSET_RIGHT;
+      const width = isFieldSelected && !showSearch ? null : selectWidth + SELECT_WIDTH_OFFSET_RIGHT + SELECT_WIDTH_ICON;
       let tooltipText = selectedAltLabel || selectedFullLabel;
       if (tooltipText == selectedLabel)
         tooltipText = null;
@@ -91,7 +91,7 @@ export default class FieldSelect extends PureComponent {
   renderSelectItems(fields, childrenSelected) {
     return keys(fields).map(fieldKey => {
         const field = fields[fieldKey];
-        const {items, key, path, label, fullLabel, altLabel, tooltip, grouplabel} = field;
+        const {items, key, path, label, fullLabel, altLabel, tooltip, grouplabel, icon} = field;
         const _path = path || key;
         if (field.path.split('.').length <=2) {
             childrenSelected = null;
@@ -111,6 +111,7 @@ export default class FieldSelect extends PureComponent {
                     title={altLabel}
                     grouplabel={grouplabel}
                     label={label}
+                    // className={{width: '100% !important'}}
                     disabled={( childrenSelected && childrenSelected.keyField !== null && childrenSelected.some(el => el.keyField === field.path)) ||
                     (childrenSelected && childrenSelected.some(el => {
                         if (el.keyField === null) return;
@@ -122,7 +123,7 @@ export default class FieldSelect extends PureComponent {
                         }
                     }))}
                 >
-                    {option}
+                    <i className={icon}></i>{option}
                 </Option>;
             }
     });

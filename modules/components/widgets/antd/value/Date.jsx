@@ -64,7 +64,7 @@ export default class DateWidget extends PureComponent {
     };
 
     render() {
-        const {placeholder, customProps, value, valueFormat, dateFormat, config, readonly, operator} = this.props;
+        const {placeholder, placeholders, customProps, value, valueFormat, dateFormat, config, readonly, operator} = this.props;
         const {renderSize} = config.settings;
         let dateValue;
         if (value && Array.isArray(value)) {
@@ -87,6 +87,7 @@ export default class DateWidget extends PureComponent {
                         onChange={this.handleChange}
                         disabledDate={this.disabledDate}
                         {...customProps}
+                        placeholder={placeholders}
                     />
                 ) : (
                     <DatePicker
@@ -100,7 +101,7 @@ export default class DateWidget extends PureComponent {
                         disabledDate={this.disabledDate}
                         {...customProps}
                     />)}
-       </>
+            </>
         );
     }
 }

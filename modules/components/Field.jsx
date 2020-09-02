@@ -80,6 +80,7 @@ export default class Field extends PureComponent {
 
         return keys(fields).map(fieldKey => {
             const field = fields[fieldKey];
+            const icon = field.icon;
             const label = this.getFieldLabel(field, fieldKey, config);
             const partsLabels = getFieldPathLabels(prefix+fieldKey, config);
             let fullLabel = partsLabels.join(fieldSeparatorDisplay);
@@ -102,6 +103,7 @@ export default class Field extends PureComponent {
                     fullLabel,
                     altLabel,
                     tooltip,
+                    icon,
                     items: this.buildOptions(parentFieldPath, config, field.subfields, subpath, label)
                 };
             } else {
@@ -113,6 +115,7 @@ export default class Field extends PureComponent {
                     fullLabel,
                     altLabel,
                     tooltip,
+                    icon,
                     grouplabel: optGroupLabel
                 };
             }
