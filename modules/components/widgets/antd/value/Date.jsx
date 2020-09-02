@@ -58,7 +58,7 @@ export default class DateWidget extends PureComponent {
             return current && (current > moment().endOf('day') || current < moment().subtract(3,'months'));
         }
         if (restrictions === 'personal') {
-            return current && (current > moment().endOf('day') || current < moment().subtract(18,'years'));
+            return current && (current > moment().endOf('day') || current > moment().subtract(18,'years'));
         }
         return current && current > moment().endOf('day');
     };
