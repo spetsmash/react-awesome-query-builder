@@ -119,6 +119,10 @@ export const setErrorEmptyValues = (tree, config) => {
             newTree = newTree.setIn(expandTreePath(itemPath, 'properties', 'validity'), false);
             newTree = newTree.setIn(expandTreePath(itemPath, 'properties', 'errorMessage'), config.settings.requiredFieldsMessage);
         }
+        if (requiredRules.length === 2) {
+            newTree = newTree.setIn(expandTreePath(itemPath, 'properties', 'validity'), true);
+            newTree = newTree.setIn(expandTreePath(itemPath, 'properties', 'errorMessage'), false);
+        }
 
         return newTree;
     }
