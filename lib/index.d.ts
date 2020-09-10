@@ -165,7 +165,7 @@ export interface BaseWidget {
   type: String,
   jsType?: String,
   mask?: any,
-  restrictions?: String
+  restrictions?: any
   placeholderInput?: String,
   factory: Factory<WidgetProps>,
   valueSrc?: ValueSource,
@@ -448,6 +448,7 @@ interface FieldStruct extends BaseField {
 interface FieldGroup extends BaseField {
   type: "!group",
   subfields: Fields,
+  requiredFields?: Array<String>
 };
 
 export type Field = SimpleField;

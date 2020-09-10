@@ -76,11 +76,17 @@ export const setErrorEmptyValues = (tree, config) => {
         const itemPath = path.push(item.get('id'));
 
         let properties = item.get('properties');
+
+        let ruleStr = properties.get('field');
+        let rule;
+        if(ruleStr)  {
+            rule = properties.get('field').split('.')
+        }
         let type = item.get('type');
         if (properties) {
 
             if (type && type === 'rule_group') {
-                newTree = _checkNestedRule(item.get('children1'), newTree, itemPath);
+                newTree = _checkNestedRule(item.get('children1'), newTree, itemPath, rule);
             }
             let field = properties.get('field');
             let value = properties.get('value');
@@ -104,8 +110,9 @@ export const setErrorEmptyValues = (tree, config) => {
         }
     }
 
-    function _checkNestedRule (children, newTree, itemPath) {
-        let requiredRules = ['currency', 'value'];
+    function _checkNestedRule (children, newTree, itemPath, rule) {
+        let requiredRules = [...config.fields[rule[0]].subfields[rule[1]].requiredFields];
+
         children.valueSeq().forEach(v => {
             if (v.getIn(['properties', 'field']) && v.getIn(['properties', 'field']) !== null) {
                 let temp = v.getIn(['properties', 'field']).split('.')[2];
