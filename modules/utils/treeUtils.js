@@ -92,7 +92,7 @@ export const setErrorEmptyValues = (tree, config) => {
             let value = properties.get('value');
             let operator = properties.get('operator');
             if (field) {
-                if (value && value.toJS().length > 0 && value.toJS()[0] === undefined || value.toJS()[0] === '' || (operator === 'between' &&  value.toJS()[1] === undefined)) {
+                if (value && value.toJS().length > 0 && (value.toJS()[0] === undefined || value.toJS()[0] === '') || (operator === 'between' &&  value.toJS()[1] === undefined)) {
                     newTree = newTree.setIn(expandTreePath(itemPath, 'properties', 'validity'), false);
                     newTree = newTree.setIn(expandTreePath(itemPath, 'properties', 'errorMessage'), config.settings.noValueMessage);
                 }
