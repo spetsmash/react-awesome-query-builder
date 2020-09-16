@@ -375,7 +375,7 @@ const setOperator = (state, path, newOperator, config) => {
         const _currentOperator = current.get('operator');
 
         const {canReuseValue, newValue, newValueSrc, newValueType} = getNewValueForFieldOp(
-            config, config, current, currentField, newOperator, 'operator', true
+            config, config, current, currentField, newOperator, false,'operator', true
         );
         const newOperatorOptions = canReuseValue ? currentOperatorOptions : defaultOperatorOptions(config, newOperator, currentField);
 
