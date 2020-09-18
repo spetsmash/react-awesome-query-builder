@@ -123,7 +123,7 @@ export default class FieldSelect extends PureComponent {
                         }
                     }))}
                 >
-                    <div><i className={icon}></i>{option}</div>
+                    <div><i className={icon + ' query-builder-icon' }></i>{option}</div>
                 </Option>;
             }
     });
