@@ -1,4 +1,8 @@
-.query-builder-container {
+.query-builder {
+  margin: 2rem 0;
+  &.disabled {
+    pointer-events: none;
+  }
   @mixin flex {
     display: flex;
     align-items: center;
@@ -70,8 +74,8 @@
   }
 
   .group {
-    background: rgba(250, 240, 210, 0.5);
-    border: 1px solid #DCC896;
+    background: #ebf7fa;
+    border: 1px solid #8dc9e0;
     margin-right: 10px;
   }
 
@@ -123,7 +127,7 @@
   }
 
   .group-or-rule {
-    border-radius: 5px;
+    border-radius: 2px;
     position: relative;
   }
 
@@ -183,6 +187,10 @@
   .group--header,
   .group--footer {
     @extend %flex;
+  }
+
+  .group--children .group {
+    background: #bbe1ed;
   }
 
   .group--children {
@@ -644,7 +652,7 @@
     justify-content: center;
   }
 
-  i {
+  .query-builder_i {
     width: 20px !important;
   }
 }
