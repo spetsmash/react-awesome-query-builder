@@ -86,6 +86,7 @@ export default class DateWidget extends PureComponent {
                         value={dateValue}
                         onChange={this.handleChange}
                         disabledDate={this.disabledDate}
+                        defaultValue={[dateValue, dateValue]}
                         {...customProps}
                         placeholder={placeholders}
                     />

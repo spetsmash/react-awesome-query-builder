@@ -420,7 +420,7 @@ export const getNewValueForFieldOp = function (config, oldConfig = null, current
 
 	let newValue = null, newValueSrc = null, newValueType = null;
 	newValue = new Immutable.List(Array.from({length: operatorCardinality}, (_ignore, i) => {
-			let v = undefined;
+			let v;;
 			if (canReuseValue) {
 					if (i < currentValue.size) {
 							v = currentValue.get(i);
@@ -435,6 +435,14 @@ export const getNewValueForFieldOp = function (config, oldConfig = null, current
 							v = newFieldConfig.fieldSettings.defaultValue;
 					else if (firstWidgetConfig.defaultValue !== undefined)
 							v = firstWidgetConfig.defaultValue;
+			}
+			else if (operatorCardinality == 2 && (firstWidgetConfig || newFieldConfig) && touched === false) {
+				if (newFieldConfig.defaultValue !== undefined && touched === false)
+					v = [newFieldConfig.defaultValue, newFieldConfig.defaultValue];
+				else if (newFieldConfig.fieldSettings && newFieldConfig.fieldSettings.defaultValue !== undefined)
+					v = [newFieldConfig.defaultValue, newFieldConfig.defaultValue];
+				else if (firstWidgetConfig.defaultValue !== undefined)
+					v = [firstWidgetConfig.defaultValue, firstWidgetConfig.defaultValue];
 			}
 			return v;
 	}));

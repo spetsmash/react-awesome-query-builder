@@ -307,7 +307,9 @@ export default (skin) => {
         addRequiredFieldMessage: 'Please add the required parameter(s): ',
         noValueMessage: 'No value selected',
         amountLabel: 'Amount',
-        currencyLabel: 'Currency'
+        currencyLabel: 'Currency',
+        clearValueOnChangeField: true,
+        clearValueOnChangeOp: false,
     };
 
     //////////////////////////////////////////////////////////////////////
@@ -465,7 +467,10 @@ export default (skin) => {
                     ],
                     fieldSettings: {
                         dateFormat: 'DD-MM-YYYY',
-                    }
+                    },
+                    mainWidgetProps: {
+                        restrictions: 'personal',
+                    },
                 },
             },
         },
@@ -2508,7 +2513,10 @@ export default (skin) => {
                                 label: 'Period Range',
                                 type: 'date',
                                 valueSources: ['value'],
-                                operators: ['date_range '],
+                                operators: ['date_range'],
+                                mainWidgetProps: {
+                                    restrictions: 'financial',
+                                },
                             },
                         },
                     },
