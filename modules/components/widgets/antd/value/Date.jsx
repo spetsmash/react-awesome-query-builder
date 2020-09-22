@@ -51,20 +51,8 @@ export default class DateWidget extends PureComponent {
 
     };
 
-    disabledDate = (current) => {
-        // Can not select days before today and today
-        const {restrictions} = this.props;
-        if (restrictions === 'financial') {
-            return current && (current > moment().endOf('day') || current < moment().subtract(3,'months'));
-        }
-        if (restrictions === 'personal') {
-            return current && (current > moment().endOf('day') || current > moment().subtract(18,'years'));
-        }
-        return current && current > moment().endOf('day');
-    };
-
     render() {
-        const {placeholder, placeholders, customProps, value, valueFormat, dateFormat, config, readonly, operator} = this.props;
+        const {placeholder, placeholders, customProps, value, valueFormat, dateFormat, config, readonly, operator, restrictions} = this.props;
         const {renderSize} = config.settings;
         let dateValue;
         if (value && Array.isArray(value)) {
@@ -85,7 +73,7 @@ export default class DateWidget extends PureComponent {
                         format={dateFormat}
                         value={dateValue}
                         onChange={this.handleChange}
-                        disabledDate={this.disabledDate}
+                        disabledDate={restrictions}
                         defaultValue={[dateValue, dateValue]}
                         {...customProps}
                         placeholder={placeholders}
@@ -99,7 +87,7 @@ export default class DateWidget extends PureComponent {
                         format={dateFormat}
                         value={dateValue}
                         onChange={this.handleChange}
-                        disabledDate={this.disabledDate}
+                        disabledDate={restrictions}
                         {...customProps}
                     />)}
             </>
