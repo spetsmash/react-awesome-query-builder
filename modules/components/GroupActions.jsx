@@ -35,7 +35,6 @@ export class GroupActions extends PureComponent {
     };
     let properties = tree.get('properties');
     if (properties) {
-      // let numberOfRues = properties.get('numberOfRules');
       let numberOfRues = countRules(Utils.getTree(tree).children1);
 
       if (numberOfRues && numberOfRues >= config.settings.maxNumberOfRules) {
