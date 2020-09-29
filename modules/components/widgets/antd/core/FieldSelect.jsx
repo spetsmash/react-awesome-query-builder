@@ -111,7 +111,6 @@ export default class FieldSelect extends PureComponent {
                     title={altLabel}
                     grouplabel={grouplabel}
                     label={label}
-                    // className={{width: '100% !important'}}
                     disabled={( childrenSelected && childrenSelected.keyField !== null && childrenSelected.some(el => el.keyField === field.path)) ||
                     (childrenSelected && childrenSelected.some(el => {
                         if (el.keyField === null) return;
