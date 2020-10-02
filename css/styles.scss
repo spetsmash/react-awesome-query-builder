@@ -369,8 +369,13 @@ ul.ant-select-selection__rendered {
 .rule--before-widget, .rule--after-widget {
   display: inline-block;
 }
-.rule--operator, .widget--widget, .widget--valuesrc, .widget--sep {
+.rule--operator, .widget--valuesrc, .widget--sep {
   margin-left: 10px;
+  margin-right: 10px;
+}
+
+.widget--widget {
+  margin-top: 5px;
 }
 .widget--valuesrc {
   margin-right: -8px;
@@ -613,4 +618,15 @@ $rule_actions: ".widget--valuesrc", ".rule--drag-handler", ".rule--header";
 
 .query-builder-icon {
   width: 20px !important;
+}
+
+.action--DELETE {
+  margin-left: 5px;
+}
+
+.query-builder {
+  .ant-select-multiple.ant-select-sm .ant-select-selection-item {
+    height: 19px;
+    line-height: 14px;
+  }
 }
