@@ -87,11 +87,13 @@ body.qb-dragging {
   flex: 1;
   display: flex;
   flex-direction: column;
+  margin-top: 5px;
 }
 
 .rule-group-rows {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .rule--error {
@@ -121,6 +123,7 @@ body.qb-dragging {
 .group-or-rule {
   border-radius: 5px;
   position: relative;
+  overflow-x: scroll;
 }
 
 .rule_group {
@@ -628,5 +631,15 @@ $rule_actions: ".widget--valuesrc", ".rule--drag-handler", ".rule--header";
   .ant-select-multiple.ant-select-sm .ant-select-selection-item {
     height: 19px;
     line-height: 14px;
+  }
+  .ant-btn-group {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+  .action--ADD-RULE, action--ADD-GROUP {
+    margin-bottom: 3px;
+  }
+  .group-or-rule {
+    overflow-y: hidden;
   }
 }
