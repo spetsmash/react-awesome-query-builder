@@ -19,6 +19,12 @@
   user-select: none;
 }
 
+@media (max-width: 767px) {
+  .group-or-rule {
+    overflow-x: scroll;
+  }
+}
+
 %noselect {
   @include noselect;
 }
@@ -123,7 +129,6 @@ body.qb-dragging {
 .group-or-rule {
   border-radius: 5px;
   position: relative;
-  overflow-x: scroll;
 }
 
 .rule_group {
