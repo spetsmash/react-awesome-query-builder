@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Input, Col } from 'antd';
 import MaskedInput from 'react-text-mask';

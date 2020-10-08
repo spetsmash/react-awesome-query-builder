@@ -52,7 +52,7 @@ export default class SelectWidget extends PureComponent {
     const placeholderWidth = calcTextWidth(placeholder);
     const dropdownWidth = this.optionsMaxWidth + SELECT_WIDTH_OFFSET_RIGHT;
     const width = value ? dropdownWidth : placeholderWidth + SELECT_WIDTH_OFFSET_RIGHT;
-    const _value = value != undefined ? value+"" : undefined;
+    const _value = value !== undefined ? value+"" : undefined;
 
     return (
             <Select

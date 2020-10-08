@@ -420,7 +420,7 @@ export const getNewValueForFieldOp = function (config, oldConfig = null, current
 
 	let newValue = null, newValueSrc = null, newValueType = null;
 	newValue = new Immutable.List(Array.from({length: operatorCardinality}, (_ignore, i) => {
-			let v;;
+			let v;
 			if (canReuseValue) {
 					if (i < currentValue.size) {
 							v = currentValue.get(i);
@@ -436,14 +436,6 @@ export const getNewValueForFieldOp = function (config, oldConfig = null, current
 					else if (firstWidgetConfig.defaultValue !== undefined)
 							v = firstWidgetConfig.defaultValue;
 			}
-			// else if (operatorCardinality == 2 && (firstWidgetConfig || newFieldConfig) && touched === false) {
-			// 	if (newFieldConfig.defaultValue !== undefined && touched === false)
-			// 		v = [newFieldConfig.defaultValue, newFieldConfig.defaultValue];
-			// 	else if (newFieldConfig.fieldSettings && newFieldConfig.fieldSettings.defaultValue !== undefined)
-			// 		v = [newFieldConfig.defaultValue, newFieldConfig.defaultValue];
-			// 	else if (firstWidgetConfig.defaultValue !== undefined)
-			// 		v = [firstWidgetConfig.defaultValue, firstWidgetConfig.defaultValue];
-			// }
 			return v;
 	}));
 	newValueSrc = new Immutable.List(Array.from({length: operatorCardinality}, (_ignore, i) => {
@@ -451,7 +443,7 @@ export const getNewValueForFieldOp = function (config, oldConfig = null, current
 			if (canReuseValue) {
 					if (i < currentValueSrc.size)
 							vs = currentValueSrc.get(i);
-			} else if (valueSources.length == 1) {
+			} else if (valueSources.length === 1) {
 					vs = valueSources[0];
 			} else if (valueSources.length > 1) {
 					vs = valueSources[0];

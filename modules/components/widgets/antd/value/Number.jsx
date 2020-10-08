@@ -38,7 +38,7 @@ export default class NumberWidget extends PureComponent {
   render() {
     const {config, placeholder, customProps, value,  min, max, step, readonly} = this.props;
     const {renderSize} = config.settings;
-    const _value = value != undefined ? value : undefined;
+    const _value = value !== undefined ? value : undefined;
 
     return (
       <Col>

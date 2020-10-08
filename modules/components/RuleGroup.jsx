@@ -67,7 +67,6 @@ class RuleGroup extends Group {
   errorMessageRequiredField(fields) {
     const {config} = this.props;
     let newFields = [...fields];
-    // let label = config.fields[selectedField.split('.')[0]].subfields[selectedField.split('.')[1]].subfields.value.label;
     let indexVal = newFields.indexOf('value');
     let indexCur = newFields.indexOf('currency');
     if (indexVal !== -1) {
@@ -88,8 +87,10 @@ class RuleGroup extends Group {
     const {selectedField, children1, config} = this.props;
     if (selectedField && selectedField.split('.').length === 2 &&
         config.fields[selectedField.split('.')[0]].subfields[selectedField.split('.')[1]].type === '!group') {
+      let rule = selectedField.split('.');
+      let requiredRules = [...config.fields[rule[0]].subfields[rule[1]].requiredFields];
       if (children1) {
-        this.checkRequiredNestedFields(children1)
+        this.checkRequiredNestedFields(children1, requiredRules)
       }
       return true;
     }
@@ -105,9 +106,9 @@ class RuleGroup extends Group {
     return validity;
   }
 
-  checkRequiredNestedFields(children) {
+  checkRequiredNestedFields(children, requiredRules) {
     const arrChildrenSelected = [];
-    let requiredRules = ['currency', 'value'];
+    // let requiredRules = ['currency', 'value'];
     children.forEach(function (item) {
       let temp = {
         keyField: null

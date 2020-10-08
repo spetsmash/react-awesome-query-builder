@@ -55,7 +55,7 @@ const removeGroup = (state, path, config) => {
 
     const parentPath = path.slice(0, -1);
     const isEmptyGroup = !hasChildren(state, parentPath);
-    const isEmptyRoot = isEmptyGroup && parentPath.size == 1;
+    const isEmptyRoot = isEmptyGroup && parentPath.size === 1;
     const canLeaveEmpty = isEmptyGroup && config.settings.canLeaveEmptyGroup && !isEmptyRoot;
     if (isEmptyGroup && !canLeaveEmpty) {
         state = addItem(state, parentPath, 'rule', uuid(), defaultRuleProperties(config), config);
@@ -83,9 +83,9 @@ const removeRule = (state, path, config) => {
     const parentPath = path.pop();
     const parent = state.getIn(expandTreePath(parentPath));
     const parentField = parent.getIn(['properties', 'field']);
-    const isParentRuleGroup = parent.get('type') == 'rule_group';
+    const isParentRuleGroup = parent.get('type') === 'rule_group';
     const isEmptyGroup = !hasChildren(state, parentPath);
-    const isEmptyRoot = isEmptyGroup && parentPath.size == 1;
+    const isEmptyRoot = isEmptyGroup && parentPath.size === 1;
     const canLeaveEmpty = isEmptyGroup && config.settings.canLeaveEmptyGroup && !isEmptyRoot;
     if (isEmptyGroup) {
         if (isParentRuleGroup) {
@@ -169,8 +169,6 @@ const addItem = (state, path, type, id, properties, config) => {
  * @param {object} config
  */
 const removeItem = (state, path, config) => {
-
-
     state = state.deleteIn(expandTreePath(path));
     state = fixPathsInTree(state);
     return state;
@@ -267,8 +265,6 @@ const moveItem = (state, fromPath, toPath, placement, config) => {
         state = removeGroup(state, groupPath, config)
     }
 
-
-
     state = fixPathsInTree(state);
     return state;
 };
@@ -319,10 +315,10 @@ const setField = (state, path, newField, config) => {
     return state.updateIn(expandTreePath(path, 'properties'), (map) => map.withMutations((current) => {
         const currentOperator = current.get('operator');
         const currentOperatorOptions = current.get('operatorOptions');
-        const _currentField = current.get('field');
-        const _currentValue = current.get('value');
-        const _currentValueSrc = current.get('valueSrc', new Immutable.List());
-        const _currentValueType = current.get('valueType', new Immutable.List());
+        // const _currentField = current.get('field');
+        // const _currentValue = current.get('value');
+        // const _currentValueSrc = current.get('valueSrc', new Immutable.List());
+        // const _currentValueType = current.get('valueType', new Immutable.List());
 
         // If the newly selected field supports the same operator the rule currently
         // uses, keep it selected.
@@ -458,8 +454,6 @@ const setValue = ( state, path, delta, value, valueType, flag, touched, config, 
             }
         }
     }
-
-
     return state;
 };
 
