@@ -56,7 +56,7 @@ export const getTreeBadFields = (tree) => {
                 _processNode(child, path.concat(id), lev + 1);
             });
         }
-    };
+    }
 
     if (tree)
         _processNode(tree, [], 0);
@@ -160,7 +160,7 @@ export const removePathsInTree = (tree) => {
                 _processNode(child, itemPath);
             });
         }
-    };
+    }
 
     _processNode(tree, new Immutable.List());
 
@@ -190,7 +190,7 @@ export const fixPathsInTree = (tree) => {
                 _processNode(child, itemPath, lev + 1);
             });
         }
-    };
+    }
 
     _processNode(tree, new Immutable.List(), 0);
 

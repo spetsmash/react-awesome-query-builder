@@ -46,8 +46,7 @@ export default class ValueField extends PureComponent {
   getItems({config, field, operator}) {
     const {canCompareFieldWithField} = config.settings;
     const filteredFields = this.filterFields(config, config.fields, field, operator, canCompareFieldWithField);
-    const items = this.buildOptions(config, filteredFields);
-    return items;
+    return this.buildOptions(config, filteredFields);
   }
 
   getMeta({config, field, operator, value, placeholder: customPlaceholder, isFuncArg}) {

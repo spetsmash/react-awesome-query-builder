@@ -95,9 +95,9 @@ function _lightTree (tree) {
               _processNode(children[id], id);
           }
       }
-  };
+  }
 
   _processNode(tree, null);
 
   return newTree;
-};
+}

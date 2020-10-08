@@ -20,17 +20,13 @@ export default class DateWidget extends PureComponent {
         valueFormat: PropTypes.string,
     };
 
-    wasChanged = false;
-
     constructor(props) {
         super(props);
-        const {valueFormat, value, setValue, field} = props;
+        const {valueFormat, value, setValue} = props;
         let mValue = value ? moment(value, valueFormat) : null;
         if (mValue && !mValue.isValid()) {
             setValue(null);
         }
-        let arr = field.split('.');
-
     }
 
     static defaultProps = {
