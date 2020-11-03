@@ -91,7 +91,6 @@ export default class DateWidget extends PureComponent {
         } else {
             dateValue = null;
         }
-        console.log(this.state.defaultPickerValue);
         return (
             <>
                 {operator === "date_range" || operator === "not_date_range" ? (
