@@ -642,7 +642,7 @@ $rule_actions: ".widget--valuesrc", ".rule--drag-handler", ".rule--header";
     flex-wrap: wrap;
     justify-content: flex-end;
   }
-  .action--ADD-RULE, .action--ADD-GROUP {
+  .action--ADD-RULE, action--ADD-GROUP {
     margin-bottom: 3px;
   }
   .group-or-rule {
@@ -650,17 +650,11 @@ $rule_actions: ".widget--valuesrc", ".rule--drag-handler", ".rule--header";
   }
 }
 
-.query-builder-option-wrapper {
-  display: flex;
-  flex-flow: row;
-  align-items: center;
-}
-
 .query-builder-option-wrapper-inner {
-  display: flex;
-  flex-flow: row;
   justify-content: center;
   margin-right: 7px;
   align-items: center;
   width: 17px;
+  float: left;
 }
+
