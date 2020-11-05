@@ -123,9 +123,9 @@ export default class FieldSelect extends PureComponent {
                     }))}
                 >
                     <div className='query-builder-option-wrapper'>
-                        <span className={icon ? 'query-builder-option-wrapper-inner' : ''}>
+                        <div className={icon ? 'query-builder-option-wrapper-inner' : ''}>
                             <i className={icon}></i>
-                        </span>
+                        </div>
                         {option}</div>
                 </Option>;
             }

@@ -651,10 +651,19 @@ $rule_actions: ".widget--valuesrc", ".rule--drag-handler", ".rule--header";
 }
 
 .query-builder-option-wrapper-inner {
+  //justify-content: center;
+  //margin-right: 7px;
+  //align-items: center;
+  //width: 17px;
+  //float: left;
   justify-content: center;
   margin-right: 7px;
   align-items: center;
   width: 17px;
   float: left;
+  display: flex;
 }
 
+.query-builder-option-wrapper {
+  display: flex;
+}
