@@ -21,7 +21,7 @@ export default class TreeSelectWidget extends PureComponent {
   constructor(props) {
     super(props);
     useOnPropsChanged(this);
-    this.onPropsChanged(props);  
+    this.onPropsChanged(props);
   }
 
   onPropsChanged(props) {
@@ -32,7 +32,7 @@ export default class TreeSelectWidget extends PureComponent {
     const offset = 20;
     const padding = 5 * 2;
     mapListValues(listValues, ({title, value, path}) => {
-      optionsMaxWidth = Math.max(optionsMaxWidth, 
+      optionsMaxWidth = Math.max(optionsMaxWidth,
         calcTextWidth(title, null) + padding + (path ? path.length : 0) * offset + initialOffset
       );
     });
@@ -87,7 +87,7 @@ export default class TreeSelectWidget extends PureComponent {
     const useAutoWidth = true; //tip: "auto" is good, but width will jump on expand/collapse
     const dropdownWidth = Math.max(dropdownMinWidth, Math.min(dropdownMaxWidth, this.optionsMaxWidth));
 
-    return (      
+    return (
         <TreeSelect
             disabled={readonly}
             style={{
@@ -110,6 +110,7 @@ export default class TreeSelectWidget extends PureComponent {
             value={_value}
             onChange={this.handleChange}
             treeDefaultExpandAll={treeExpandAll}
+            showCheckedStrategy={'TreeSelect.SHOW_ALL'}
             {...customProps}
         />
     );
