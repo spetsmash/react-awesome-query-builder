@@ -166,6 +166,7 @@ export interface BaseWidget {
   jsType?: String,
   mask?: any,
   restrictions?: any
+  defaultPickerValue?: any
   placeholderInput?: String,
   factory: Factory<WidgetProps>,
   valueSrc?: ValueSource,
@@ -225,7 +226,7 @@ export interface ConjunctionOption {
 };
 
 export interface ConjsProps {
-  path: String, 
+  path: String,
   readonly?: Boolean,
   disabled?: Boolean,
   selectedConjunction?: String,
@@ -242,8 +243,8 @@ export interface ConjsProps {
 /////////////////
 
 export interface ButtonProps {
-  type: "addRule" | "addGroup" | "delRule" | "delGroup"  | "addRuleGroup" | "delRuleGroup", 
-  onClick(): void, 
+  type: "addRule" | "addGroup" | "delRule" | "delGroup"  | "addRuleGroup" | "delRuleGroup",
+  onClick(): void,
   label: String,
   config?: Config,
 };
@@ -259,23 +260,23 @@ export interface ProviderProps {
 };
 
 export type ValueSourceItem = {
-  label: String, 
+  label: String,
 };
 type ValueSourcesItems = TypedKeyMap<ValueSource, ValueSourceItem>;
 
 export interface ValueSourcesProps {
   config?: Config,
-  valueSources: ValueSourcesItems, 
-  valueSrc?: ValueSource, 
-  setValueSrc(valueSrc: String): void, 
+  valueSources: ValueSourcesItems,
+  valueSrc?: ValueSource,
+  setValueSrc(valueSrc: String): void,
   readonly?: Boolean,
   title: String,
 };
 
 export interface ConfirmModalProps {
-  onOk(): void, 
-  okText: String, 
-  cancelText?: String, 
+  onOk(): void,
+  okText: String,
+  cancelText?: String,
   title: String,
 };
 
@@ -461,12 +462,12 @@ export type Fields = TypedMap<FieldOrGroup>;
 /////////////////
 
 export type FieldItem = {
-  items?: FieldItems, 
-  key: String, 
-  path?: String, 
-  label: String, 
-  fullLabel?: String, 
-  altLabel?: String, 
+  items?: FieldItems,
+  key: String,
+  path?: String,
+  label: String,
+  fullLabel?: String,
+  altLabel?: String,
   tooltip?: String,
   disabled?: Boolean,
   icon?: String,
