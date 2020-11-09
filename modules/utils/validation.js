@@ -1,5 +1,5 @@
 import {
-	getFieldConfig, getOperatorsForField, getOperatorConfig, 
+	getFieldConfig, getOperatorsForField, getOperatorConfig,
 	getWidgetForFieldOp, getFieldWidgetConfig, getFuncConfig, getValueSourcesForFieldOp,
 } from './configUtils';
 import {defaultValue, deepEqual, getTitleInListValues, getValueInListValues, getItemInListValues} from "../utils/stuff";
@@ -66,7 +66,7 @@ function validateGroup (item, path, itemId, meta, c) {
 		sanitized = true;
 		item = undefined;
 	}
-	
+
 	if (sanitized)
 		meta.sanitized = true;
 	if (sanitized && item)
@@ -141,7 +141,7 @@ function validateRule (item, path, itemId, meta, c) {
 	//validate values
 	valueSrc = properties.get('valueSrc');
 	value = properties.get('value');
-	let {newValue, newValueSrc} = 
+	let {newValue, newValueSrc} =
 			getNewValueForFieldOp(config, oldConfig, properties, field, operator, touched, null, true);
 	if (value === undefined || value.toJS()[0] === undefined) {
         value = newValue;
@@ -166,7 +166,7 @@ function validateRule (item, path, itemId, meta, c) {
 		item = undefined;
 	if (sanitized && item)
 		item = item.set('properties', properties);
-	
+
 	return item;
 };
 
@@ -199,11 +199,11 @@ export const validateValue = (config, leftField, field, operator, value, valueTy
 					const w = getWidgetForFieldOp(config, field, operator, valueSrc);
 					const fieldWidgetDefinition = omit(getFieldWidgetConfig(config, field, operator, w, valueSrc), ['factory', 'formatValue']);
 					const rightFieldDefinition = (valueSrc == 'field' ? getFieldConfig(value, config) : null);
-	
+
 					const fn = fieldWidgetDefinition.validateValue;
 					if (typeof fn == 'function') {
 							const args = [
-									fixedValue, 
+									fixedValue,
 									//field,
 									fieldConfig,
 									flag,
@@ -232,7 +232,7 @@ export const validateValue = (config, leftField, field, operator, value, valueTy
 };
 
 /**
-* 
+*
 */
 const validateNormalValue = (leftField, field, value, valueSrc, valueType, config, operator = null, isEndValue = false, canFix = false) => {
 	let fixedValue = value;
@@ -276,13 +276,13 @@ const validateNormalValue = (leftField, field, value, valueSrc, valueType, confi
 					return [`Value ${value} > max ${fieldSettings.max}`, value];
 			}
 	}
-	
+
 	return [null, value];
 };
 
 
 /**
-* 
+*
 */
 const validateFieldValue = (leftField, field, value, _valueSrc, valueType, config, operator = null, isEndValue = false, canFix = false) => {
 	const {fieldSeparator} = config.settings;
@@ -299,11 +299,11 @@ const validateFieldValue = (leftField, field, value, _valueSrc, valueType, confi
 };
 
 /**
-* 
+*
 */
 const validateFuncValue = (leftField, field, value, _valueSrc, valueType, config, flag, operator = null, isEndValue = false, canFix = false) => {
 	let fixedValue = value;
-	
+
 	if (value) {
 			const funcKey = value.get('func');
 			if (funcKey) {
@@ -391,14 +391,14 @@ export const getNewValueForFieldOp = function (config, oldConfig = null, current
 	const reusableWidgets = newValueWidgets.filter(w => currentValueWidgets.includes(w));
 	const firstWidgetConfig = getFieldWidgetConfig(config, newField, newOperator, null, currentValueSrc.first());
 	const valueSources = getValueSourcesForFieldOp(config, newField, newOperator);
-	let canReuseValue = currentField && currentOperator && newOperator 
-			&& (!changedField 
-					|| changedField == 'field' && !config.settings.clearValueOnChangeField 
+	let canReuseValue = currentField && currentOperator && newOperator
+			&& (!changedField
+					|| changedField == 'field' && !config.settings.clearValueOnChangeField
 					|| changedField == 'operator' && !config.settings.clearValueOnChangeOp)
-			&& (currentFieldConfig && newFieldConfig && currentFieldConfig.type == newFieldConfig.type) 
+			&& (currentFieldConfig && newFieldConfig && currentFieldConfig.type == newFieldConfig.type)
 			&& reusableWidgets.length > 0;
 	;
-	
+
 	let valueFixes = {};
 	if (canReuseValue) {
 			for (let i = 0 ; i < commonWidgetsCnt ; i++) {
@@ -429,8 +429,10 @@ export const getNewValueForFieldOp = function (config, oldConfig = null, current
 							}
 					}
 			} else if ((operatorCardinality == 1 ||  operatorCardinality == 2) && (firstWidgetConfig || newFieldConfig) && touched === false) {
-					if (newFieldConfig.defaultValue !== undefined && touched === false)
+					if (newFieldConfig.defaultValue !== undefined && touched === false && newOperator !== 'date_range')
 							v = newFieldConfig.defaultValue;
+				if (newFieldConfig.defaultValue !== undefined && touched === false && newOperator === 'date_range')
+							v = undefined;
 					else if (newFieldConfig.fieldSettings && newFieldConfig.fieldSettings.defaultValue !== undefined)
 							v = newFieldConfig.fieldSettings.defaultValue;
 					else if (firstWidgetConfig.defaultValue !== undefined)

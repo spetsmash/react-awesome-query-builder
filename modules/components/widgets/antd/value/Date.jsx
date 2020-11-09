@@ -22,13 +22,13 @@ export default class DateWidget extends PureComponent {
 
     constructor(props) {
         super(props);
-        const {valueFormat, value, setValue} = props;
+        const {valueFormat, value, setValue, defaultPickerValue} = props;
         let mValue = value ? moment(value, valueFormat) : null;
         if (mValue && !mValue.isValid()) {
             setValue(null);
         }
         this.state = {
-            defaultPickerValue: moment(value, valueFormat)
+            defaultPickerValue: defaultPickerValue
         };
     }
 
@@ -61,27 +61,29 @@ export default class DateWidget extends PureComponent {
                 .format('YYYY-MM-DD'));
             let defaultPickerValue = date;
             setValue(date, false, true);
-            this.setState({defaultPickerValue: defaultPickerValue});
+            // this.setState({defaultPickerValue: defaultPickerValue});
 
         }
     };
 
-    onOpenRangeChange = () => {
-        const {setValue, value} = this.props;
-        if (value === undefined) {
-            const date = moment(moment()
-                .subtract(18, 'year')
-                .format('YYYY-MM-DD'));
-            let defaultPickerValue = date;
-            setValue([date, date], false, true);
-
-            this.setState({defaultPickerValue:  defaultPickerValue});
-        }
-    };
+    // onOpenRangeChange = () => {
+    //     const {setValue, valueFormat, defaultPickerValue} = this.props;
+    //     if (defaultPickerValue) {
+    //         // const date = moment(moment()
+    //         //     .subtract(18, 'year')
+    //         //     .format('YYYY-MM-DD'));
+    //         // let defaultPickerValue = date;
+    //         // setValue([date, date], false, true);
+    //
+    //         this.setState({defaultPickerValue:  defaultPickerValue});
+    //     } else {
+    //         this.setState({defaultPickerValue:  moment().format('YYYY-MM-DD')});
+    //     }
+    // };
 
 
     render() {
-        const {placeholder, placeholders, customProps, value, valueFormat, dateFormat, config, readonly, operator, restrictions} = this.props;
+        const {placeholder, placeholders, customProps, value, valueFormat, dateFormat, config, readonly, operator, restrictions, defaultPickerValue} = this.props;
         const {renderSize} = config.settings;
         let dateValue;
         if (value && Array.isArray(value)) {
@@ -91,6 +93,7 @@ export default class DateWidget extends PureComponent {
         } else {
             dateValue = null;
         }
+        // this.setState({defaultPickerValue: moment(defaultPickerValue, valueFormat)});
         return (
             <>
                 {operator === "date_range" || operator === "not_date_range" ? (
@@ -99,11 +102,10 @@ export default class DateWidget extends PureComponent {
                         key="widget-date"
                         size={renderSize}
                         format={dateFormat}
-                        value={dateValue}
                         onChange={this.handleChange}
-                        onOpenChange={this.onOpenRangeChange}
+                        // onOpenChange={this.onOpenRangeChange}
                         disabledDate={restrictions}
-                        defaultValue={dateValue}
+                        value={dateValue}
                         defaultPickerValue={[this.state.defaultPickerValue, this.state.defaultPickerValue]}
                         {...customProps}
                         placeholder={placeholders}
