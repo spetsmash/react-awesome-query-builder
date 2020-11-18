@@ -52,32 +52,17 @@ export default class DateWidget extends PureComponent {
         }
     };
 
-    onOpenChange = (open) => {
-        const {setValue, value} = this.props;
-        console.log(open)
-        if (value === undefined) {
-            const date = moment(moment()
-                .subtract(18, 'year')
-                .format('YYYY-MM-DD'));
-            let defaultPickerValue = date;
-            setValue(date, false, true);
-            // this.setState({defaultPickerValue: defaultPickerValue});
-
-        }
-    };
-
-    // onOpenRangeChange = () => {
-    //     const {setValue, valueFormat, defaultPickerValue} = this.props;
-    //     if (defaultPickerValue) {
-    //         // const date = moment(moment()
-    //         //     .subtract(18, 'year')
-    //         //     .format('YYYY-MM-DD'));
-    //         // let defaultPickerValue = date;
-    //         // setValue([date, date], false, true);
+    // onOpenChange = (open) => {
+    //     const {setValue, value} = this.props;
+    //     console.log(open)
+    //     if (value === undefined) {
+    //         const date = moment(moment()
+    //             .subtract(18, 'year')
+    //             .format('YYYY-MM-DD'));
+    //         let defaultPickerValue = date;
+    //         setValue(date, false, true);
+    //         // this.setState({defaultPickerValue: defaultPickerValue});
     //
-    //         this.setState({defaultPickerValue:  defaultPickerValue});
-    //     } else {
-    //         this.setState({defaultPickerValue:  moment().format('YYYY-MM-DD')});
     //     }
     // };
 
@@ -93,7 +78,6 @@ export default class DateWidget extends PureComponent {
         } else {
             dateValue = null;
         }
-        // this.setState({defaultPickerValue: moment(defaultPickerValue, valueFormat)});
         return (
             <>
                 {operator === "date_range" || operator === "not_date_range" ? (
@@ -103,7 +87,6 @@ export default class DateWidget extends PureComponent {
                         size={renderSize}
                         format={dateFormat}
                         onChange={this.handleChange}
-                        // onOpenChange={this.onOpenRangeChange}
                         disabledDate={restrictions}
                         value={dateValue}
                         defaultPickerValue={[this.state.defaultPickerValue, this.state.defaultPickerValue]}
@@ -121,8 +104,6 @@ export default class DateWidget extends PureComponent {
                         onChange={this.handleChange}
                         disabledDate={restrictions}
                         defaultPickerValue={this.state.defaultPickerValue}
-                        onOpenChange={this.onOpenChange}
-                        onPanelChange={this.onPanelChange}
                         {...customProps}
                     />)}
             </>
