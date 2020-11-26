@@ -44,7 +44,7 @@ export default class TextWidget extends PureComponent {
 
     return (
         <Col>
-          {mask ?
+          {mask && _value == null ?
               (
                   <MaskedInput
                       mask={mask}
